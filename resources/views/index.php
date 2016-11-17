@@ -38,20 +38,26 @@
         <script src='/js/app.services/auth.factory.js'></script>
         <script src='/js/app.services/animPages.service.js'></script>
         <script src='/js/app.services/animMsj.service.js'></script>
+        <script src='/js/app.services/error.service.js'></script>
         <script src='/js/app.services/perfil.service.js'></script>
         <script src='/js/app.services/users.factory.js'></script>
         <script src='/js/app.services/tipo.factory.js'></script>
         <script src='/js/app.services/generales.factory.js'></script>
+        <script src='/js/app.services/empleados.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
         <script src='/js/login/login.controller.js'></script>
+        <script src='/js/error/errormessajes.directive.js'></script>
         <script src='/js/authhome/authhome.controller.js'></script>
         <script src='/js/usuarios/usuarios.controller.js'></script>
         <script src='/js/usuarios/usuarioInfo.controller.js'></script>
         <script src='/js/usuarios/usuario.directive.js'></script>
         <script src='/js/usuarios/profile.controller.js'></script>
         <script src='/js/generales/generales.controller.js'></script>
+        <script src='/js/empleados/empleados.controller.js'></script>
+        <script src='/js/empleados/empleado.directive.js'></script>
+        <script src='/js/empleados/modempleado.directive.js'></script>
         
     </head>
     <body ng-app="escuela">

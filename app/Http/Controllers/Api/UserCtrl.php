@@ -256,4 +256,15 @@ class UserCtrl extends Controller
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
+
+    public function userEmpleable(){
+        $obj=User::where('tipo_usuario_id','!=',1)
+            ->where('tipo_usuario_id','!=',6)
+            ->orderBy('lastname','desc')
+            ->get();
+        $ev=new EventlogRegister;
+        $msj='Consulta de empleables. Tabla=users';
+        $ev->registro(0,$msj,$this->req->user()->id);
+        return $obj->toJson();
+    }
 }

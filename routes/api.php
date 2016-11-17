@@ -18,6 +18,19 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 	
+	/** RUTAS EMPLEADOS TABLE **/
+	Route::group(['prefix'=>'empleados','middleware'=>'admin'],function(){
+		//Basicos
+		Route::get('/','EmpleadosCtrl@index');
+		Route::post('/','EmpleadosCtrl@store');
+		Route::get('/{id}','EmpleadosCtrl@show');
+		Route::put('/{id}','EmpleadosCtrl@update');
+		Route::delete('/{id}','EmpleadosCtrl@destroy');
+		//Adicionales
+		Route::get('/search/{info}','EmpleadosCtrl@search');
+		Route::get('/range/{ini}','EmpleadosCtrl@index');
+	});
+
 	/** RUTAS GENERALES TABLE **/
 	Route::group(['prefix'=>'generales','middleware'=>'admin'],function(){
 		//Basicos
@@ -27,8 +40,6 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::put('/{id}','GenCtrl@update');
 		Route::delete('/{id}','GenCtrl@destroy');
 		//Adicionales
-		Route::get('/search/{info}','UserCtrl@search');
-		Route::get('/range/{ini}','UserCtrl@index');
 	});
 
 	/** RUTAS USERS TABLE **/
@@ -43,6 +54,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::get('/search/{info}','UserCtrl@search');
 		Route::get('/range/{ini}','UserCtrl@index');
 		Route::put('/status/{user}/{status}','UserCtrl@modEstado');
+		Route::get('/add/empleables','UserCtrl@userEmpleable');
 	});
 
 	/** RUTAS PERFIL TABLE **/

@@ -1,0 +1,60 @@
+<form class="form" name='formEmpleado' ng-submit='formEmpleado.$valid && vm.accionEmpleado()' novalidate>
+<fieldset>
+	<legend>Datos de ingreso: </legend>
+	<div class="form-group" ng-if='!vm.hayExistente()'>
+		<label class="control-label" for="nombre_empleado">Usuario a volver empleado</label>  
+	    <select id="empleado_seleccionado" class="form-control" ng-model='vm.ndts.users_id'>
+	    	<option ng-repeat='empl in vm.empleables.data' value="{{ empl.id }}"><em>{{ empl.lastname }}, {{ empl.name }}.</em> No. {{ empl.identificacion }}</option>
+	    </select>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="salario">Salario base</label>  
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1">$</span>
+	    	<input id="salario" ng-model="vm.ndts.salario" type="number" step="0.01" class="form-control input-md" required>
+	    </div>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="eps">Nombre de EPS</label>  
+	    <input id="eps" ng-model="vm.ndts.eps" type="text" class="form-control input-md" required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="eps_val">Porcentaje legal de EPS</label> 
+		<div class="input-group">
+			<input id="eps_val" ng-model="vm.ndts.eps_val" type="number" step="0.01" class="form-control input-md" required>
+			<span class="input-group-addon" id="basic-addon1">%</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="arl">Nombre de ARL</label>  
+	    <input id="arl" ng-model="vm.ndts.arl" type="text" class="form-control input-md" required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="arl_val">Porcentaje de ARL</label>  
+		<div class="input-group">
+			<input id="arl_val" ng-model="vm.ndts.arl_val" type="number" step="0.01" class="form-control input-md" required>
+			<span class="input-group-addon" id="basic-addon1">%</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="pension">Nombre de Administradora de pensión</label>  
+	    <input id="pension" ng-model="vm.ndts.pension" type="text" class="form-control input-md" required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="pension_val">Porcentaje legal de pensión</label>
+		<div class="input-group">  
+	    	<input id="pension_val" ng-model="vm.ndts.pension_val" type="number" step="0.01" value="12.5" class="form-control input-md" required>
+	    	<span class="input-group-addon" id="basic-addon1">%</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="fecha_ini">Fecha de inicio de contrato</label>  
+	    <input id="contrato_ini" ng-model="vm.ndts.contrato_ini" type="date" class="form-control input-md" required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="fecha_fin">Fecha de terminación de contrato</label>  
+	    <input id="contrato_fin" ng-model="vm.ndts.contrato_fin" type="date" class="form-control input-md">
+	</div>
+	<input type="submit" class="btn btn-info" value="Enviar">
+</fieldset>
+</form>

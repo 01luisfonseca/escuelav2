@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-use App\modelos\Authdevice;
+use App\Authdevice;
 
 class CheckSerial
 {

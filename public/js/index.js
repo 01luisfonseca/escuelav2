@@ -112,6 +112,19 @@
                         controller: 'GenCtrl as vm',
                     }
                 }
+            })
+            .state('empleados', {
+                url: "/empleados",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/empleados/empleados.index.html",
+                        controller: 'EmpleadosCtrl as vm',
+                    }
+                }
             });
     }
 

@@ -13,7 +13,8 @@
             addUser: addUser,
 			modUser: modUser,
             delUser: delUser,
-            setEstado: setEstado
+            setEstado: setEstado,
+            getEmpleables:getEmpleables
 		};
 
 		return fc;
@@ -42,6 +43,9 @@
         }
         function setEstado(id,stat){
             return $http.put(fc.url+'/status/'+id+'/'+stat);
+        }
+        function getEmpleables(){
+            return $http.get(fc.url+'/add/empleables');
         }
         
 	}
