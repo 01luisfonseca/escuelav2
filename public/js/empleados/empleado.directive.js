@@ -82,6 +82,10 @@
 					vm.ndts=res.data;
 					vm.ndts.contrato_ini= new Date(vm.ndts.contrato_ini);
 					vm.ndts.contrato_fin= new Date(vm.ndts.contrato_fin);
+					vm.ndts.salario=parseInt(vm.ndts.salario);
+					vm.ndts.eps_val=parseFloat(vm.ndts.eps_val);
+					vm.ndts.arl_val=parseFloat(vm.ndts.arl_val);
+					vm.ndts.pension_val=parseFloat(vm.ndts.pension_val);
 				});
 			}
 		
