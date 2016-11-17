@@ -63,6 +63,9 @@
         <script src='/js/empleados/modempleado.directive.js'></script>
         <script src='/js/plan/controller.js'></script>
         <script src='/js/anios/controller.js'></script>
+        <script src='/js/anios/form.directive.js'></script>
+        <script src='/js/anios/mod.directive.js'></script>
+        <script src='/js/anios/rel.directive.js'></script>
         
     </head>
     <body ng-app="escuela">
