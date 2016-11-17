@@ -22,7 +22,7 @@
       		/* */
     	}
 
-    	function controller(EmpleadosFactory,$window,$timeout,$interval){
+    	function controller(EmpleadosFactory,$window,$timeout,$interval,error){
     		var vm=this;
     		var promise;
 
@@ -46,7 +46,7 @@
 			// Funciones adicionales
 
 			// Lanzamiento Automático
-			vm.getDatas();
+			//vm.getDatas();
 			startData();
 
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
@@ -55,11 +55,12 @@
 
 			function startData(){
 				stopData();
-				promise=$interval(vm.getDatas,5000);
+				vm.getDatas();
+				//promise=$interval(vm.getDatas,5000);
 			}
 
 			function stopData(){
-				$interval.cancel(promise);
+				//$interval.cancel(promise);
 			}
 
 			function getDatas(){

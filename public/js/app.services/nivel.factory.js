@@ -1,11 +1,11 @@
 (function(){
 	'use strict';
 	angular.module('escuela')
-	.factory('AniosFactory',factory);
+	.factory('NivelesFactory',factory);
 
 	function factory($http){
 		var fc={
-            url: '/api/anios',
+            url: '/api/niveles',
 			gDt: gDt,
 			gDts: gDts,
             gSDt:gSDt,

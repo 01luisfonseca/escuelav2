@@ -1,0 +1,69 @@
+.boton_uno {
+	background: #ffffff url(/img/numeros/uno.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_dos {
+	background: #ffffff url(/img/numeros/dos.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_tres {
+	background: #ffffff url(/img/numeros/tres.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_cuatro {
+	background: #ffffff url(/img/numeros/cuatro.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_cinco {
+	background: #ffffff url(/img/numeros/cinco.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_seis {
+	background: #ffffff url(/img/numeros/seis.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_siete {
+	background: #ffffff url(/img/numeros/siete.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_ocho {
+	background: #ffffff url(/img/numeros/ocho.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.boton_nueve {
+	background: #ffffff url(/img/numeros/nueve.png) no-repeat center;
+    border: none;
+    height: 180px;
+    width: 55px;
+}
+
+.vertical_text {
+	transform: rotate(-90deg);
+	color: #ffffff;
+    letter-spacing: .1em;
+    text-shadow: -1px -1px 1px #B3B3B3, 1px 1px 1px #B3B3B3, -1px -1px 1px #B3B3B3, 1px 1px 1px #B3B3B3; 
+}

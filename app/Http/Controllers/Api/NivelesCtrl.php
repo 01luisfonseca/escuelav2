@@ -4,17 +4,35 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Helpers\EventlogRegister;
+use Carbon\Carbon;
+use Log;
+use App\Niveles;
 
 class NivelesCtrl extends Controller
 {
+    /**
+     * @var Request
+     */
+    protected $req;
+
+    public function __construct(Request $request)//Dependency injection
+    {
+        $this->req = $request;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($ini=0)
     {
-        //
+        $obj=Niveles::skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
+        $ev=new EventlogRegister;
+        $msj='Consulta registros. Tabla=Niveles.';
+        $ev->registro(0,$msj,$this->req->user()->id);
+        return $obj->toJson();
     }
 
     /**
@@ -33,26 +51,45 @@ class NivelesCtrl extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $ev=new EventlogRegister;
+        $ev->registro(1,'Intento de guardar en tabla=Niveles.',$this->req->user()->id);
+        $this->validate($this->req,[
+            'nombre'=>'required'
+        ]);
+        $obj=new Niveles;
+        $obj->nombre=$this->req->input('nombre');
+        if ($this->req->has('descripcion')) {
+            $obj->descripcion=$this->req->input('descripcion');
+        }else{
+            $obj->descripcion='';
+        }
+        $obj->save();
+        $msj='Elemento Creado. Tabla=Niveles, id='.$obj->id;
+        $ev->registro(1,$msj,$this->req->user()->id);
+        return response()->json(['msj'=>$msj]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $obj=Niveles::findOrFail($id);
+        $ev=new EventlogRegister;
+        $msj='Consulta de elemento. Tabla=Niveles, id='.$id;
+        $ev->registro(0,$msj,$this->req->user()->id);
+        return $obj->toJson();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -64,22 +101,58 @@ class NivelesCtrl extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $ev=new EventlogRegister;
+        $ev->registro(1,'Intento de modificación. Tabla=Niveles, id='.$id,$this->req->user()->id);
+        $obj=Niveles::findOrFail($id);
+        $this->validate($this->req,[
+            'nombre'=>'required'
+        ]);
+        $obj=Niveles::findOrFail($id);
+        $obj->nombre=$this->req->input('nombre');
+        if ($this->req->has('descripcion')) {
+            $obj->descripcion=$this->req->input('descripcion');
+        }else{
+            $obj->descripcion='';
+        }
+        $obj->save();
+        $msj='Modificación. Tabla=Niveles, id='.$id;
+        $ev->registro(1,$msj,$this->req->user()->id);
+        return response()->json(['msj'=>$msj]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $ev=new EventlogRegister;
+        $ev->registro(2,'Intento de eliminación. Tabla=Niveles, id='.$id,$this->req->user()->id);
+        $obj=Niveles::findOrFail($id);
+        $obj->delete();
+        $msj='Borrado. Tabla=Niveles, id='.$obj->id;
+        $ev->registro(2,$msj,$this->req->user()->id);
+        return response()->json(['msj'=>$msj]);
+    }
+
+    /////////////////////////////////////////////
+    /////////// FUNCIONES ADICIONALES ///////////
+    /////////////////////////////////////////////
+   
+    /**
+     * Muestra numero de registros
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function count(){
+        $obj=Niveles::all();
+        return response()->json(['registros'=>$obj->count()]);
     }
 }

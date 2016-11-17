@@ -18,6 +18,39 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 	
+	/** RUTAS NIVELES TABLE **/
+	Route::group(['prefix'=>'niveles','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','NivelesCtrl@index');
+		Route::post('/','NivelesCtrl@store');
+		Route::get('/{id}','NivelesCtrl@show');
+		Route::put('/{id}','NivelesCtrl@update');
+		Route::delete('/{id}','NivelesCtrl@destroy');
+		//Adicionales
+	});
+
+	/** RUTAS MATERIAS TABLE **/
+	Route::group(['prefix'=>'materias','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','MateriasCtrl@index');
+		Route::post('/','MateriasCtrl@store');
+		Route::get('/{id}','MateriasCtrl@show');
+		Route::put('/{id}','MateriasCtrl@update');
+		Route::delete('/{id}','MateriasCtrl@destroy');
+		//Adicionales
+	});
+
+	/** RUTAS ANIOS TABLE **/
+	Route::group(['prefix'=>'anios','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','AniosCtrl@index');
+		Route::post('/','AniosCtrl@store');
+		Route::get('/{id}','AniosCtrl@show');
+		Route::put('/{id}','AniosCtrl@update');
+		Route::delete('/{id}','AniosCtrl@destroy');
+		//Adicionales
+	});
+
 	/** RUTAS EMPLEADOS TABLE **/
 	Route::group(['prefix'=>'empleados','middleware'=>'admin'],function(){
 		//Basicos

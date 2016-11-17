@@ -44,6 +44,9 @@
         <script src='/js/app.services/tipo.factory.js'></script>
         <script src='/js/app.services/generales.factory.js'></script>
         <script src='/js/app.services/empleados.factory.js'></script>
+        <script src='/js/app.services/anio.factory.js'></script>
+        <script src='/js/app.services/materia.factory.js'></script>
+        <script src='/js/app.services/nivel.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -58,6 +61,8 @@
         <script src='/js/empleados/empleados.controller.js'></script>
         <script src='/js/empleados/empleado.directive.js'></script>
         <script src='/js/empleados/modempleado.directive.js'></script>
+        <script src='/js/plan/controller.js'></script>
+        <script src='/js/anios/controller.js'></script>
         
     </head>
     <body ng-app="escuela">

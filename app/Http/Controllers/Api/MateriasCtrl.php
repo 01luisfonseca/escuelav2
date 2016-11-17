@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
 use Carbon\Carbon;
 use Log;
-use App\Anios;
+use App\Materias;
 
-class AniosCtrl extends Controller
+class MateriasCtrl extends Controller
 {
     /**
      * @var Request
@@ -28,9 +28,9 @@ class AniosCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=Anios::skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
+        $obj=Materias::skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
         $ev=new EventlogRegister;
-        $msj='Consulta registros. Tabla=Anios.';
+        $msj='Consulta registros. Tabla=Materias.';
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
@@ -54,19 +54,19 @@ class AniosCtrl extends Controller
     public function store()
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de guardar en tabla=Anios.',$this->req->user()->id);
+        $ev->registro(1,'Intento de guardar en tabla=Materias.',$this->req->user()->id);
         $this->validate($this->req,[
-            'anio'=>'required'
+            'nombre'=>'required'
         ]);
-        $obj=new Anios;
-        $obj->anio=$this->req->input('anio');
+        $obj=new Materias;
+        $obj->nombre=$this->req->input('nombre');
         if ($this->req->has('descripcion')) {
             $obj->descripcion=$this->req->input('descripcion');
         }else{
             $obj->descripcion='';
         }
         $obj->save();
-        $msj='Elemento Creado. Tabla=Anios, id='.$obj->id;
+        $msj='Elemento Creado. Tabla=Materias, id='.$obj->id;
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -79,9 +79,9 @@ class AniosCtrl extends Controller
      */
     public function show($id)
     {
-        $obj=Anios::findOrFail($id);
+        $obj=Materias::findOrFail($id);
         $ev=new EventlogRegister;
-        $msj='Consulta de elemento. Tabla=Anios, id='.$id;
+        $msj='Consulta de elemento. Tabla=Materias, id='.$id;
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
@@ -107,20 +107,20 @@ class AniosCtrl extends Controller
     public function update($id)
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de modificación. Tabla=Anios, id='.$id,$this->req->user()->id);
-        $obj=Anios::findOrFail($id);
+        $ev->registro(1,'Intento de modificación. Tabla=Materias, id='.$id,$this->req->user()->id);
+        $obj=Materias::findOrFail($id);
         $this->validate($this->req,[
-            'anio'=>'required'
+            'nombre'=>'required'
         ]);
-        $obj=Anios::findOrFail($id);
-        $obj->anio=$this->req->input('anio');
+        $obj=Materias::findOrFail($id);
+        $obj->nombre=$this->req->input('nombre');
         if ($this->req->has('descripcion')) {
             $obj->descripcion=$this->req->input('descripcion');
         }else{
             $obj->descripcion='';
         }
         $obj->save();
-        $msj='Modificación. Tabla=Anios, id='.$id;
+        $msj='Modificación. Tabla=Materias, id='.$id;
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -134,10 +134,10 @@ class AniosCtrl extends Controller
     public function destroy($id)
     {
         $ev=new EventlogRegister;
-        $ev->registro(2,'Intento de eliminación. Tabla=Anios, id='.$id,$this->req->user()->id);
-        $obj=Anios::findOrFail($id);
+        $ev->registro(2,'Intento de eliminación. Tabla=Materias, id='.$id,$this->req->user()->id);
+        $obj=Materias::findOrFail($id);
         $obj->delete();
-        $msj='Borrado. Tabla=Anios, id='.$obj->id;
+        $msj='Borrado. Tabla=Materias, id='.$obj->id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -152,7 +152,8 @@ class AniosCtrl extends Controller
      * @return \Illuminate\Http\Response
      */
     public function count(){
-        $obj=Anios::all();
+        $obj=Materias::all();
         return response()->json(['registros'=>$obj->count()]);
     }
 }
+

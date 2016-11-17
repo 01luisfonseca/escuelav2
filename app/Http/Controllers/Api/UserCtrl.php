@@ -257,9 +257,15 @@ class UserCtrl extends Controller
         return response()->json(['msj'=>$msj]);
     }
 
+    /**
+     * Muestra usuarios que pueden ser empleables.
+     *
+     * @param  Ninguno
+     * @return \Illuminate\Http\Response
+     */
     public function userEmpleable(){
-        $obj=User::where('tipo_usuario_id','!=',1)
-            ->where('tipo_usuario_id','!=',6)
+        $obj=User::where('tipo_usuario_id','>',2)
+            ->where('id','>',2)
             ->orderBy('lastname','desc')
             ->get();
         $ev=new EventlogRegister;

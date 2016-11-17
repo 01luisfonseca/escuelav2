@@ -3,6 +3,7 @@
 <p ng-show='vm.buscado!=""'>A continuación se presentan los resultados.</p>
 <div  ng-show='vm.buscando'><p><h4><em>Cargando información</em></h4></p></div>
 <div class="table-responsive desplazable-grande">
+	<button class="btn btn-xs btn-info" ng-click='vm.getDatas()'>Actualizar tabla.</button>
 	<table class="table table-stripped">
 		<tr>
 			<th>Acción</th>

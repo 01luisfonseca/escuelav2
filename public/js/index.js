@@ -125,6 +125,32 @@
                         controller: 'EmpleadosCtrl as vm',
                     }
                 }
+            })
+            .state('plan', {
+                url: "/plan",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/plan/index.html",
+                        controller: 'PlanCtrl as vm',
+                    }
+                }
+            })
+            .state('anios', {
+                url: "/anios",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/anios/index.html",
+                        controller: 'AniosCtrl as vm',
+                    }
+                }
             });
     }
 
