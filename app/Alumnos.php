@@ -39,4 +39,13 @@ class Alumnos extends Model
     public function newasistencia(){
         return $this->hasMany('App\Newasistencia');
     }
+
+    public function delete(){
+        $this->pago_pension()->delete();
+        $this->pago_matricula()->delete();
+        $this->pago_otro()->delete();
+        $this->notas()->delete();
+        $this->newasistencia()->delete();
+        parent::delete();
+    }
 }

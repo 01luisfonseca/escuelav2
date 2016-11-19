@@ -1,6 +1,13 @@
+<div ng-show='vm.hayBases()'>
 <form class="form" name='formPeriodo' ng-submit='formPeriodo.$valid && vm.accion()' novalidate>
 <fieldset>
 	<legend>Datos de ingreso: </legend>
+	<div class="form-group" ng-if='!vm.hayExistente()'>
+		<label class="control-label" for="asignar">Asignar año.</label>  
+	    <select id="asig_seleccionado" class="form-control" ng-model='vm.ndts.anios_id'>
+	    	<option ng-repeat='bs in vm.base.data' value="{{ bs.id }}">{{ bs.anio }}</option>
+	    </select>
+	</div>
 	<div class="form-group">
 		<label class="control-label" for="nombre">Nombre</label>  
 	    <input id="nombre" ng-model="vm.ndts.nombre" type="text" class="form-control input-md" required>
@@ -9,6 +16,18 @@
 		<label class="control-label" for="descripcion">Descripción</label>
 		<textarea id="descripcion" ng-model="vm.ndts.descripcion" cols="3" class="form-control"></textarea> 
 	</div>
+	<div class="form-group" ng-hide='typeof(vm.ndts.anios_id)=="undefined"'>
+		<label class="control-label" for="fecha_ini">Fecha Inicial</label>  
+	    <input id="fecha_ini" ng-model="vm.ndts.fecha_ini" type="date" class="form-control input-md" min='{{vm.selAnio()-1}}-06-01' max='{{vm.selAnio()+1}}-06-01' required>
+	</div>
+	<div class="form-group" ng-hide='typeof(vm.ndts.anios_id)=="undefined"'>
+		<label class="control-label" for="fecha_fin">Fecha Final</label>  
+	    <input id="fecha_fin" ng-model="vm.ndts.fecha_fin" type="date" class="form-control input-md" required>
+	</div>
 	<input type="submit" class="btn btn-info" value="Enviar">
 </fieldset>
 </form>
+</div>
+<div ng-hide='vm.hayBases()'>
+	<p>No se puede cargar el formulario ya que no se han creado los años. Por favor cree años para poder crear periodos.</p>
+</div>

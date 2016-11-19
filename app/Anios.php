@@ -15,4 +15,14 @@ class Anios extends Model
     	return $this->hasMany('App\Periodos');
     }
 
+    public function niveles_has_anios(){
+    	return $this->hasMany('App\NivelesHasAnios');
+    }
+
+    public function delete(){
+    	$this->periodos()->delete();
+    	$this->niveles_has_anios()->delete();
+    	parent::delete();
+    }
+
 }

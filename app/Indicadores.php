@@ -22,4 +22,9 @@ class Indicadores extends Model
     public function materias_has_niveles(){
     	return $this->belongsTo('App\MateriasHasNiveles');
     }
+
+    public function delete(){
+        $this->tipo_nota()->delete();
+        parent::delete();
+    }
 }

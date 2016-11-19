@@ -3,8 +3,8 @@
 	angular.module('escuela')
 	.factory('PeriodosFactory',factory);
 
-	function factory($http,RestFactory){
-        var url: '/api/periodos';
+	function factory($http){
+        var url= '/api/periodos';
 		var fc={
 			gDt: gDt,
 			gDts: gDts,

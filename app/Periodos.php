@@ -22,4 +22,10 @@ class Periodos extends Model
     public function anios(){
         return $this->belongsTo('App\Anios');
     }
+
+    public function delete(){
+        $this->indicadores()->delete();
+        $this->newasistencia()->delete();
+        parent::delete();
+    }
 }

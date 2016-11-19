@@ -18,4 +18,9 @@ class TipoNota extends Model
     public function indicadores(){
     	return $this->belongsTo('App\Indicadores');
     }
+
+    public function delete(){
+        $this->notas()->delete();
+        parent::delete();
+    }
 }

@@ -11,12 +11,13 @@ class Niveles extends Model
     use Softdeletes;
     protected $table = 'niveles';
 
-    public function alumnos(){
-    	return $this->hasMany('App\Alumnos');
-    }
-
     public function niveles_has_anios(){
     	return $this->hasMany('App\NivelesHasAnios');
+    }
+
+    public function delete(){
+        $this->niveles_has_anios()->delete();
+        parent::delete();
     }
 
 }

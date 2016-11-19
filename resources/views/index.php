@@ -67,6 +67,7 @@
         <script src='/js/anios/form.directive.js'></script>
         <script src='/js/anios/mod.directive.js'></script>
         <script src='/js/anios/rel.directive.js'></script>
+        <script src='/js/periodos/controller.js'></script>
         <script src='/js/periodos/form.directive.js'></script>
         <script src='/js/periodos/mod.directive.js'></script>
         <script src='/js/periodos/rel.directive.js'></script>

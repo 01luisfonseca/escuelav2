@@ -23,12 +23,14 @@
       		/* */
     	}
 
-    	function controller(PeriodosFactory,error){
+    	function controller(AniosFactory,PeriodosFactory,error){
     		var vm=this;
 
 			// Variables básicas
 			var basicFactory= PeriodosFactory;
+			var baseFactory= AniosFactory;
 			vm.ndts={};
+			vm.base={};
 
 			// Variables adicionales
 	
@@ -38,17 +40,33 @@
 			vm.newData=newData;
 			vm.hayExistente=hayExistente;
 			vm.accion=accion;
+			vm.getBases=getBases;
+			vm.hayBases=hayBases;
 
 			// Funciones adicionales
+			vm.selAnio=selAnio;
 			
 			// Lanzamiento Automático
 
 			// Lanzamiento obligatorio
+			vm.getBases();
+
 			if (typeof(vm.existente)!='undefined') {
 				vm.getData(vm.existente);
 			}
 
 			/////////////////////////// FUNCIONES ADICIONALES //////////////////////////////
+			function selAnio(){
+				//console.log(vm.ndts.anios_id);
+				if (typeof(vm.ndts.anios_id)!='undefined') {
+				for (var i = 0; i < vm.base.data.length; i++) {
+					if (vm.base.data[i].id==vm.ndts.anios_id) {
+						return vm.base.data[i].anio;
+					}
+				}
+				}
+				return 2000;
+			}
 
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 
@@ -56,7 +74,8 @@
 				return basicFactory.gDt(id).then(function(res){
 					//console.log(res);
 					vm.ndts=res.data;
-					vm.ndts.anio=parseInt(vm.ndts.anio);
+					vm.ndts.fecha_ini=new Date(vm.ndts.fecha_ini);
+					vm.ndts.fecha_fin=new Date(vm.ndts.fecha_fin);
 				});
 			}
 		
@@ -94,6 +113,28 @@
 					return true;
 				}
 				return false;
+			}
+
+			function getBases(){
+				return baseFactory.gDts().then(function(res){
+					vm.base=res;
+				},function(res){
+					error.setAlerta('No se encontraron años.');
+				});
+			}
+
+			function hayBases(){
+				try{
+					console.log(typeof(vm.base.data));
+					if (typeof(vm.base.data)=='array' || typeof(vm.base.data)=='object') {
+						return true;
+					}
+					return false;
+				}
+				catch(err){
+					console.log(err);
+					return false;
+				}
 			}
     	}
 	}

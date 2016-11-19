@@ -57,11 +57,15 @@ class PeriodosCtrl extends Controller
         $ev->registro(1,'Intento de guardar en tabla=Periodos.',$this->req->user()->id);
         $this->validate($this->req,[
             'nombre'=>'required',
-            'anios_id'=>'required'
+            'anios_id'=>'required',
+            'fecha_ini'=>'required',
+            'fecha_fin'=>'required'
         ]);
         $obj=new Periodos;
         $obj->nombre=$this->req->input('nombre');
         $obj->anios_id=$this->req->input('anios_id');
+        $obj->fecha_ini=new Carbon($this->req->input('fecha_ini'));
+        $obj->fecha_fin=new Carbon($this->req->input('fecha_fin'));
         if ($this->req->has('descripcion')) {
             $obj->descripcion=$this->req->input('descripcion');
         }else{
@@ -113,11 +117,15 @@ class PeriodosCtrl extends Controller
         $obj=Periodos::findOrFail($id);
         $this->validate($this->req,[
             'nombre'=>'required',
-            'anios_id'=>'required'
+            'anios_id'=>'required',
+            'fecha_ini'=>'required',
+            'fecha_fin'=>'required'
         ]);
         $obj=Periodos::findOrFail($id);
         $obj->nombre=$this->req->input('nombre');
         $obj->anios_id=$this->req->input('anios_id');
+        $obj->fecha_ini=new Carbon($this->req->input('fecha_ini'));
+        $obj->fecha_fin=new Carbon($this->req->input('fecha_fin'));
         if ($this->req->has('descripcion')) {
             $obj->descripcion=$this->req->input('descripcion');
         }else{
