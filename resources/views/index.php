@@ -47,6 +47,7 @@
         <script src='/js/app.services/anio.factory.js'></script>
         <script src='/js/app.services/materia.factory.js'></script>
         <script src='/js/app.services/nivel.factory.js'></script>
+        <script src='/js/app.services/periodo.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -66,6 +67,9 @@
         <script src='/js/anios/form.directive.js'></script>
         <script src='/js/anios/mod.directive.js'></script>
         <script src='/js/anios/rel.directive.js'></script>
+        <script src='/js/periodos/form.directive.js'></script>
+        <script src='/js/periodos/mod.directive.js'></script>
+        <script src='/js/periodos/rel.directive.js'></script>
         
     </head>
     <body ng-app="escuela">

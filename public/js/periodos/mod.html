@@ -4,12 +4,14 @@
 		<tr>
 			<th>Acción</th>
 			<th>Año</th>
+			<th>Nombre</th>
 			<th>Descripción</th>
             <th>Ult. actualiz.</th>
 		</tr>
 	     <tr ng-repeat='dt in vm.dts.data'>
 		    <td><button type="button" class="btn btn-primary btn-xs" ng-click='vm.selecPanel($index)'>Ver mas</button></td>
-		    <td>{{ dt.anio }}</td>
+		    <td>{{ dt.anios.anio }}</td>
+		    <td>{{ dt.nombre }}</td>
             <td>{{ dt.descripcion }}</td>
 		    <td>{{ dt.updated_at }}</td>
 	     </tr>
@@ -22,8 +24,8 @@
       	<h4 class="panel-title">Modificación de registro</h4>
       </div>
 	<div class="panel-body">
-		<p>Puede cambiar los valores de la propiedad en los siguientes campos.</p>
-        <form-anio existente='dt.id'></form-anio>
+		<p>Puede cambiar los valores de la propiedad en los siguientes campos. Si desea cambiar el año del periodo, debe eliminarlo y volverlo a crear.</p>
+        <form-periodo existente='dt.id'></form-periodo>
     </div>
     <div class="panel-footer">
      	<button type="button" class="btn btn-primary" ng-click='vm.cerrarPanel()'>Cerrar.</button>

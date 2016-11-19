@@ -151,6 +151,19 @@
                         controller: 'AniosCtrl as vm',
                     }
                 }
+            })
+            .state('periodos', {
+                url: "/periodos",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/periodos/index.html",
+                        controller: 'PeriodosCtrl as vm',
+                    }
+                }
             });
     }
 

@@ -56,7 +56,7 @@ class AniosCtrl extends Controller
         $ev=new EventlogRegister;
         $ev->registro(1,'Intento de guardar en tabla=Anios.',$this->req->user()->id);
         $this->validate($this->req,[
-            'anio'=>'required'
+            'anio'=>'required | unique:anios'
         ]);
         $obj=new Anios;
         $obj->anio=$this->req->input('anio');

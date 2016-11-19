@@ -2,12 +2,12 @@
 	'use strict';
 	angular
 		.module('escuela')
-		.directive('modAnio',directive);
+		.directive('modPeriodo',directive);
 
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/anios/mod.html',
+        	templateUrl: '/js/periodos/mod.html',
         	restrict: 'EA',
         	scope:{
         	},
@@ -22,12 +22,12 @@
       		/* */
     	}
 
-    	function controller(AniosFactory,error,$timeout,$window){
+    	function controller(PeriodosFactory,error,$timeout,$window){
     		var vm=this;
     		var promise;
 
 			// Variables básicas
-			var basicFactory=AniosFactory;
+			var basicFactory=PeriodosFactory;
 			vm.panel=0;
 			vm.dts={};
 			vm.buscado='';

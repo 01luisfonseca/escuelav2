@@ -2,12 +2,12 @@
 	'use strict';
 	angular
 		.module('escuela')
-		.directive('formAnio',directive);
+		.directive('formPeriodo',directive);
 
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/anios/form.html',
+        	templateUrl: '/js/periodos/form.html',
         	restrict: 'EA',
         	scope:{
         		existente: '='
@@ -23,11 +23,11 @@
       		/* */
     	}
 
-    	function controller(AniosFactory,error){
+    	function controller(PeriodosFactory,error){
     		var vm=this;
 
 			// Variables básicas
-			var basicFactory= AniosFactory;
+			var basicFactory= PeriodosFactory;
 			vm.ndts={};
 
 			// Variables adicionales

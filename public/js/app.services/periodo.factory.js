@@ -1,11 +1,11 @@
 (function(){
 	'use strict';
 	angular.module('escuela')
-	.factory('AniosFactory',factory);
+	.factory('PeriodosFactory',factory);
 
-	function factory($http){
+	function factory($http,RestFactory){
+        var url: '/api/periodos';
 		var fc={
-            url: '/api/anios',
 			gDt: gDt,
 			gDts: gDts,
             gSDt:gSDt,
@@ -19,25 +19,25 @@
 
 		/////////////////
         function gDt(id){
-            return $http.get(fc.url+'/'+id);
+            return $http.get(url+'/'+id);
         }
         function gDts(){
-            return $http.get(fc.url);
+            return $http.get(url);
         }
         function gSDt(texto){
-            return $http.get(fc.url+'/search/'+texto);
+            return $http.get(url+'/search/'+texto);
         }
         function gRDts(first){
-            return $http.get(fc.url+'/range/'+first);
+            return $http.get(url+'/range/'+first);
         }
         function aDt(data){
-            return $http.post(fc.url,data);
+            return $http.post(url,data);
         }
         function mDt(id,data){
-            return $http.put(fc.url+'/'+id,data);
+            return $http.put(url+'/'+id,data);
         }
         function dDt(id){
-            return $http.delete(fc.url+'/'+id);
+            return $http.delete(url+'/'+id);
         }      
 	}
 })();
