@@ -164,6 +164,19 @@
                         controller: 'PeriodosCtrl as vm',
                     }
                 }
+            })
+            .state('niveles', {
+                url: "/niveles",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/niveles/index.html",
+                        controller: 'NivelesCtrl as vm',
+                    }
+                }
             });
     }
 

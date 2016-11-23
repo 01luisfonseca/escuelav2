@@ -1,17 +1,18 @@
-<div  id="anios" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+<div  id="niveles" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
 	<div id="header">
-		<h2>Gestión de años</h2>
-		<p><a href='#/plan' class="btn btn-sm btn-info">Volver a Plan de Estudios.</a><a href="#/periodos" class="btn btn-sm btn-warning">Ir a Periodos</a></p>
+		<h2>Gestión de Niveles</h2>
+		<p><a href="#/periodos" class="btn btn-sm btn-warning">Ir a periodos</a><a href='#/plan' class="btn btn-sm btn-info">Volver a Plan de Estudios.</a><a href="#/materias" class="btn btn-sm btn-warning">Ir a Materias</a></p>
 	</div>
 	<div id="content">
-		<p>El sistema depende de los años que se hallan creado. La aplicación engloba el comportamiento académico según el año. Para el año se relacionarán los periodos y los niveles.</p> 
+		<p>A continuación podrá insertar los cursos típicos que encontrará en uno o varios años. En la sección de relaciones se asignarán los niveles a los años asociados.</p>
+            <p><em>Importante: </em>Las relaciones estarán disponibles en caso de que ya se hayan creado años y niveles.</p> 
 	</div>
 	<div id="footer">
 			<!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active" ng-click='vm.selectTab(1)'><a aria-controls="CrearData" role="tab" data-toggle="tab">Crear</a></li>
                   <li role="presentation" ng-click='vm.selectTab(2)'><a aria-controls="ModData" role="tab" data-toggle="tab">Modificar</a></li>
-                  <!--<li role="presentation" ng-click='vm.selectTab(3)'><a aria-controls="RelData" role="tab" data-toggle="tab">Relaciones</a></li>-->
+                  <li role="presentation" ng-click='vm.selectTab(3)'><a aria-controls="RelData" role="tab" data-toggle="tab">Relaciones</a></li>
             </ul>
 
              <!-- Tab panes -->
@@ -19,19 +20,19 @@
 
                   <div role="tabpanel" class="active"  id="CrearData">
                         <div class="panel panel-default" ng-show='vm.tabSelec(1)'>
-                              <div class="panel-body"><form-anio></form-anio></div>
+                              <div class="panel-body"><form-nivel></form-nivel></div>
                         </div>
                   </div>
 
                   <div role="tabpanel" class="active"  id="ModData">
                         <div class="panel panel-default" ng-show='vm.tabSelec(2)'>
-                              <div class="panel-body"><mod-anio></mod-anio></div>
+                              <div class="panel-body"><mod-nivel></mod-nivel></div>
                         </div>
                   </div>
 
                   <div role="tabpanel" class="active"  id="RelData">
                         <div class="panel panel-default" ng-show='vm.tabSelec(3)'>
-                              <div class="panel-body"><rel-anio></rel-anio></div>
+                              <div class="panel-body"><rel-nivel></rel-nivel></div>
                         </div>
                   </div>
 

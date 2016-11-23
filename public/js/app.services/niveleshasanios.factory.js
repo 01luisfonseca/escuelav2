@@ -1,10 +1,10 @@
 (function(){
 	'use strict';
 	angular.module('escuela')
-	.factory('NivelesFactory',factory);
+	.factory('NivelesHasAniosFactory',factory);
 
 	function factory($http){
-		var url= '/api/niveles';
+		var url= '/api/niveleshasanios';
         var fc={
 			gDt: gDt,
 			gDts: gDts,

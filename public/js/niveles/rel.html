@@ -1,0 +1,54 @@
+<div class="container-fluid">
+<div class="col-xs-12">
+	<button class="btn btn-xs btn-info" ng-click='vm.buscarDatos()'>Actualizar todo.</button>
+</div>
+<div class="col-md-4">
+	<div class="panel panel-primary">
+			<div class="panel-heading"><h4 class="panel-title">Años y niveles relacionados</h4></div>
+			<div class="panel-body">
+				<ul>
+					<li ng-repeat='anio in vm.anios.data'>
+						<p>{{ anio.anio }}</p>
+						<ul>
+							<li ng-repeat='nivel in anio.niveles_has_anios'>
+								<p>{{ nivel.niveles.nombre }}</p>
+								<p><button class="btn btn-danger btn-xs" ng-click='vm.delData(nivel.id)'>Eliminar Nivel</button></p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+	</div>
+</div>
+<div class="col-md-4">
+<div class="panel panel-success">
+	<div class="panel-heading"><h4 class="panel-title">Por favor seleccione el año.</h4></div>
+	<div class="panel-body">
+		<p>Se tomarán los años creados en el sistema. <em>Cuando elija un año y un nivel se habilitará el registro.</em></p>
+	</div>
+	<div class="list-group">
+  		<a ng-repeat='anio in vm.anios.data' class="list-group-item" ng-click='vm.selAnio(anio.id)' ng-class='{active: vm.anioSel(anio.id)}'>
+    		<h4 class="list-group-item-heading">{{anio.anio}}</h4>
+    		<p class="list-group-item-text">{{anio.descripcion}}</p>
+  		</a>
+	</div>
+</div>
+</div>
+<div class="col-md-4" ng-show='vm.selec.anio!=0'>
+<div class="panel panel-success">
+	<div class="panel-heading"><h4 class="panel-title">Por favor seleccione el nivel.</h4></div>
+	<div class="panel-body">
+		<p>Se tomarán los niveles creados en el sistema y que no han sido asignados al año seleccionado. <em>Cuando elija un año y un nivel se habilitará el registro.</em></p>
+	</div>
+	<div class="list-group">
+  		<a ng-repeat='nivel in vm.niveles.data' class="list-group-item" ng-click='vm.selNivel(nivel.id)' ng-class='{active: vm.nivelSel(nivel.id)}' ng-hide='vm.nivelExiste(nivel.id)'>
+    		<h4 class="list-group-item-heading">{{nivel.nombre}}</h4>
+    		<p class="list-group-item-text">{{nivel.descripcion}}</p>
+  		</a>
+	</div>
+</div>
+</div>
+<div class="col-xs-offset-3 col-xs-6">
+	<button class="btn btn-primary btn-lg" ng-show='vm.infoCompleta()' ng-click='vm.guardarRel()'>Guardar relación</button>
+</div>
+</div>

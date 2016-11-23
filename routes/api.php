@@ -18,6 +18,17 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 	
+	/** RUTAS NIVELES HAS ANIOS TABLE **/
+	Route::group(['prefix'=>'niveleshasanios','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','NivelesHasAniosCtrl@index');
+		Route::post('/','NivelesHasAniosCtrl@store');
+		Route::get('/{id}','NivelesHasAniosCtrl@show');
+		Route::put('/{id}','NivelesHasAniosCtrl@update');
+		Route::delete('/{id}','NivelesHasAniosCtrl@destroy');
+		//Adicionales
+	});
+
 	/** RUTAS PERIODOS TABLE **/
 	Route::group(['prefix'=>'periodos','middleware'=>'coordinador'],function(){
 		//Basicos

@@ -28,7 +28,7 @@ class AniosCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=Anios::skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
+        $obj=Anios::with('niveles_has_anios.niveles')->skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=Anios.';
         $ev->registro(0,$msj,$this->req->user()->id);
@@ -79,7 +79,7 @@ class AniosCtrl extends Controller
      */
     public function show($id)
     {
-        $obj=Anios::findOrFail($id);
+        $obj=Anios::with('niveles')->findOrFail($id);
         $ev=new EventlogRegister;
         $msj='Consulta de elemento. Tabla=Anios, id='.$id;
         $ev->registro(0,$msj,$this->req->user()->id);

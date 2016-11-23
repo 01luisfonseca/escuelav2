@@ -1,0 +1,14 @@
+<form class="form" name='formNivel' ng-submit='formNivel.$valid && vm.accion()' novalidate>
+<fieldset>
+	<legend>Datos de ingreso: </legend>
+	<div class="form-group">
+		<label class="control-label" for="nombre">Nombre</label>  
+	    <input id="nombre" ng-model="vm.ndts.nombre" type="text" class="form-control input-md" required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="descripcion">Descripción</label>
+		<textarea id="descripcion" ng-model="vm.ndts.descripcion" cols="3" class="form-control"></textarea> 
+	</div>
+	<input type="submit" class="btn btn-info" value="Enviar">
+</fieldset>
+</form>

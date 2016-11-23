@@ -145,7 +145,7 @@ class CreateTablesEscuela extends Migration
             //Tablas
             $table->increments('id')->unique();
             $table->integer('users_id');
-            $table->integer('niveles_id');
+            $table->integer('niveles_has_anios_id');
             $table->float('pension');
             $table->mediumText('descripcion_pen');
             $table->float('matricula');
