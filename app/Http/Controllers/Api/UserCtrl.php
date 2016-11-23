@@ -98,7 +98,12 @@ class UserCtrl extends Controller
      */
     public function show($user)
     {
-        $obj=User::with('tipo_usuario')->where('id','>',2)->findOrFail($user);
+        $obj=0;
+        if ($this->req->user()->id<3) {
+            $obj=User::with('tipo_usuario')->findOrFail($user);
+        }else{
+            $obj=User::with('tipo_usuario')->where('id','>',2)->findOrFail($user);
+        }
         $ev=new EventlogRegister;
         $msj='Consulta el usuario id='.$user;
         $ev->registro(0,$msj,$this->req->user()->id);
@@ -219,7 +224,7 @@ class UserCtrl extends Controller
                 'tipo_usuario.nombre as tnombre'
                 )
             ->join('tipo_usuario','tipo_usuario_id','=','tipo_usuario.id')
-            ->where('users.id','!=','1') // El administrador nunca aparece
+            ->where('users.id','>','2') // El administrador nunca aparece
             ->where('identificacion','LIKE','%'.$info.'%')
             ->orWhere('name','LIKE','%'.$info.'%')
             ->orWhere('lastname','LIKE','%'.$info.'%')

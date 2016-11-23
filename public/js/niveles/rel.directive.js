@@ -128,7 +128,7 @@
 			}
 
 			function delData(id){
-				if (!$window.confirm('¿ Seguro que desea eliminar el elemento. Afectará notas y asistencias asociadas. ?')) {
+				if (!$window.confirm('¿ Seguro que desea eliminar el elemento. Afectará alumnos, notas y asistencias asociadas. ?')) {
 					return false;
 				}
 				return nha.dDt(id).then(function(res){
