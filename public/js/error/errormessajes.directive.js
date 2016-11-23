@@ -22,21 +22,33 @@
       		/* */
     	}
 
-    	function controller(error){
+    	function controller(error,$scope){
     		var vm=this;
 
 			// Variables básicas
-			vm.error=error;
+			$scope.error=error;
+			vm.error={};
 
 			// Variables adicionales
 	
 			// Funciones basicas
+			vm.actError=actError;
+			vm.actAlerta=actAlerta;
 
 			// Funciones adicionales
 			
 			// Lanzamiento Automático
+			$scope.$watch('error.getErrorStat()',actError);
+			$scope.$watch('error.getAlertaStat()',actAlerta);
 			
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
+			function actError(){
+				vm.error=error.error;
+			}
+
+			function actAlerta(){
+				vm.alerta=error.alerta;
+			}
 
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 			

@@ -79,7 +79,7 @@ class AniosCtrl extends Controller
      */
     public function show($id)
     {
-        $obj=Anios::with('niveles')->findOrFail($id);
+        $obj=Anios::with('niveles_has_anios.niveles')->findOrFail($id);
         $ev=new EventlogRegister;
         $msj='Consulta de elemento. Tabla=Anios, id='.$id;
         $ev->registro(0,$msj,$this->req->user()->id);

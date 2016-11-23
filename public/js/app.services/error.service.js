@@ -20,6 +20,8 @@
 		// Funciones
 		vm.setAlerta=setAlerta;
 		vm.setError=setError;
+		vm.getErrorStat=getErrorStat;
+		vm.getAlertaStat=getAlertaStat;
 
 		// Automáticas
 
@@ -61,6 +63,14 @@
 			animMsj.hide(elem,function(){
 				callback();
 			});
+		}
+
+		function getErrorStat(){
+			return vm.error.existe;
+		}
+
+		function getAlertaStat(){
+			return vm.alerta.existe;
 		}
 
 		
