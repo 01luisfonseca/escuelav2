@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Anios extends Model
 {
     //
-    use Softdeletes;
     protected $table = 'anios';
 
     public function periodos(){

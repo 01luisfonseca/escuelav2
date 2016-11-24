@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Niveles extends Model
 {
     //
-    use Softdeletes;
     protected $table = 'niveles';
 
     public function niveles_has_anios(){

@@ -2,12 +2,12 @@
 	'use strict';
 	angular
 		.module('escuela')
-		.directive('formPeriodo',directive);
+		.directive('formMateria',directive);
 
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/periodos/form.html',
+        	templateUrl: '/js/materias/form.html',
         	restrict: 'EA',
         	scope:{
         		existente: '='
@@ -23,11 +23,11 @@
       		/* */
     	}
 
-    	function controller(AniosFactory,PeriodosFactory,error){
+    	function controller(AniosFactory,MateriasFactory,error){
     		var vm=this;
 
 			// Variables básicas
-			var basicFactory= PeriodosFactory;
+			var basicFactory= MateriasFactory;
 			var baseFactory= AniosFactory;
 			vm.ndts={};
 			vm.base={};
@@ -49,7 +49,7 @@
 			// Lanzamiento Automático
 
 			// Lanzamiento obligatorio
-			vm.getBases();
+			//vm.getBases();
 
 			if (typeof(vm.existente)!='undefined') {
 				vm.getData(vm.existente);
@@ -74,8 +74,6 @@
 				return basicFactory.gDt(id).then(function(res){
 					//console.log(res);
 					vm.ndts=res.data;
-					vm.ndts.fecha_ini=new Date(vm.ndts.fecha_ini);
-					vm.ndts.fecha_fin=new Date(vm.ndts.fecha_fin);
 				});
 			}
 		
@@ -125,7 +123,7 @@
 
 			function hayBases(){
 				try{
-					//console.log(typeof(vm.base.data));
+					console.log(typeof(vm.base.data));
 					if (typeof(vm.base.data)=='array' || typeof(vm.base.data)=='object') {
 						return true;
 					}

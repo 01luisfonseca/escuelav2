@@ -10,10 +10,12 @@ class NivelesHasAnios extends Model
     //
     protected $table = 'niveles_has_anios';
 
-    use Softdeletes;
-
     public function niveles(){
     	return $this->belongsTo('App\Niveles');
+    }
+
+    public function empleados(){
+        return $this->belongsTo('App\Empleados');
     }
 
     public function materias_has_niveles(){

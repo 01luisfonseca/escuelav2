@@ -58,6 +58,10 @@ class NivelesCtrl extends Controller
         $this->validate($this->req,[
             'nombre'=>'required'
         ]);
+        $val=Niveles::where('nombre',$this->req->input('nombre'));
+        if($val->count()){
+            return response()->json(['msj'=>'El elemento ya fue creado']);
+        }
         $obj=new Niveles;
         $obj->nombre=$this->req->input('nombre');
         if ($this->req->has('descripcion')) {

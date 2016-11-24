@@ -15,12 +15,8 @@ class Indicadores extends Model
     	return $this->hasMany('App\TipoNota');
     }
 
-    public function periodos(){
-    	return $this->belongsTo('App\Periodos');
-    }
-
-    public function materias_has_niveles(){
-    	return $this->belongsTo('App\MateriasHasNiveles');
+    public function materias_has_periodos(){
+    	return $this->belongsTo('App\MateriasHasPeriodos');
     }
 
     public function delete(){

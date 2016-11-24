@@ -28,7 +28,9 @@ class AniosCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=Anios::with('niveles_has_anios.niveles')->skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
+        $obj=Anios::with(['niveles_has_anios'=>function($query){
+            $query->with('niveles','materias_has_niveles.materias');
+        }])->skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=Anios.';
         $ev->registro(0,$msj,$this->req->user()->id);
@@ -58,6 +60,10 @@ class AniosCtrl extends Controller
         $this->validate($this->req,[
             'anio'=>'required'
         ]);
+        $val=Anios::where('anio',$this->req->input('anio'));
+        if($val->count()){
+            return response()->json(['msj'=>'El elemento ya fue creado']);
+        }
         $obj=new Anios;
         $obj->anio=$this->req->input('anio');
         if ($this->req->has('descripcion')) {

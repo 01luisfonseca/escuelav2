@@ -1,23 +1,23 @@
 (function(){
-    'use strict';
-    angular.module('escuela')
-    .factory('MateriasFactory',factory);
+	'use strict';
+	angular.module('escuela')
+	.factory('MateriasHasNivelesFactory',factory);
 
-    function factory($http){
-        var url= '/api/materias';
+	function factory($http){
+		var url= '/api/materiashasniveles';
         var fc={
-            gDt: gDt,
-            gDts: gDts,
+			gDt: gDt,
+			gDts: gDts,
             gSDt:gSDt,
             gRDts: gRDts,
             aDt: aDt,
-            mDt: mDt,
+			mDt: mDt,
             dDt: dDt
-        };
+		};
 
-        return fc;
+		return fc;
 
-        /////////////////
+		/////////////////
         function gDt(id){
             return $http.get(url+'/'+id);
         }
@@ -39,5 +39,5 @@
         function dDt(id){
             return $http.delete(url+'/'+id);
         }  
-    }
+	}
 })();

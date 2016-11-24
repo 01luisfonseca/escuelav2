@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
 use Carbon\Carbon;
 use Log;
-use App\Materias;
+use App\MateriasHasPeriodos;
 
-class MateriasCtrl extends Controller
+class MateriasHasPeriodosCtrl extends Controller
 {
     /**
      * @var Request
@@ -28,9 +28,9 @@ class MateriasCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=Materias::with('materias_has_niveles')->skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
+        $obj=MateriasHasPeriodos::skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
         $ev=new EventlogRegister;
-        $msj='Consulta registros. Tabla=Materias.';
+        $msj='Consulta registros. Tabla=MateriasHasPeriodos.';
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
@@ -54,23 +54,21 @@ class MateriasCtrl extends Controller
     public function store()
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de guardar en tabla=Materias.',$this->req->user()->id);
+        $ev->registro(1,'Intento de guardar en tabla=MateriasHasPeriodos.',$this->req->user()->id);
         $this->validate($this->req,[
-            'nombre'=>'required'
+            'periodos_id'=>'required',
+            'materias_has_niveles'=>'required'
         ]);
-        $val=Materias::where('nombre',$this->req->input('nombre'));
-        if($val->count()){
-            return response()->json(['msj'=>'El elemento ya fue creado']);
+        $elem=MateriasHasPeriodos::where('periodos_id',$this->req->input('periodos_id'))
+        	->where('materias_has_niveles',$this->req->input('materias_has_niveles'))->get();
+        if($elem->count()>0){
+        	return response()->json(['msj'=>'No se puede almacenar un registro con el mismo periodo y materia']);
         }
-        $obj=new Materias;
-        $obj->nombre=$this->req->input('nombre');
-        if ($this->req->has('descripcion')) {
-            $obj->descripcion=$this->req->input('descripcion');
-        }else{
-            $obj->descripcion='';
-        }
+        $obj=new MateriasHasPeriodos;
+        $obj->periodos_id=$this->req->input('periodos_id');
+        $obj->materias_has_niveles=$this->req->input('materias_has_niveles');
         $obj->save();
-        $msj='Elemento Creado. Tabla=Materias, id='.$obj->id;
+        $msj='Elemento Creado. Tabla=MateriasHasPeriodos, id='.$obj->id;
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -83,9 +81,9 @@ class MateriasCtrl extends Controller
      */
     public function show($id)
     {
-        $obj=Materias::with('materias_has_niveles')->findOrFail($id);
+        $obj=MateriasHasPeriodos::findOrFail($id);
         $ev=new EventlogRegister;
-        $msj='Consulta de elemento. Tabla=Materias, id='.$id;
+        $msj='Consulta de elemento. Tabla=MateriasHasPeriodos, id='.$id;
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
@@ -111,21 +109,20 @@ class MateriasCtrl extends Controller
     public function update($id)
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de modificación. Tabla=Materias, id='.$id,$this->req->user()->id);
-        $obj=Materias::findOrFail($id);
-        $this->validate($this->req,[
-            'nombre'=>'required'
-        ]);
-        $obj=Materias::findOrFail($id);
-        $obj->nombre=$this->req->input('nombre');
-        if ($this->req->has('descripcion')) {
-            $obj->descripcion=$this->req->input('descripcion');
-        }else{
-            $obj->descripcion='';
+        $ev->registro(1,'Intento de modificación. Tabla=MateriasHasPeriodos, id='.$id,$this->req->user()->id);
+        $obj=MateriasHasPeriodos::findOrFail($id);
+        if ($this->req->has('periodos_id')) {
+        	$obj->periodos_id=$this->req->input('periodos_id');
         }
-        $obj->save();
-        $msj='Modificación. Tabla=Materias, id='.$id;
-        $ev->registro(1,$msj,$this->req->user()->id);
+        if ($this->req->has('materias_has_niveles')) {
+        	$obj->materias_has_niveles=$this->req->input('materias_has_niveles');
+        }
+        $msj='Sin cambios en la tabla';
+        if ($this->req->has('materias_has_niveles') || $this->req->has('periodos_id')) {
+        	$obj->save();
+        	$msj='Modificación. Tabla=MateriasHasPeriodos, id='.$id;
+        	$ev->registro(1,$msj,$this->req->user()->id);
+        }
         return response()->json(['msj'=>$msj]);
     }
 
@@ -138,10 +135,10 @@ class MateriasCtrl extends Controller
     public function destroy($id)
     {
         $ev=new EventlogRegister;
-        $ev->registro(2,'Intento de eliminación. Tabla=Materias, id='.$id,$this->req->user()->id);
-        $obj=Materias::findOrFail($id);
+        $ev->registro(2,'Intento de eliminación. Tabla=MateriasHasPeriodos, id='.$id,$this->req->user()->id);
+        $obj=MateriasHasPeriodos::findOrFail($id);
         $obj->delete();
-        $msj='Borrado. Tabla=Materias, id='.$obj->id;
+        $msj='Borrado. Tabla=MateriasHasPeriodos, id='.$obj->id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -156,8 +153,7 @@ class MateriasCtrl extends Controller
      * @return \Illuminate\Http\Response
      */
     public function count(){
-        $obj=Materias::all();
+        $obj=MateriasHasPeriodos::all();
         return response()->json(['registros'=>$obj->count()]);
     }
 }
-

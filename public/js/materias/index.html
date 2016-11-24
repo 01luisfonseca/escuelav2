@@ -1,0 +1,41 @@
+<div  id="materias" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Gestión de Materias</h2>
+		<p><a href="#/niveles" class="btn btn-sm btn-warning">Ir a Niveles</a><a href='#/plan' class="btn btn-sm btn-info">Volver a Plan de Estudios.</a></p>
+	</div>
+	<div id="content">
+		<p>A continuación podrá insertar las materias típicas que encontrará en uno o varios años. En la sección de relaciones se asignarán las materias a los niveles asociados.</p>
+            <p><em>Importante: </em>Las relaciones estarán disponibles en caso de que ya se hayan creado niveles y materias.</p> 
+	</div>
+	<div id="footer">
+			<!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active" ng-click='vm.selectTab(1)'><a aria-controls="CrearData" role="tab" data-toggle="tab">Crear</a></li>
+                  <li role="presentation" ng-click='vm.selectTab(2)'><a aria-controls="ModData" role="tab" data-toggle="tab">Modificar</a></li>
+                  <li role="presentation" ng-click='vm.selectTab(3)'><a aria-controls="RelData" role="tab" data-toggle="tab">Relaciones</a></li>
+            </ul>
+
+             <!-- Tab panes -->
+            <div class="tab-content">
+
+                  <div role="tabpanel" class="active"  id="CrearData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(1)'>
+                              <div class="panel-body"><form-materia></form-materia></div>
+                        </div>
+                  </div>
+
+                  <div role="tabpanel" class="active"  id="ModData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(2)'>
+                              <div class="panel-body"><mod-materia></mod-materia></div>
+                        </div>
+                  </div>
+
+                  <div role="tabpanel" class="active"  id="RelData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(3)'>
+                              <div class="panel-body"><rel-materia></rel-materia></div>
+                        </div>
+                  </div>
+
+            </div>
+	</div>               
+</div>

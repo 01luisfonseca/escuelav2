@@ -18,6 +18,28 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 	
+	/** RUTAS MATERIAS HAS PERIODOS TABLE **/
+	Route::group(['prefix'=>'materiashasperiodos','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','MateriasHasPeriodosCtrl@index');
+		Route::post('/','MateriasHasPeriodosCtrl@store');
+		Route::get('/{id}','MateriasHasPeriodosCtrl@show');
+		Route::put('/{id}','MateriasHasPeriodosCtrl@update');
+		Route::delete('/{id}','MateriasHasPeriodosCtrl@destroy');
+		//Adicionales
+	});
+
+	/** RUTAS MATERIAS HAS NIVELES TABLE **/
+	Route::group(['prefix'=>'materiashasniveles','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','MateriasHasNivelesCtrl@index');
+		Route::post('/','MateriasHasNivelesCtrl@store');
+		Route::get('/{id}','MateriasHasNivelesCtrl@show');
+		Route::put('/{id}','MateriasHasNivelesCtrl@update');
+		Route::delete('/{id}','MateriasHasNivelesCtrl@destroy');
+		//Adicionales
+	});
+
 	/** RUTAS NIVELES HAS ANIOS TABLE **/
 	Route::group(['prefix'=>'niveleshasanios','middleware'=>'coordinador'],function(){
 		//Basicos

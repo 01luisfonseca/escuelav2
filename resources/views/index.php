@@ -49,6 +49,8 @@
         <script src='/js/app.services/nivel.factory.js'></script>
         <script src='/js/app.services/periodo.factory.js'></script>
         <script src='/js/app.services/niveleshasanios.factory.js'></script>
+        <script src='/js/app.services/materiashasniveles.factory.js'></script>
+        <script src='/js/app.services/materiashasperiodos.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -76,6 +78,10 @@
         <script src='/js/niveles/form.directive.js'></script>
         <script src='/js/niveles/mod.directive.js'></script>
         <script src='/js/niveles/rel.directive.js'></script>
+        <script src='/js/materias/controller.js'></script>
+        <script src='/js/materias/form.directive.js'></script>
+        <script src='/js/materias/mod.directive.js'></script>
+        <script src='/js/materias/rel.directive.js'></script>
 
     </head>
     <body ng-app="escuela">

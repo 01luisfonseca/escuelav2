@@ -224,7 +224,6 @@ class UserCtrl extends Controller
                 'tipo_usuario.nombre as tnombre'
                 )
             ->join('tipo_usuario','tipo_usuario_id','=','tipo_usuario.id')
-            ->where('users.id','>','2') // El administrador nunca aparece
             ->where('identificacion','LIKE','%'.$info.'%')
             ->orWhere('name','LIKE','%'.$info.'%')
             ->orWhere('lastname','LIKE','%'.$info.'%')
@@ -234,10 +233,13 @@ class UserCtrl extends Controller
             ->orWhere('tarjeta','LIKE','%'.$info.'%')
             ->orderBy('lastname','desc')
             ->get();
+        $fitered=$obj->reject(function($ob){
+            return $ob->id==1 || $ob->id==2;
+        });
         $msj='Se han buscado los registros con letras: '.$info;
         $ev=new EventlogRegister;
         $ev->registro(0,$msj,$this->req->user()->id);
-        return $obj->toJson();
+        return $fitered->toJson();
     }
 
     /**

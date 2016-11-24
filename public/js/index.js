@@ -177,6 +177,19 @@
                         controller: 'NivelesCtrl as vm',
                     }
                 }
+            })
+            .state('materias', {
+                url: "/materias",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/materias/index.html",
+                        controller: 'MateriasCtrl as vm',
+                    }
+                }
             });
     }
 

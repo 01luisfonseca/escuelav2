@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Notas extends Model
 {
     //
-    use Softdeletes;
     protected $table = 'notas';
 
     public function alumnos(){

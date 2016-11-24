@@ -100,8 +100,7 @@ class CreateTablesEscuela extends Migration
             $table->string('nombre');
             $table->mediumText('descripcion');
             $table->float('porcentaje');
-            $table->integer('materias_has_niveles_id');
-            $table->integer('periodos_id');
+            $table->integer('materias_has_periodos_id');
             $table->timestamps();
             $table->softDeletes();
             
@@ -125,6 +124,16 @@ class CreateTablesEscuela extends Migration
             $table->integer('empleados_id');
             $table->integer('niveles_has_anios_id');
             $table->integer('materias_id');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        }
+        if (!Schema::hasTable('materias_has_periodos')) {
+        Schema::create('materias_has_periodos', function (Blueprint $table) {
+            //Tablas
+            $table->increments('id')->unique();
+            $table->integer('periodos_id');
+            $table->integer('materias_has_niveles_id');
             $table->timestamps();
             $table->softDeletes();
         });

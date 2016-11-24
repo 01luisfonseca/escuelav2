@@ -5,15 +5,24 @@ namespace App\Helpers\Contracts;
 Interface BorradorContract
 {
 
-    public function limpiarAnio($id);
-    public function limpiarPeriodo($id);
-    public function limpiarMateria($id);
-    public function limpiarNivel($id);
-    public function limpiarNivelesHasAnio($id);
-    public function limpiarMateriasHasNivel($id);
-    public function limpiarIndicador($id);
-    public function limpiarTipoNota($id);
-    public function limpiarNota($id);
-    public function limpiarAsistencia($id);
+   public function getLimpiarHuerfanos();
+    public function getLimpiarHuerfanosLiviano();
+    public function autoLlenarAlumnos();
+    public function autoLlenarAlumno($id);
+    public function eliminarMateriasHasNivelesHuerfanos();
+    public function eliminarPeriodosHasNivelesHuerfanos();
+    public function eliminarAsistenciasHuerfanos();
+    public function eliminarNotasHuerfanos();
+    public function eliminarAlumnosHuerfanos();
+    public function eliminarEmpleadosHuerfanos();
+    public function hayMateriasHasNiveles($id);
+    public function hayNivelesHasPeriodos($id);
+    public function hayPeriodo($id);
+    public function hayMateria($id);
+    public function hayNivel($id);
+    public function hayUsuario($id);
+    public function hayAlumno($id);
+    public function hayEmpleado($id);
+    public function esUtil($variable);
 
 }

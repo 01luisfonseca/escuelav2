@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class MateriasHasNiveles extends Model
 {
     //
-    use Softdeletes;
     protected $table = 'materias_has_niveles';
 
-    public function indicadores(){
-    	return $this->hasMany('App\Indicadores');
+    public function materias_has_periodos(){
+    	return $this->hasMany('App\MateriasHasPeriodos');
     }
 
     public function materias(){
@@ -28,7 +27,7 @@ class MateriasHasNiveles extends Model
     }
 
     public function delete(){
-        $this->indicadores()->delete();
+        $this->materias_has_periodos()->delete();
         parent::delete();
     }
 }
