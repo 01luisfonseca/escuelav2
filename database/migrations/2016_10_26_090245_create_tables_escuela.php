@@ -74,6 +74,16 @@ class CreateTablesEscuela extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        Schema::create('matasistencia', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('materias_has_periodos_id');
+            $table->integer('alumnos_id');
+            $table->string('name');
+            $table->string('lastname');
+            $table->integer('authdevice_id');
+            $table->timestamps();
+            $table->softDeletes();
+        });
         Schema::create('anios', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('anio');
@@ -292,6 +302,7 @@ class CreateTablesEscuela extends Migration
         Schema::dropIfExists('materias');
         Schema::dropIfExists('periodos');
         Schema::dropIfExists('newasistencia');
+        Schema::dropIfExists('matasistencia');
         Schema::dropIfExists('notas');
         Schema::dropIfExists('tipo_nota');
         Schema::dropIfExists('indicadores');

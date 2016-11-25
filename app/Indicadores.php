@@ -19,8 +19,4 @@ class Indicadores extends Model
     	return $this->belongsTo('App\MateriasHasPeriodos');
     }
 
-    public function delete(){
-        $this->tipo_nota()->delete();
-        parent::delete();
-    }
 }

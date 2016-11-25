@@ -25,10 +25,4 @@ class MateriasHasPeriodos extends Model
     public function matasistencia(){
         return $this->hasMany('App\Matasistencia');
     }
-
-    public function delete(){
-        $this->indicadores()->delete();
-        $this->matasistencia()->delete();
-        parent::delete();
-    }
 }

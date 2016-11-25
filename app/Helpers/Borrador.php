@@ -17,7 +17,8 @@ use App\Materias;
 use App\MateriasHasNiveles;
 use App\MateriasHasPeriodos;
 use App\Meses;
-use App\NewAsistencia;
+use App\Newasistencia;
+use App\Matasistencia;
 use App\Niveles;
 use App\NivelesHasAnios;
 use App\TipoNota;
@@ -202,7 +203,7 @@ class Borrador implements BorradorContract
     }//Verificado
 
     public function eliminarPeriodosHasNivelesHuerfanos(){
-        $elementos=NivelesHasPeriodos::all();
+        $elementos=MateriasHasPeriodos::all();
         $marcado=array();
         $eliminados=0;
         foreach ($elementos as $elemento) {
@@ -218,7 +219,7 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=NivelesHasPeriodos::find($seleccionado);
+                $eliminado=MateriasHasPeriodos::find($seleccionado);
                 $eliminado->delete();
             }
         }
@@ -231,7 +232,7 @@ class Borrador implements BorradorContract
         $eliminados=0;
         foreach ($elementos as $elemento) {
             if (
-                !$this->hayNivelesHasPeriodos($elemento->niveles_has_periodos_id) ||
+                !$this->hayMateriasHasPeriodos($elemento->niveles_has_periodos_id) ||
                 !$this->hayAlumno($elemento->alumnos_id)
                 ) 
             {
@@ -255,7 +256,7 @@ class Borrador implements BorradorContract
         $eliminados=0;
         foreach ($elementos as $elemento) {
             if (
-                !$this->hayNivelesHasPeriodos($elemento->niveles_has_periodos_id)
+                !$this->hayMateriasHasPeriodos($elemento->niveles_has_periodos_id)
                 ) 
             {
                 $marcado[]=$elemento->id;
@@ -353,62 +354,299 @@ class Borrador implements BorradorContract
         return $eliminados;
     }
 
-    public function eliminarEmpleadosHuerfanos(){
-        $elementos=Empleados::all();
-        $marcado=array();
-        $eliminados=0;
-        foreach ($elementos as $elemento) {
-            if (
-                !$this->hayUsuario($elemento->users_id)
-                ) 
-            {
-                $marcado[]=$elemento->id;
+    // Eliminar registros en cadena.
+
+    public function delUser($id){
+        $elem=User::with('alumnos','empleados')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->alumnos as $hijo) {
+                $this->delAlumnos($hijo->id); // Borrar hijos
             }
-        }
-        $marcado=array_unique($marcado);
-        $eliminados=count($marcado);
-        if($eliminados>0){
-            foreach ($marcado as $seleccionado) {
-                $eliminado=Empleados::find($seleccionado);
-                $eliminado->delete();
+            foreach ($elem->empleados as $hijo) {
+                $this->delEmpleados($hijo->id); // Borrar hijos
             }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
         }
-        return $eliminados;
+        return false;
+    }
+
+    public function delAlumnos($id){
+        $elem=Alumnos::with('pago_matricula','pago_pension','pago_otro','notas','newasistencia', 'matasistencia')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->pago_matricula as $hijo) {
+                $this->delPagoMatricula($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->pago_pension as $hijo) {
+                $this->delPagoPension($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->pago_otro as $hijo) {
+                $this->delPagoOtros($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->notas as $hijo) {
+                $this->delNota($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->newasistencia as $hijo) {
+                $this->delNewasistencia($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->matasistencia as $hijo) {
+                $this->delMatasistencia($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delAnios($id){
+        $elem=Anios::with('periodos','niveles_has_anios')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->periodos as $hijo) {
+                $this->delPeriodos($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->niveles_has_anios as $hijo) {
+                $this->delNivelesHasAnios($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delNiveles($id){
+        $elem=Niveles::with('niveles_has_anios')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->niveles_has_anios as $hijo) {
+                $this->delNivelesHasAnios($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delNivelesHasAnios($id){
+        $elem=NivelesHasAnios::with('materias_has_niveles','alumnos')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->materias_has_niveles as $hijo) {
+                $this->delMateriasHasNiveles($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->alumnos as $hijo) {
+                $this->delAlumnos($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delMaterias($id){
+        $elem=Materias::with('materias_has_niveles')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->materias_has_niveles as $hijo) {
+                $this->delMateriasHasNiveles($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delMateriasHasNiveles($id){
+        $elem=MateriasHasNiveles::with('materias_has_periodos')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->materias_has_periodos as $hijo) {
+                $this->delMateriasHasPeriodos($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delPeriodos($id){
+        $elem=Periodos::with('materias_has_periodos','newasistencia')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->materias_has_periodos as $hijo) {
+                $this->delMateriasHasPeriodos($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->newasistencia as $hijo) {
+                $this->delNewasistencia($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delMateriasHasPeriodos($id){
+        $elem=MateriasHasPeriodos::with('indicadores','matasistencia')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->indicadores as $hijo) {
+                $this->delIndicadores($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->matasistencia as $hijo) {
+                $this->delMatasistencia($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delIndicadores($id){
+        $elem=Indicadores::with('tipo_nota')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->tipo_nota as $hijo) {
+                $this->delTipoNota($hijo->id); // Borrar hijos
+            }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delTipoNota($id){
+        $elem=TipoNota::with('notas')->find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->notas as $hijo) {
+                $this->delNota($hijo->id);
+            }
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delNota($id){
+        $elem=Notas::find($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delMatasistencia($id){
+        $elem=Matasistencia::find($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delNewasistencia($id){
+        $elem=Newasistencia::find($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delEmpleados($id){
+        $elem=Empleados::with('pago_salario')-find($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->pago_salario as $hijo) {
+                $this->delPagoSalario($hijo->id); // Borrar hijos
+            }
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delPagoSalario($id){
+        $elem=PagoSalario::find($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delPagoOtros($id){
+        $elem=PagoOtros::find($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    } 
+
+    public function delPagoPension($id){
+        $elem=PagoPension::find($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delPagoMatricula($id){
+        $elem=PagoMatricula::find($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
     }
 
     //Funciones generales de la clase
 
-    public function hayIndicadores($id){
+    private function hayAnio($id){
+        return $this->esUtil(Anios::find($id));
+    }
+    private function hayEventlog($id){
+        return $this->esUtil(Eventlog::find($id));
+    }
+    private function hayIndicador($id){
         return $this->esUtil(Indicadores::find($id));
     }
-    public function hayTipoNotas($id){
+    private function hayTipoNota($id){
         return $this->esUtil(TipoNota::find($id));
     }
-    public function hayMateriasHasNiveles($id){
+    private function hayMateriasHasNiveles($id){
         return $this->esUtil(MateriasHasNiveles::find($id));
     }
-    public function hayNivelesHasPeriodos($id){
-        return $this->esUtil(NivelesHasPeriodos::find($id));
+    private function hayMateriasHasPeriodos($id){
+        return $this->esUtil(MateriasHasPeriodos::find($id));
     }
-    public function hayPeriodo($id){
+    private function hayNivelesHasAnios($id){
+        return $this->esUtil(NivelesHasAnios::find($id));
+    }
+    private function hayPeriodo($id){
         return $this->esUtil(Periodos::find($id));
     }
-    public function hayMateria($id){
+    private function hayMateria($id){
         return $this->esUtil(Materias::find($id));
     }
-    public function hayNivel($id){
+    private function hayNivel($id){
         return $this->esUtil(Niveles::find($id));
     }
-    public function hayUsuario($id){
+    private function hayUsuario($id){
         return $this->esUtil(Users::find($id));
     }
-    public function hayAlumno($id){
+    private function hayAlumno($id){
         return $this->esUtil(Alumnos::find($id));
     }
-    public function hayEmpleado($id){
+    private function hayEmpleado($id){
         return $this->esUtil(Empleados::find($id));
     }
-    public function esUtil($variable){
+    private function hayNota($id){
+        return $this->esUtil(Notas::find($id));
+    }
+    private function esUtil($variable){
         if(!is_object($variable) || is_null($variable) ){
             return false;
         }

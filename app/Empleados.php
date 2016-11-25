@@ -27,8 +27,4 @@ class Empleados extends Model
     	return $this->belongsTo('App\User');
     }
 
-    public function delete(){
-        $this->pago_salario()->delete();
-        parent::delete();
-    }
 }

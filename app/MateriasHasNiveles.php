@@ -25,9 +25,4 @@ class MateriasHasNiveles extends Model
     public function niveles_has_anios(){
     	return $this->belongsTo('App\NivelesHasAnios');
     }
-
-    public function delete(){
-        $this->materias_has_periodos()->delete();
-        parent::delete();
-    }
 }

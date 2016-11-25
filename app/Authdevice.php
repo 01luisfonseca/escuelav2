@@ -15,4 +15,8 @@ class Authdevice extends Model
     	return $this->hasMany('App\Newasistencia');
     }
 
+    public function matasistencia(){
+    	return $this->hasMany('App\Matasistencia');
+    }
+
 }

@@ -28,10 +28,4 @@ class NivelesHasAnios extends Model
     public function alumnos(){
         return $this->hasMany('App\Alumnos');
     }
-
-    public function delete(){
-        $this->materias_has_niveles()->delete();
-        $this->alumnos()->delete();
-        parent::delete();
-    }
 }

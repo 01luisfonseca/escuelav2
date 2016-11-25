@@ -14,9 +14,4 @@ class Materias extends Model
     public function materias_has_niveles(){
     	return $this->hasMany('App\MateriasHasNiveles');
     }
-
-    public function delete(){
-        $this->materias_has_niveles()->delete();
-        parent::delete();
-    }
 }

@@ -14,9 +14,4 @@ class Niveles extends Model
     	return $this->hasMany('App\NivelesHasAnios');
     }
 
-    public function delete(){
-        $this->niveles_has_anios()->delete();
-        parent::delete();
-    }
-
 }

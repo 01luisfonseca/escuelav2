@@ -51,11 +51,4 @@ class User extends Authenticatable
     public function empleados(){
         return $this->hasMany('App\Empleados');
     }
-
-    public function delete(){
-        $this->eventlog()->delete();
-        $this->alumnos()->delete();
-        $this->empleados()->delete();
-        parent::delete();
-    }
 }
