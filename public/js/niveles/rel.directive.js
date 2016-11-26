@@ -87,6 +87,7 @@
 			
 			function selAnio(id){
 				vm.selec.anio=id;
+				vm.selec.nivel=0;
 			}
 
 			function anioSel(id){
@@ -109,6 +110,10 @@
 				return nha.aDt(data).then(function(res){
 					error.setAlerta(res.data.msj);
 					vm.buscarDatos();
+					vm.selec={
+				anio:0,
+				nivel:0
+			};
 				},function(res){
 					error.setError('No se puede guardar la relación');
 				})

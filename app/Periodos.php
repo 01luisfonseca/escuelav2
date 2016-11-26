@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Periodos extends Model
 {
     //
-    use Softdeletes;
     protected $table = 'periodos';
 
     public function materias_has_periodos(){

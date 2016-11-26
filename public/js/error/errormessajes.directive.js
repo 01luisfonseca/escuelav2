@@ -26,7 +26,7 @@
     		var vm=this;
 
 			// Variables básicas
-			$scope.error=error;
+			$scope.errorSc=error;
 			vm.error={};
 
 			// Variables adicionales
@@ -38,15 +38,17 @@
 			// Funciones adicionales
 			
 			// Lanzamiento Automático
-			$scope.$watch('error.getErrorStat()',actError);
-			$scope.$watch('error.getAlertaStat()',actAlerta);
+			$scope.$watch('errorSc.error.msj',actError);
+			$scope.$watch('errorSc.alerta.msj',actAlerta);
 			
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 			function actError(){
+				console.log('Se ha actualizado el error');
 				vm.error=error.error;
 			}
 
 			function actAlerta(){
+				console.log('Se ha actualizado la advertencia');
 				vm.alerta=error.alerta;
 			}
 

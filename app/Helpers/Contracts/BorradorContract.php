@@ -7,11 +7,11 @@ Interface BorradorContract
 
    public function getLimpiarHuerfanos();
     public function getLimpiarHuerfanosLiviano();
-    public function autoLlenarAlumnos();
-    public function autoLlenarAlumno($id);
+    public function eliminarNivelesHasAniosHuerfanos();
     public function eliminarMateriasHasNivelesHuerfanos();
-    public function eliminarPeriodosHasNivelesHuerfanos();
-    public function eliminarAsistenciasHuerfanos();
+    public function eliminarMateriasHasPeriodosHuerfanos();
+    public function eliminarNewasistenciasHuerfanos();
+    public function eliminarMatasistenciasHuerfanos();
     public function eliminarNotasHuerfanos();
     public function eliminarAlumnosHuerfanos();
     public function eliminarEmpleadosHuerfanos();

@@ -31,6 +31,7 @@
 		
 		// Lanza alerta.
 		function setAlerta(msj){
+			console.log('Alerta: '+msj);
 			vm.alerta={
 				existe:true,
 				msj:msj,
@@ -42,6 +43,7 @@
 
 		// Lanza errores
 		function setError(msj){
+			console.log('Error: '+msj);
 			vm.error={
 				existe:true,
 				msj:msj

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
 use Carbon\Carbon;
+use App\Helpers\Borrador;
 use Log;
 use App\MateriasHasPeriodos;
 
@@ -136,9 +137,9 @@ class MateriasHasPeriodosCtrl extends Controller
     {
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminación. Tabla=MateriasHasPeriodos, id='.$id,$this->req->user()->id);
-        $obj=MateriasHasPeriodos::findOrFail($id);
-        $obj->delete();
-        $msj='Borrado. Tabla=MateriasHasPeriodos, id='.$obj->id;
+        $res=new Borrador;
+        $res->delMateriasHasPeriodos($id);
+        $msj='Borrado. Tabla=MateriasHasPeriodos, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
 use App\Helpers\Rellenador;
+use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\MateriasHasNiveles;
@@ -147,9 +148,9 @@ class MateriasHasNivelesCtrl extends Controller
     {
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminación. Tabla=MateriasHasNiveles, id='.$id,$this->req->user()->id);
-        $obj=MateriasHasNiveles::findOrFail($id);
-        $obj->delete();
-        $msj='Borrado. Tabla=MateriasHasNiveles, id='.$obj->id;
+        $res=new Borrador;
+        $res->delMateriasHasNiveles($id);
+        $msj='Borrado. Tabla=MateriasHasNiveles, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

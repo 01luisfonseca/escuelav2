@@ -58,7 +58,7 @@
 			/////////////////////////// FUNCIONES ADICIONALES //////////////////////////////
 			function selAnio(){
 				//console.log(vm.ndts.anios_id);
-				if (typeof(vm.ndts.anios_id)!='undefined') {
+				if (typeof(vm.ndts.anios_id)!='undefined' && typeof(vm.base.data)!='undefined') {
 				for (var i = 0; i < vm.base.data.length; i++) {
 					if (vm.base.data[i].id==vm.ndts.anios_id) {
 						return vm.base.data[i].anio;

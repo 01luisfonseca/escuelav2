@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
+use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\Anios;
@@ -141,9 +142,9 @@ class AniosCtrl extends Controller
     {
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminación. Tabla=Anios, id='.$id,$this->req->user()->id);
-        $obj=Anios::findOrFail($id);
-        $obj->delete();
-        $msj='Borrado. Tabla=Anios, id='.$obj->id;
+        $res=new Borrador;
+        $res->delAnios($id);
+        $msj='Borrado. Tabla=Anios, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

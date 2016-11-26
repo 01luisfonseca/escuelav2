@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
+use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\Materias;
@@ -139,9 +140,9 @@ class MateriasCtrl extends Controller
     {
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminación. Tabla=Materias, id='.$id,$this->req->user()->id);
-        $obj=Materias::findOrFail($id);
-        $obj->delete();
-        $msj='Borrado. Tabla=Materias, id='.$obj->id;
+        $res=new Borrador;
+        $res->delMaterias($id);
+        $msj='Borrado. Tabla=Materias, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

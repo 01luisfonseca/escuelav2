@@ -35,123 +35,15 @@ use App\TipoUsuario;
 class Borrador implements BorradorContract
 {
 
-    //Rellena las notas de todos los alumnos nuevos
-    // En Desuso por la demora del proceso.
-    public function autoLlenarAlumnos(){
-        //Primero, buscar los 500 alumnos nuevos de cada nivel
-        $alumnos=Alumnos::orderBy('created_at','desc')->take(500)->get();
-        // Los comparamos con los indicadores y tipos de nota existentes de cada uno de sus niveles
-        // Creamos una colección para los resultados
-        $col=collect([]);
-        foreach ($alumnos as $alumno) {
-            // Buscamos el nivel de cada alumno y sus notas
-            $notasNivel=Niveles::where('id',$alumno->niveles_id)
-                ->with('materias_has_niveles.niveles_has_periodos.indicadores.tipo_nota.notas')
-                ->first();
-            foreach ($notasNivel->materias_has_niveles as $materia) {
-                // en cada materia
-                foreach ($materia->niveles_has_periodos as $periodo) {
-                    // En cada periodo
-                    foreach ($periodo->indicadores as $indicador) {
-                        // En cada indicador
-                        foreach ($indicador->tipo_nota as $tipo) {
-                            // En cada tipo
-                            $encontrado=false;
-                            foreach ($tipo->notas as $nota) {
-                                // En cada nota, si lo encuentra, pone $encontrado a true, de lo contrario false
-                                $encontrado=$nota->alumnos_id==$alumno->id?true:false;
-                            }
-                            // Si no se encontró al alumno, se crea una nota vacía.
-                            if(!$encontrado){
-                                $obj=new Notas;
-                                $obj->tipo_nota_id=$tipo->id;
-                                $obj->nombre_nota='ND';
-                                $obj->descripcion='';
-                                $obj->calificacion=0;
-                                $obj->alumnos_id=$alumno->id;
-                                $obj->save();
-                                Log::info('Creada nota de alumno ID:'+$alumno->id+'Con el tipo de nota ID:'+$tipo->id);
-                                $col->push([
-                                    'alumno_id'=>$alumno->id,
-                                    'materia_id'=>$materia->id,
-                                    'periodo_id'=>$periodo->id,
-                                    'indicador_id'=>$indicador->id,
-                                    'tipo_nota_id'=>$tipo->id
-                                    ]);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $col->toJson();  
-    }
-
-    //Rellena las notas de un alumno despues de crearlo
-    public function autoLlenarAlumno($id){
-        $alumno=Alumnos::find($id);
-        $notasNivel=Niveles::where('id',$alumno->niveles_id)
-            ->with(['materias_has_niveles'=>function($query){
-                $query->with(['materias','niveles_has_periodos'=>function($query){
-                    $query->with(['periodos','indicadores.tipo_nota.notas']);
-                }]);
-            }])
-            ->first();
-        $resultado=[];
-        foreach ($notasNivel->materias_has_niveles as $materia) {
-            // en cada materia
-            foreach ($materia->niveles_has_periodos as $periodo) {
-                // En cada periodo
-                foreach ($periodo->indicadores as $indicador) {
-                    // En cada indicador
-                    foreach ($indicador->tipo_nota as $tipo) {
-                        // En cada tipo
-                        $encontrado=false;
-                        foreach ($tipo->notas as $nota) {
-                            // En cada nota, si lo encuentra, pone $encontrado a true, de lo contrario false
-                            if($nota->alumnos_id==$alumno->id){
-                                $encontrado=true;
-                                break;
-                            }
-                        }
-                        // Si no se encontró al alumno, se crea una nota vacía.
-                        if(!$encontrado){
-                            $obj=new Notas;
-                            $obj->tipo_nota_id=$tipo->id;
-                            $obj->nombre_nota='ND';
-                            $obj->descripcion='';
-                            $obj->calificacion=0;
-                            $obj->alumnos_id=$alumno->id;
-                            $obj->save();
-                            Log::info('Creada nota de alumno ID:'+$alumno->id+'Con el tipo de nota ID:'+$tipo->id);
-                            $resultado[]=[
-                                'materia_id'=>$materia->id,
-                                'materia_name'=>$materia->materias->nombre_materia,
-                                'periodo_id'=>$periodo->id,
-                                'periodo_name'=>$periodo->periodos->nombre_periodo,
-                                'indicador_id'=>$indicador->id,
-                                'indicador_name'=>$indicador->nombre,
-                                'tipo_nota_id'=>$tipo->id,
-                                'tipo_nota_name'=>$tipo->nombre,
-                                'alumnos_id'=>$alumno->id
-                                ];  
-                        }
-                    }
-                }
-            }
-        }
-        // Devuelve una colección con al menos el mensaje de estado.
-        $col=collect([$resultado]);
-        return $col->toJson();
-    }
-
     public function getLimpiarHuerfanos(){
         $resultados='Resultados de limpieza de huerfanos: ';
         $resultados.=' '.$this->eliminarAlumnosHuerfanos().' alumnos eliminados, ';
         $resultados.=' '.$this->eliminarEmpleadosHuerfanos().' empleados eliminados, ';
+        $resultados.=' '.$this->eliminarNivelesHasAniosHuerfanos().' niveles-años eliminadas, ';
         $resultados.=' '.$this->eliminarMateriasHasNivelesHuerfanos().' niveles-materias eliminadas, ';
-        $resultados.=' '.$this->eliminarPeriodosHasNivelesHuerfanos().' niveles-materias-periodos eliminados, ';
-        $resultados.=' '.$this->eliminarAsistenciasHuerfanos().' asistencias eliminadas, ';
+        $resultados.=' '.$this->eliminarMateriasHasPeriodosHuerfanos().' niveles-materias-periodos eliminados, ';
+        $resultados.=' '.$this->eliminarNewasistenciasHuerfanos().' asistencias globales eliminadas, ';
+        $resultados.=' '.$this->eliminarMatasistenciasHuerfanos().' asistencias en materias eliminadas, ';
         $resultados.=' '.$this->eliminarIndicadoresHuerfanos().' indicadores eliminadas, ';
         $resultados.=' '.$this->eliminarTiposHuerfanos().' tipos de nota eliminadas. ';
         //$resultados.=' '.$this->eliminarNotasHuerfanos().' notas eliminadas. ';
@@ -162,14 +54,40 @@ class Borrador implements BorradorContract
     public function getLimpiarHuerfanosLiviano(){
         $resultados=$this->eliminarAlumnosHuerfanos();
         $resultados+=$this->eliminarEmpleadosHuerfanos();
+        $resultados+=$this->eliminarNivelesHasAniosHuerfanos();
         $resultados+=$this->eliminarMateriasHasNivelesHuerfanos();
-        $resultados+=$this->eliminarPeriodosHasNivelesHuerfanos();
-        $resultados+=$this->eliminarAsistenciasHuerfanos();
+        $resultados+=$this->eliminarMateriasHasPeriodosHuerfanos();
+        $resultados+=$this->eliminarNewasistenciasHuerfanos();
+        $resultados+=$this->eliminarMatasistenciasHuerfanos();
         $resultados+=$this->eliminarIndicadoresHuerfanos();
         $resultados+=$this->eliminarTiposHuerfanos();
         $resultados+=$this->eliminarNotasHuerfanos();
         return $resultados;
     }
+
+    public function eliminarNivelesHasAniosHuerfanos(){
+        $elementos=NivelesHasAnios::all();
+        $marcado=array();
+        $eliminados=0;
+        foreach ($elementos as $elemento) {
+            if (
+                !$this->hayAnio($elemento->anio_id) ||
+                !$this->hayNivel($elemento->niveles_id)
+                ) 
+            {
+                $marcado[]=$elemento->id;
+            }
+        }
+        $marcado=array_unique($marcado);
+        $eliminados=count($marcado);
+        if($eliminados>0){
+            foreach ($marcado as $seleccionado) {
+                $eliminado=NivelesHasAnios::findOrFail($seleccionado);
+                $eliminado->delete();
+            }
+        }
+        return $eliminados;
+    }//Verificado
 
     public function eliminarMateriasHasNivelesHuerfanos(){
         $elementos=MateriasHasNiveles::all();
@@ -178,14 +96,14 @@ class Borrador implements BorradorContract
         foreach ($elementos as $elemento) {
             if (
                 !$this->hayMateria($elemento->materias_id) ||
-                !$this->hayNivel($elemento->niveles_id)
+                !$this->hayNivelesHasAnios($elemento->niveles_has_anios_id)
                 ) 
             {
                 $marcado[]=$elemento->id;
             }
             if ($elemento->empleados_id!=0) {
                 if(!$this->hayEmpleado($elemento->empleados_id)){
-                    $especial=MateriasHasNiveles::find($elemento->id);
+                    $especial=MateriasHasNiveles::findOrFail($elemento->id);
                     $especial->empleados_id=0;
                     $especial->save();
                 }
@@ -195,14 +113,14 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=MateriasHasNiveles::find($seleccionado);
+                $eliminado=MateriasHasNiveles::findOrFail($seleccionado);
                 $eliminado->delete();
             }
         }
         return $eliminados;
     }//Verificado
 
-    public function eliminarPeriodosHasNivelesHuerfanos(){
+    public function eliminarMateriasHasPeriodosHuerfanos(){
         $elementos=MateriasHasPeriodos::all();
         $marcado=array();
         $eliminados=0;
@@ -219,20 +137,20 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=MateriasHasPeriodos::find($seleccionado);
+                $eliminado=MateriasHasPeriodos::findOrFail($seleccionado);
                 $eliminado->delete();
             }
         }
         return $eliminados;
     }//Verificado
 
-    public function eliminarAsistenciasHuerfanos(){
-        $elementos=Asistencia::all();
+    public function eliminarNewasistenciasHuerfanos(){
+        $elementos=Newasistencia::all();
         $marcado=array();
         $eliminados=0;
         foreach ($elementos as $elemento) {
             if (
-                !$this->hayMateriasHasPeriodos($elemento->niveles_has_periodos_id) ||
+                !$this->hayPeriodos($elemento->periodos_id) ||
                 !$this->hayAlumno($elemento->alumnos_id)
                 ) 
             {
@@ -243,7 +161,31 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=Asistencia::find($seleccionado);
+                $eliminado=Newasistencia::findOrFail($seleccionado);
+                $eliminado->delete();
+            }
+        }
+        return $eliminados;
+    }//Verificado
+
+    public function eliminarMatasistenciasHuerfanos(){
+        $elementos=Matasistencia::all();
+        $marcado=array();
+        $eliminados=0;
+        foreach ($elementos as $elemento) {
+            if (
+                !$this->hayMateriasHasPeriodos($elemento->materias_has_periodos_id) ||
+                !$this->hayAlumno($elemento->alumnos_id)
+                ) 
+            {
+                $marcado[]=$elemento->id;
+            }
+        }
+        $marcado=array_unique($marcado);
+        $eliminados=count($marcado);
+        if($eliminados>0){
+            foreach ($marcado as $seleccionado) {
+                $eliminado=Matasistencia::findOrFail($seleccionado);
                 $eliminado->delete();
             }
         }
@@ -266,7 +208,7 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=Indicadores::find($seleccionado);
+                $eliminado=Indicadores::findOrFail($seleccionado);
                 $eliminado->delete();
             }
         }
@@ -289,7 +231,7 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=TipoNota::find($seleccionado);
+                $eliminado=TipoNota::findOrFail($seleccionado);
                 $eliminado->delete();
             }
         }
@@ -323,7 +265,7 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=Notas::find($seleccionado);
+                $eliminado=Notas::findOrFail($seleccionado);
                 $eliminado->delete();
             }
         }
@@ -337,7 +279,7 @@ class Borrador implements BorradorContract
         foreach ($elementos as $elemento) {
             if (
                 !$this->hayUsuario($elemento->users_id) ||
-                !$this->hayNivel($elemento->niveles_id)
+                !$this->hayNivelesHasAnios($elemento->niveles_has_anios_id)
                 ) 
             {
                 $marcado[]=$elemento->id;
@@ -347,7 +289,30 @@ class Borrador implements BorradorContract
         $eliminados=count($marcado);
         if($eliminados>0){
             foreach ($marcado as $seleccionado) {
-                $eliminado=Alumnos::find($seleccionado);
+                $eliminado=Alumnos::findOrFail($seleccionado);
+                $eliminado->delete();
+            }
+        }
+        return $eliminados;
+    }
+
+    public function eliminarEmpleadosHuerfanos(){
+        $elementos=Empleados::all();
+        $marcado=array();
+        $eliminados=0;
+        foreach ($elementos as $elemento) {
+            if (
+                !$this->hayUsuario($elemento->users_id)
+                ) 
+            {
+                $marcado[]=$elemento->id;
+            }
+        }
+        $marcado=array_unique($marcado);
+        $eliminados=count($marcado);
+        if($eliminados>0){
+            foreach ($marcado as $seleccionado) {
+                $eliminado=Alumnos::findOrFail($seleccionado);
                 $eliminado->delete();
             }
         }
@@ -357,7 +322,7 @@ class Borrador implements BorradorContract
     // Eliminar registros en cadena.
 
     public function delUser($id){
-        $elem=User::with('alumnos','empleados')->find($id);
+        $elem=User::with('alumnos','empleados')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->alumnos as $hijo) {
                 $this->delAlumnos($hijo->id); // Borrar hijos
@@ -372,7 +337,7 @@ class Borrador implements BorradorContract
     }
 
     public function delAlumnos($id){
-        $elem=Alumnos::with('pago_matricula','pago_pension','pago_otro','notas','newasistencia', 'matasistencia')->find($id);
+        $elem=Alumnos::with('pago_matricula','pago_pension','pago_otro','notas','newasistencia', 'matasistencia')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->pago_matricula as $hijo) {
                 $this->delPagoMatricula($hijo->id); // Borrar hijos
@@ -399,7 +364,7 @@ class Borrador implements BorradorContract
     }
 
     public function delAnios($id){
-        $elem=Anios::with('periodos','niveles_has_anios')->find($id);
+        $elem=Anios::with('periodos','niveles_has_anios')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->periodos as $hijo) {
                 $this->delPeriodos($hijo->id); // Borrar hijos
@@ -414,7 +379,7 @@ class Borrador implements BorradorContract
     }
 
     public function delNiveles($id){
-        $elem=Niveles::with('niveles_has_anios')->find($id);
+        $elem=Niveles::with('niveles_has_anios')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->niveles_has_anios as $hijo) {
                 $this->delNivelesHasAnios($hijo->id); // Borrar hijos
@@ -426,7 +391,7 @@ class Borrador implements BorradorContract
     }
 
     public function delNivelesHasAnios($id){
-        $elem=NivelesHasAnios::with('materias_has_niveles','alumnos')->find($id);
+        $elem=NivelesHasAnios::with('materias_has_niveles','alumnos')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->materias_has_niveles as $hijo) {
                 $this->delMateriasHasNiveles($hijo->id); // Borrar hijos
@@ -441,7 +406,7 @@ class Borrador implements BorradorContract
     }
 
     public function delMaterias($id){
-        $elem=Materias::with('materias_has_niveles')->find($id);
+        $elem=Materias::with('materias_has_niveles')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->materias_has_niveles as $hijo) {
                 $this->delMateriasHasNiveles($hijo->id); // Borrar hijos
@@ -453,7 +418,7 @@ class Borrador implements BorradorContract
     }
 
     public function delMateriasHasNiveles($id){
-        $elem=MateriasHasNiveles::with('materias_has_periodos')->find($id);
+        $elem=MateriasHasNiveles::with('materias_has_periodos')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->materias_has_periodos as $hijo) {
                 $this->delMateriasHasPeriodos($hijo->id); // Borrar hijos
@@ -465,7 +430,7 @@ class Borrador implements BorradorContract
     }
 
     public function delPeriodos($id){
-        $elem=Periodos::with('materias_has_periodos','newasistencia')->find($id);
+        $elem=Periodos::with('materias_has_periodos','newasistencia')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->materias_has_periodos as $hijo) {
                 $this->delMateriasHasPeriodos($hijo->id); // Borrar hijos
@@ -480,7 +445,7 @@ class Borrador implements BorradorContract
     }
 
     public function delMateriasHasPeriodos($id){
-        $elem=MateriasHasPeriodos::with('indicadores','matasistencia')->find($id);
+        $elem=MateriasHasPeriodos::with('indicadores','matasistencia')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->indicadores as $hijo) {
                 $this->delIndicadores($hijo->id); // Borrar hijos
@@ -495,7 +460,7 @@ class Borrador implements BorradorContract
     }
 
     public function delIndicadores($id){
-        $elem=Indicadores::with('tipo_nota')->find($id);
+        $elem=Indicadores::with('tipo_nota')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->tipo_nota as $hijo) {
                 $this->delTipoNota($hijo->id); // Borrar hijos
@@ -507,7 +472,7 @@ class Borrador implements BorradorContract
     }
 
     public function delTipoNota($id){
-        $elem=TipoNota::with('notas')->find($id);
+        $elem=TipoNota::with('notas')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->notas as $hijo) {
                 $this->delNota($hijo->id);
@@ -520,7 +485,7 @@ class Borrador implements BorradorContract
     }
 
     public function delNota($id){
-        $elem=Notas::find($id);
+        $elem=Notas::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos
@@ -530,7 +495,7 @@ class Borrador implements BorradorContract
     }
 
     public function delMatasistencia($id){
-        $elem=Matasistencia::find($id);
+        $elem=Matasistencia::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos
@@ -540,7 +505,7 @@ class Borrador implements BorradorContract
     }
 
     public function delNewasistencia($id){
-        $elem=Newasistencia::find($id);
+        $elem=Newasistencia::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos
@@ -550,7 +515,7 @@ class Borrador implements BorradorContract
     }
 
     public function delEmpleados($id){
-        $elem=Empleados::with('pago_salario')-find($id);
+        $elem=Empleados::with('pago_salario')-findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->pago_salario as $hijo) {
                 $this->delPagoSalario($hijo->id); // Borrar hijos
@@ -563,7 +528,7 @@ class Borrador implements BorradorContract
     }
 
     public function delPagoSalario($id){
-        $elem=PagoSalario::find($id);
+        $elem=PagoSalario::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos
@@ -573,7 +538,7 @@ class Borrador implements BorradorContract
     }
 
     public function delPagoOtros($id){
-        $elem=PagoOtros::find($id);
+        $elem=PagoOtros::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos
@@ -583,7 +548,7 @@ class Borrador implements BorradorContract
     } 
 
     public function delPagoPension($id){
-        $elem=PagoPension::find($id);
+        $elem=PagoPension::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos
@@ -593,7 +558,7 @@ class Borrador implements BorradorContract
     }
 
     public function delPagoMatricula($id){
-        $elem=PagoMatricula::find($id);
+        $elem=PagoMatricula::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos
@@ -605,46 +570,46 @@ class Borrador implements BorradorContract
     //Funciones generales de la clase
 
     private function hayAnio($id){
-        return $this->esUtil(Anios::find($id));
+        return $this->esUtil(Anios::findOrFail($id));
     }
     private function hayEventlog($id){
-        return $this->esUtil(Eventlog::find($id));
+        return $this->esUtil(Eventlog::findOrFail($id));
     }
     private function hayIndicador($id){
-        return $this->esUtil(Indicadores::find($id));
+        return $this->esUtil(Indicadores::findOrFail($id));
     }
     private function hayTipoNota($id){
-        return $this->esUtil(TipoNota::find($id));
+        return $this->esUtil(TipoNota::findOrFail($id));
     }
     private function hayMateriasHasNiveles($id){
-        return $this->esUtil(MateriasHasNiveles::find($id));
+        return $this->esUtil(MateriasHasNiveles::findOrFail($id));
     }
     private function hayMateriasHasPeriodos($id){
-        return $this->esUtil(MateriasHasPeriodos::find($id));
+        return $this->esUtil(MateriasHasPeriodos::findOrFail($id));
     }
     private function hayNivelesHasAnios($id){
-        return $this->esUtil(NivelesHasAnios::find($id));
+        return $this->esUtil(NivelesHasAnios::findOrFail($id));
     }
     private function hayPeriodo($id){
-        return $this->esUtil(Periodos::find($id));
+        return $this->esUtil(Periodos::findOrFail($id));
     }
     private function hayMateria($id){
-        return $this->esUtil(Materias::find($id));
+        return $this->esUtil(Materias::findOrFail($id));
     }
     private function hayNivel($id){
-        return $this->esUtil(Niveles::find($id));
+        return $this->esUtil(Niveles::findOrFail($id));
     }
     private function hayUsuario($id){
-        return $this->esUtil(Users::find($id));
+        return $this->esUtil(Users::findOrFail($id));
     }
     private function hayAlumno($id){
-        return $this->esUtil(Alumnos::find($id));
+        return $this->esUtil(Alumnos::findOrFail($id));
     }
     private function hayEmpleado($id){
-        return $this->esUtil(Empleados::find($id));
+        return $this->esUtil(Empleados::findOrFail($id));
     }
     private function hayNota($id){
-        return $this->esUtil(Notas::find($id));
+        return $this->esUtil(Notas::findOrFail($id));
     }
     private function esUtil($variable){
         if(!is_object($variable) || is_null($variable) ){

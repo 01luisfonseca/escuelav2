@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
+use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\Niveles;
@@ -139,9 +140,9 @@ class NivelesCtrl extends Controller
     {
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminación. Tabla=Niveles, id='.$id,$this->req->user()->id);
-        $obj=Niveles::findOrFail($id);
-        $obj->delete();
-        $msj='Borrado. Tabla=Niveles, id='.$obj->id;
+        $res=new Borrador;
+        $res->delNiveles($id);
+        $msj='Borrado. Tabla=Niveles, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

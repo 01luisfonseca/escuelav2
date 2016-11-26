@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
+use App\Helpers\Rellenador;
+use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\Periodos;
@@ -73,6 +75,8 @@ class PeriodosCtrl extends Controller
         }
         $obj->save();
         $msj='Elemento Creado. Tabla=Periodos, id='.$obj->id;
+        $rell=new Rellenador;
+        $msj.=' '.$rell->PeriodosEnMateriasMHP($obj->id); // Rellena las materias en nivel con los periodos 
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -147,9 +151,9 @@ class PeriodosCtrl extends Controller
     {
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminación. Tabla=Periodos, id='.$id,$this->req->user()->id);
-        $obj=Periodos::findOrFail($id);
-        $obj->delete();
-        $msj='Borrado. Tabla=Periodos, id='.$obj->id;
+        $res=new Borrador;
+        $res->delPeriodos($id);
+        $msj='Borrado. Tabla=Periodos, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

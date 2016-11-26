@@ -101,6 +101,7 @@
 				return basicFactory.dDt(vm.dts.data[index].id).then(function(res){
 					vm.getDatas();
 					error.setAlerta(res.data.msj);
+					vm.selecPanel(-1);
 				});
 			}
 	
