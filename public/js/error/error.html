@@ -1,2 +1,2 @@
-<div id="error" ng-show='vm.error.existe' class="alert alert-danger" role="alert"><p>{{vm.error.msj}}</p></div>
-<div id="alerta" ng-show='vm.alerta.existe' class="alert alert-warning" role="alert"><p>{{vm.alerta.msj}}</p></div>
+<div id="error" ng-show='vm.existe.error' class="alert alert-danger" role="alert"><p ng-repeat='error in vm.listError()'>{{error}}</p></div>
+<div id="alerta" ng-show='vm.existe.alerta' class="alert alert-warning" role="alert"><p  ng-repeat='alerta in vm.listAlerta()'>{{alerta}}</p></div>

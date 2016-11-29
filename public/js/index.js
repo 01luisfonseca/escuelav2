@@ -190,6 +190,19 @@
                         controller: 'MateriasCtrl as vm',
                     }
                 }
+            })
+            .state('profesores', {
+                url: "/profesores",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/profesores/index.html",
+                        controller: 'ProfesorCtrl as vm',
+                    }
+                }
             });
     }
 

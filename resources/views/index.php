@@ -82,6 +82,7 @@
         <script src='/js/materias/form.directive.js'></script>
         <script src='/js/materias/mod.directive.js'></script>
         <script src='/js/materias/rel.directive.js'></script>
+        <script src='/js/profesores/controller.js'></script>
 
     </head>
     <body ng-app="escuela">

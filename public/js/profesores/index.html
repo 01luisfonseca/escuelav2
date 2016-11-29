@@ -1,0 +1,85 @@
+<div  id="profesores" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Gestión de Profesores</h2>
+	</div>
+	<div id="content">
+		<p>En este espacio podrá asignar a los empleados que tienen permisos de profesores o coordinadores. Los podrá asignar según la materia que le corresponda.</p>
+            <p>Cuando se elimine una relación, no se afectarán los archivos anteriores. Sin embargo, perderán derecho a administrar las notas de la materia que halla sido asignado.</p>
+            <mensajes></mensajes>
+	</div>
+	<div id="footer">
+       
+            <div class="row">
+                  <div class="col-md-6">
+                        <div class="panel panel-primary">
+                              <div class="panel-heading"><h4 class="panel-title">Niveles, materias y profesores asignados.</h4></div>
+                              <div class="panel-body">
+                                    <ul>
+                                          <li ng-repeat='anio in vm.anios.data'>
+                                          <p>{{ anio.anio }}</p>
+                                                <ul>
+                                                      <li ng-repeat='nivel in anio.niveles_has_anios'>
+                                                            <p>{{ nivel.niveles.nombre }}</p>
+                                                            <ul>
+                                                                  <li ng-repeat='mat in nivel.materias_has_niveles'>
+                                                                        <p>{{ mat.materias.nombre }}</p>
+                                                                        <p ng-if='vm.hayProfe()'>{{ mat.empleados.users.lastname }}, {{ mat.empleados.users.name }}. <button class="btn btn-danger btn-xs" ng-click='vm.delProfesorData(mat.id)'>Eliminar Profesor</button></p>
+                                                                        <p ng-if='!vm.hayProfe()'><em style="color: red;">Curso Libre</em></p>
+                                                                  </li>
+                                                            </ul>
+                                                      </li>
+                                                </ul>
+                                          </li>
+                                    </ul>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="col-md-6">
+                        <div class="panel panel-success">
+                              <div class="panel-heading"><h4 class="panel-title">Seleccione la materia</h4></div>
+                              <div class="panel-body">
+                                    <p>Seleccione el año, el nivel, la materia y el profesor correspondiente.</p>
+                                    <p>
+                                          <div class="form-horizontal">
+                                                <div class="form-group">
+                                                      <label class="col-sm-2 control-label">Año</label>
+                                                      <div class="col-sm-10">
+                                                            <select class="form-control" ng-model='vm.selec.anio' ng-change='vm.calcNivel()'>
+                                                                  <option ng-repeat='anio in vm.anios.data' value='{{anio.id}}'>{{ anio.nombre }}</option>
+                                                            </select>
+                                                      </div>
+                                                </div>
+                                                <div class="form-group">
+                                                      <label class="col-sm-2 control-label">Nivel</label>
+                                                      <div class="col-sm-10">
+                                                            <select class="form-control"  ng-model='vm.selec.nivel' ng-change='vm.calcMat()'>
+                                                                  <option ng-repeat='nivel in vm.selecNivel()' value={{nivel.id}}>{{ nivel.niveles.nombre }}</option>
+                                                            </select>
+                                                      </div>
+                                                </div>
+                                                <div class="form-group">
+                                                      <label class="col-sm-2 control-label">Materia</label>
+                                                      <div class="col-sm-10">
+                                                            <select class="form-control"  ng-model='vm.selec.mat' ng-change='vm.calcEmpl()'>
+                                                                  <option ng-repeat='mat in vm.selecMat()' value={{mat.id}}>{{ mat.materias.nombre }}</option>
+                                                            </select>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </p>
+                              </div>
+                              <div class="list-group">
+                                    <a ng-repeat='empl in vm.empl.data' class="list-group-item" ng-click='vm.selEmpl(empl.id)' ng-class='{active: vm.emplSel(empl.id)}'>
+                                          <h4 class="list-group-item-heading">{{empl.users.lastname}}, {{empl.users.name}}</h4>
+                                          <p class="list-group-item-text">{{empl.users.tipo_usuario.nombre}}</p>
+                                    </a>
+                              </div>
+                              <div class="panel-footer">
+                                    <button class="btn btn-primary btn-lg" ng-show='vm.infoCompleta()' ng-click='vm.guardarRel()'>Guardar relación</button>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+
+      </div>               
+</div>

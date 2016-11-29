@@ -22,35 +22,67 @@
       		/* */
     	}
 
-    	function controller(error,$scope){
+    	function controller(error, animMsj,$timeout){
     		var vm=this;
 
 			// Variables básicas
-			$scope.errorSc=error;
-			vm.error={};
+			vm.timeout=2000;
+			vm.existe={
+				alerta:false,
+				error:false,
+			};
 
 			// Variables adicionales
 	
 			// Funciones basicas
-			vm.actError=actError;
-			vm.actAlerta=actAlerta;
+			vm.listError=listError;
+			vm.listAlerta=listAlerta;
 
 			// Funciones adicionales
 			
 			// Lanzamiento Automático
-			$scope.$watch('errorSc.error.msj',actError);
-			$scope.$watch('errorSc.alerta.msj',actAlerta);
 			
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
-			function actError(){
-				console.log('Se ha actualizado el error');
-				vm.error=error.error;
+			function listAlerta(){
+				var res=error.getAlertaList();
+				//console.log('Se lista alerta.');
+				if(!vm.existe.alerta && res.length){
+					vm.existe.alerta=true;
+					ventanaMsj('alerta',function(){
+						error.cleanAlerta();
+						vm.existe.alerta=false;
+					});
+				}
+				return res;
 			}
 
-			function actAlerta(){
-				console.log('Se ha actualizado la advertencia');
-				vm.alerta=error.alerta;
+			function listError(){
+				var res=error.getErrorList();
+				//console.log('Se lista error');
+				if(!vm.existe.error && res.length){
+					vm.existe.error=true;
+					ventanaMsj('error',function(){
+						error.cleanError();
+						vm.existe.error=false;
+					});
+				}
+				return res;
 			}
+
+			function ventanaMsj(clase, callback){
+				animMsj.show(clase,function(){
+					$timeout(function(){
+						volver(clase,callback);
+					},vm.timeout);
+				});
+			}
+
+			function volver(elem,callback){
+				animMsj.hide(elem,function(){
+					callback();
+				});
+			}
+
 
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 			

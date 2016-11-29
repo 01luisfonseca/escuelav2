@@ -3,10 +3,14 @@
 	angular.module('escuela')
 		.service('error',service);
 
-	function service(animMsj,$timeout){
+	function service(){
 		var vm=this;
 
 		// Variables
+		vm.error=[];
+		vm.alerta=[];
+
+		/*
 		vm.timeout=2000;
 		vm.error={
 			existe:false,
@@ -15,13 +19,15 @@
 		vm.alerta={
 			existe:false,
 			msj:'',
-		};
+		};*/
 
 		// Funciones
 		vm.setAlerta=setAlerta;
 		vm.setError=setError;
-		vm.getErrorStat=getErrorStat;
-		vm.getAlertaStat=getAlertaStat;
+		vm.getErrorList=getErrorList;
+		vm.getAlertaList=getAlertaList;
+		vm.cleanAlerta=cleanAlerta;
+		vm.cleanError=cleanError;
 
 		// Automáticas
 
@@ -31,48 +37,45 @@
 		
 		// Lanza alerta.
 		function setAlerta(msj){
-			console.log('Alerta: '+msj);
+			vm.alerta.push(msj);
+			/*console.log('Alerta: '+msj);
 			vm.alerta={
 				existe:true,
 				msj:msj,
 			};
 			ventanaMsj('alerta',function(){
 				vm.alerta.existe=false;
-			});
+			});*/
 		}
 
 		// Lanza errores
 		function setError(msj){
-			console.log('Error: '+msj);
+			vm.error.push(msj);
+			/*console.log('Error: '+msj);
 			vm.error={
 				existe:true,
 				msj:msj
 			};
 			ventanaMsj('error',function(){
 				vm.error.existe=false;
-			});
+			});*/
 		}
 
 		// Funciones para mensajes
-		function ventanaMsj(clase, callback){
-			animMsj.show(clase,function(){
-				$timeout(function(){
-					volver(clase,callback);
-				},vm.timeout);
-			});
-		}
-		function volver(elem,callback){
-			animMsj.hide(elem,function(){
-				callback();
-			});
+		function getErrorList(){
+			return vm.error;
 		}
 
-		function getErrorStat(){
-			return vm.error.existe;
+		function getAlertaList(){
+			return vm.alerta;
 		}
 
-		function getAlertaStat(){
-			return vm.alerta.existe;
+		function cleanError(){
+			vm.error=[];
+		}
+
+		function cleanAlerta(){
+			vm.alerta=[];
 		}
 
 		
