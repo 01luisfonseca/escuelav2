@@ -23,8 +23,8 @@
                                                             <ul>
                                                                   <li ng-repeat='mat in nivel.materias_has_niveles'>
                                                                         <p>{{ mat.materias.nombre }}</p>
-                                                                        <p ng-if='vm.hayProfe()'>{{ mat.empleados.users.lastname }}, {{ mat.empleados.users.name }}. <button class="btn btn-danger btn-xs" ng-click='vm.delProfesorData(mat.id)'>Eliminar Profesor</button></p>
-                                                                        <p ng-if='!vm.hayProfe()'><em style="color: red;">Curso Libre</em></p>
+                                                                        <p ng-if='mat.empleados_id!=0'><em style="color: blue;">{{ mat.empleados.users.lastname }}, {{ mat.empleados.users.name }}.</em><button class="btn btn-danger btn-xs" ng-click='vm.delData(mat.id)'>Eliminar Profesor</button></p>
+                                                                        <p ng-if='mat.empleados_id==0'><em style="color: red;">Sin profesor</em></p>
                                                                   </li>
                                                             </ul>
                                                       </li>
@@ -44,38 +44,39 @@
                                                 <div class="form-group">
                                                       <label class="col-sm-2 control-label">Año</label>
                                                       <div class="col-sm-10">
-                                                            <select class="form-control" ng-model='vm.selec.anio' ng-change='vm.calcNivel()'>
-                                                                  <option ng-repeat='anio in vm.anios.data' value='{{anio.id}}'>{{ anio.nombre }}</option>
+                                                            <select class="form-control" ng-model='vm.selec.anio' ng-change='vm.changeAnio()'>
+                                                                  <option ng-repeat='anio in vm.anios.data' value='{{anio.id}}'>{{ anio.anio }}</option>
                                                             </select>
                                                       </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" ng-if='vm.selec.anio!=0'>
                                                       <label class="col-sm-2 control-label">Nivel</label>
                                                       <div class="col-sm-10">
-                                                            <select class="form-control"  ng-model='vm.selec.nivel' ng-change='vm.calcMat()'>
+                                                            <select class="form-control"  ng-model='vm.selec.nivel' ng-change='vm.changeNivel()'>
                                                                   <option ng-repeat='nivel in vm.selecNivel()' value={{nivel.id}}>{{ nivel.niveles.nombre }}</option>
                                                             </select>
                                                       </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" ng-if='vm.selec.nivel!=0'>
                                                       <label class="col-sm-2 control-label">Materia</label>
                                                       <div class="col-sm-10">
-                                                            <select class="form-control"  ng-model='vm.selec.mat' ng-change='vm.calcEmpl()'>
+                                                            <select class="form-control"  ng-model='vm.selec.mat' ng-change='vm.changeMat()'>
                                                                   <option ng-repeat='mat in vm.selecMat()' value={{mat.id}}>{{ mat.materias.nombre }}</option>
                                                             </select>
                                                       </div>
                                                 </div>
                                           </div>
                                     </p>
+                                    <p ng-show='vm.selec.mat!=0'>Ahora abajo puede elegir el empleado que será el profesor de la materia.</p>
                               </div>
-                              <div class="list-group">
+                              <div class="list-group" ng-if='vm.selec.mat!=0'>
                                     <a ng-repeat='empl in vm.empl.data' class="list-group-item" ng-click='vm.selEmpl(empl.id)' ng-class='{active: vm.emplSel(empl.id)}'>
                                           <h4 class="list-group-item-heading">{{empl.users.lastname}}, {{empl.users.name}}</h4>
                                           <p class="list-group-item-text">{{empl.users.tipo_usuario.nombre}}</p>
                                     </a>
                               </div>
-                              <div class="panel-footer">
-                                    <button class="btn btn-primary btn-lg" ng-show='vm.infoCompleta()' ng-click='vm.guardarRel()'>Guardar relación</button>
+                              <div class="panel-footer" ng-show='vm.infoCompleta()'>
+                                    <button class="btn btn-primary btn-lg" ng-click='vm.guardarRel()'>Guardar relación</button>
                               </div>
                         </div>
                   </div>

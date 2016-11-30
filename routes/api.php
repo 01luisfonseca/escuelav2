@@ -18,6 +18,17 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 	
+	/** RUTAS PROFESOR **/
+	Route::group(['prefix'=>'profesor','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','ProfesorCtrl@index');
+		Route::post('/','ProfesorCtrl@store');
+		Route::get('/{id}','ProfesorCtrl@show');
+		Route::put('/{id}','ProfesorCtrl@update');
+		Route::delete('/{id}','ProfesorCtrl@destroy');
+		//Adicionales
+	});
+
 	/** RUTAS MATERIAS HAS PERIODOS TABLE **/
 	Route::group(['prefix'=>'materiashasperiodos','middleware'=>'coordinador'],function(){
 		//Basicos

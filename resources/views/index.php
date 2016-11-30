@@ -51,6 +51,7 @@
         <script src='/js/app.services/niveleshasanios.factory.js'></script>
         <script src='/js/app.services/materiashasniveles.factory.js'></script>
         <script src='/js/app.services/materiashasperiodos.factory.js'></script>
+        <script src='/js/app.services/profesor.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
