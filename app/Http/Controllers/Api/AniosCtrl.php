@@ -63,7 +63,7 @@ class AniosCtrl extends Controller
         ]);
         $val=Anios::where('anio',$this->req->input('anio'));
         if($val->count()){
-            return response()->json(['msj'=>'El elemento ya fue creado']);
+            return response()->json(['msj'=>'El elemento ya fue creado anteriormente. No se crea uno nuevo.']);
         }
         $obj=new Anios;
         $obj->anio=$this->req->input('anio');

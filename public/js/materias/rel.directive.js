@@ -32,8 +32,9 @@
 			vm.selec={
 				anio:0,
 				nivel:0,
-				mat:0
+				mat:[]
 			};
+			vm.contadorOps=0;
 
 			// Variables adicionales
 	
@@ -82,7 +83,7 @@
 			}
 
 			function infoCompleta(){
-				if(vm.selec.anio!=0 && vm.selec.nivel!=0 && vm.selec.mat!=0){
+				if(vm.selec.anio!=0 && vm.selec.nivel!=0 && vm.selec.mat.length>0){
 					return true;
 				}
 				return false;
@@ -91,7 +92,7 @@
 			function selAnio(id){
 				vm.selec.anio=id;
 				vm.selec.nivel=0;
-				vm.selec.mat=0;
+				vm.selec.mat=[];
 				//console.log(vm.selec);
 				vm.niveles=buscarNivelEnAnio(id);
 				//console.log(vm.niveles);
@@ -114,7 +115,7 @@
 
 			function selNivel(id){
 				vm.selec.nivel=id;
-				vm.selec.mat=0;
+				vm.selec.mat=[];
 			}
 
 			function nivelSel(id){
@@ -122,24 +123,56 @@
 			}
 
 			function selMat(id){
-				vm.selec.mat=id;
+				var temp;
+				var existe=false;
+				for (var i = 0; i < vm.selec.mat.length; i++) {
+					if (vm.selec.mat[i]==id) {
+						//console.log('Index: '+i);
+						vm.selec.mat[i]=vm.selec.mat[vm.selec.mat.length-1];
+						vm.selec.mat.pop();
+						existe=true;
+					}
+				}
+				if (!existe) {
+					vm.selec.mat.push(id);
+				}
 			}
 
 			function matSel(id){
-				return vm.selec.mat==id;
+				for (var i = 0; i < vm.selec.mat.length; i++) {
+					if(vm.selec.mat[i]==id){
+						return true;
+					}
+				}
+				return false;
 			}
 
 			function guardarRel(){
-				var data={
-					niveles_has_anios_id: vm.selec.nivel,
-					materias_id: vm.selec.mat
-				};
-				return nha.aDt(data).then(function(res){
-					error.setAlerta(res.data.msj);
+				for (var i = 0; i < vm.selec.mat.length; i++) {
+					grabador({niveles_has_anios_id: vm.selec.nivel, materias_id: vm.selec.mat[i]}).then(verificaStatus);
+				}
+			}
+
+			function verificaStatus(){
+				if (vm.contadorOps==vm.selec.mat.length) {
+					error.setAlerta('Se han guardado '+vm.contadorOps+' registros');
 					vm.buscarDatos();
-				},function(res){
-					error.setError('No se puede guardar la relación');
-				})
+					vm.contadorOps=0;
+					vm.selec={
+						anio:0,
+						nivel:0,
+						mat:[]
+					};
+				}
+			}
+
+			function grabador(data){
+				//console.log(data);
+				return nha.aDt(data).then(function(res){
+						vm.contadorOps++;
+					},function(res){
+						vm.contadorOps++;
+					});
 			}
 
 			function matExiste(id){

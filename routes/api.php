@@ -17,6 +17,18 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 	Route::get('/user', function (Request $request) {
     	return $request->user(); // Info del usuario logueado
 	});
+
+	/** RUTAS ALUMNOS **/
+	Route::group(['prefix'=>'alumnos','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','AlumnosCtrl@index');
+		Route::post('/','AlumnosCtrl@store');
+		Route::get('/{id}','AlumnosCtrl@show');
+		Route::put('/{id}','AlumnosCtrl@update');
+		Route::delete('/{id}','AlumnosCtrl@destroy');
+		//Adicionales
+		Route::get('/search/{info}','AlumnosCtrl@search');
+	});
 	
 	/** RUTAS PROFESOR **/
 	Route::group(['prefix'=>'profesor','middleware'=>'coordinador'],function(){
@@ -60,6 +72,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::put('/{id}','NivelesHasAniosCtrl@update');
 		Route::delete('/{id}','NivelesHasAniosCtrl@destroy');
 		//Adicionales
+		Route::get('add/nivelables','NivelesHasAniosCtrl@nivelables');
 	});
 
 	/** RUTAS PERIODOS TABLE **/
@@ -143,6 +156,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::get('/range/{ini}','UserCtrl@index');
 		Route::put('/status/{user}/{status}','UserCtrl@modEstado');
 		Route::get('/add/empleables','UserCtrl@userEmpleable');
+		Route::get('/add/alumnable','UserCtrl@userAlumnable');
 	});
 
 	/** RUTAS PERFIL TABLE **/

@@ -1,0 +1,41 @@
+<div  id="alumnos" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Gestión de Alumnos</h2>
+	</div>
+	<div id="content">
+		<p>Los alumnos son usuarios registrados que recibirán notas y asistencias. A continuación se le mostrará el listado de usuarios con permisos de alumnos que pueden ser asignados.</p>
+            <p><em>NOTA: </em>No se permitirá la creación de un usuario duplicado en el nivel.</p>
+            <mensajes></mensajes>
+	</div>
+	<div id="footer">
+			<!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active" ng-click='vm.selectTab(1)'><a aria-controls="CrearData" role="tab" data-toggle="tab">Crear</a></li>
+                  <li role="presentation" ng-click='vm.selectTab(2)'><a aria-controls="ModData" role="tab" data-toggle="tab">Modificar</a></li>
+                  <!--<li role="presentation" ng-click='vm.selectTab(3)'><a aria-controls="RelData" role="tab" data-toggle="tab">Relaciones</a></li>-->
+            </ul>
+
+             <!-- Tab panes -->
+            <div class="tab-content">
+
+                  <div role="tabpanel" class="active"  id="CrearData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(1)'>
+                              <div class="panel-body"><form-alumno></form-alumno></div>
+                        </div>
+                  </div>
+
+                  <div role="tabpanel" class="active"  id="ModData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(2)'>
+                              <div class="panel-body"><mod-alumno></mod-alumno></div>
+                        </div>
+                  </div>
+
+                  <div role="tabpanel" class="active"  id="RelData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(3)'>
+                              <div class="panel-body"><rel-alumno></rel-alumno></div>
+                        </div>
+                  </div>
+
+            </div>
+	</div>               
+</div>

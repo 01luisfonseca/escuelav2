@@ -31,8 +31,9 @@
 			vm.niveles={};
 			vm.selec={
 				anio:0,
-				nivel:0
+				nivel:[]
 			};
+			vm.contadorOps=0;
 
 			// Variables adicionales
 	
@@ -79,7 +80,7 @@
 			}
 
 			function infoCompleta(){
-				if(vm.selec.anio!=0 && vm.selec.nivel!=0){
+				if(vm.selec.anio!=0 && vm.selec.nivel.length>0){
 					return true;
 				}
 				return false;
@@ -87,7 +88,7 @@
 			
 			function selAnio(id){
 				vm.selec.anio=id;
-				vm.selec.nivel=0;
+				vm.selec.nivel=[];
 			}
 
 			function anioSel(id){
@@ -95,28 +96,56 @@
 			}
 
 			function selNivel(id){
-				vm.selec.nivel=id;
+				var temp;
+				var existe=false;
+				for (var i = 0; i < vm.selec.nivel.length; i++) {
+					if (vm.selec.nivel[i]==id) {
+						//console.log('Index: '+i);
+						vm.selec.nivel[i]=vm.selec.nivel[vm.selec.nivel.length-1];
+						vm.selec.nivel.pop();
+						existe=true;
+					}
+				}
+				if (!existe) {
+					vm.selec.nivel.push(id);
+				}
+
 			}
 
 			function nivelSel(id){
-				return vm.selec.nivel==id;
+				for (var i = 0; i < vm.selec.nivel.length; i++) {
+					if(vm.selec.nivel[i]==id){
+						return true;
+					}
+				}
+				return false;
 			}
 
 			function guardarRel(){
-				var data={
-					niveles_id: vm.selec.nivel,
-					anios_id: vm.selec.anio
-				};
-				return nha.aDt(data).then(function(res){
-					error.setAlerta(res.data.msj);
+				for (var i = 0; i < vm.selec.nivel.length; i++) {
+					grabador({niveles_id: vm.selec.nivel[i],anios_id: vm.selec.anio}).then(verificaStatus);
+				}
+			}
+
+			function verificaStatus(){
+				if (vm.contadorOps==vm.selec.nivel.length) {
+					error.setAlerta('Se han guardado '+vm.contadorOps+' registros');
 					vm.buscarDatos();
+					vm.contadorOps=0;
 					vm.selec={
-				anio:0,
-				nivel:0
-			};
-				},function(res){
-					error.setError('No se puede guardar la relación');
-				})
+						anio:0,
+						nivel:[]
+					};
+				}
+			}
+
+			function grabador(data){
+				//console.log(data);
+				return nha.aDt(data).then(function(res){
+						vm.contadorOps++;
+					},function(res){
+						vm.contadorOps++;
+					});
 			}
 
 			function nivelExiste(id){

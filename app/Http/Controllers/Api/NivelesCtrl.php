@@ -61,7 +61,7 @@ class NivelesCtrl extends Controller
         ]);
         $val=Niveles::where('nombre',$this->req->input('nombre'));
         if($val->count()){
-            return response()->json(['msj'=>'El elemento ya fue creado']);
+            return response()->json(['msj'=>'El elemento ya fue creado anteriormente. No se crea uno nuevo.']);
         }
         $obj=new Niveles;
         $obj->nombre=$this->req->input('nombre');

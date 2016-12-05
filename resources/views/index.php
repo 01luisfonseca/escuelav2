@@ -52,6 +52,7 @@
         <script src='/js/app.services/materiashasniveles.factory.js'></script>
         <script src='/js/app.services/materiashasperiodos.factory.js'></script>
         <script src='/js/app.services/profesor.factory.js'></script>
+        <script src='/js/app.services/alumnos.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -84,6 +85,10 @@
         <script src='/js/materias/mod.directive.js'></script>
         <script src='/js/materias/rel.directive.js'></script>
         <script src='/js/profesores/controller.js'></script>
+        <script src='/js/alumnos/controller.js'></script>
+        <script src='/js/alumnos/form.directive.js'></script>
+        <script src='/js/alumnos/mod.directive.js'></script>
+        <script src='/js/alumnos/rel.directive.js'></script>
 
     </head>
     <body ng-app="escuela">

@@ -14,7 +14,8 @@
 			modUser: modUser,
             delUser: delUser,
             setEstado: setEstado,
-            getEmpleables:getEmpleables
+            getEmpleables:getEmpleables,
+            getAlumnables:getAlumnables
 		};
 
 		return fc;
@@ -46,6 +47,9 @@
         }
         function getEmpleables(){
             return $http.get(fc.url+'/add/empleables');
+        }
+        function getAlumnables(){
+            return $http.get(fc.url+'/add/alumnable');
         }
         
 	}

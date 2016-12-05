@@ -165,4 +165,19 @@ class NivelesHasAniosCtrl extends Controller
         $obj=NivelesHasAnios::all();
         return response()->json(['registros'=>$obj->count()]);
     }
+
+    /**
+     * Muestra numero de registros
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function nivelables(){
+        $obj=NivelesHasAnios::join('anios','anios_id','=','anios.id')
+            ->select('niveles_has_anios.*','anios.anio')
+            ->with('anios','niveles')
+            ->orderBy('anios.anio','desc')
+            ->where('niveles_has_anios.id','>',0)
+            ->get();
+        return $obj->toJson();
+    }
 }

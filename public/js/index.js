@@ -203,6 +203,19 @@
                         controller: 'ProfesorCtrl as vm',
                     }
                 }
+            })
+            .state('alumnos', {
+                url: "/alumnos",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/alumnos/index.html",
+                        controller: 'AlumnosCtrl as vm',
+                    }
+                }
             });
     }
 

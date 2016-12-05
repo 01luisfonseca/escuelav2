@@ -12,7 +12,8 @@
             gRDts: gRDts,
             aDt: aDt,
 			mDt: mDt,
-            dDt: dDt
+            dDt: dDt,
+            getNivelables:getNivelables
 		};
 
 		return fc;
@@ -38,6 +39,9 @@
         }
         function dDt(id){
             return $http.delete(url+'/'+id);
-        }  
+        }
+        function getNivelables(){
+            return $http.get(url+'/add/nivelables');
+        }
 	}
 })();

@@ -280,4 +280,21 @@ class UserCtrl extends Controller
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
+
+    /**
+     * Muestra usuarios que pueden ser alumnos.
+     *
+     * @param  Ninguno
+     * @return \Illuminate\Http\Response
+     */
+    public function userAlumnable(){
+        $obj=User::where('tipo_usuario_id',2)
+            ->where('id','>',2)
+            ->orderBy('lastname','desc')
+            ->get();
+        $ev=new EventlogRegister;
+        $msj='Consulta de posibles alumnos. Tabla=users';
+        $ev->registro(0,$msj,$this->req->user()->id);
+        return $obj->toJson();
+    }
 }
