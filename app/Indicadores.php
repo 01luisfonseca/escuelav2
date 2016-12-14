@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Indicadores extends Model
 {
     //
-    use Softdeletes;
     protected $table = 'indicadores';
 
     public function tipo_nota(){

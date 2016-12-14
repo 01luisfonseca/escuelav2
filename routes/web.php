@@ -14,3 +14,15 @@
 Route::get('/',function(){
     return view('index');
 });
+
+Route::group(['middleware'=>'checkSerial', 'namespace'=>'registro'],function(){
+	Route::group(['prefix'=>'{serial}/device'],function(){
+		Route::get('/status',function(){
+			return response('Habilitado',200);
+		});
+		Route::post('/asistencia/{tarjeta}','AsistenciaCtrl@postAsistencia');
+		Route::get('/asistencia/{tarjeta}','AsistenciaCtrl@getDeviceAsistencia');
+		Route::get('/asistencia','AsistenciaCtrl@getOnlyTarjetas'); // Probadas para la carga
+		Route::get('/all','AuthdeviceCtrl@getDevices');
+	});
+});

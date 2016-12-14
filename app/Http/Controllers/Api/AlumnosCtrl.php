@@ -200,7 +200,7 @@ class AlumnosCtrl extends Controller
             ->orWhere('anios.anio','LIKE','%'.$info.'%')
             ->orWhere('niveles.nombre','LIKE','%'.$info.'%')
             ->orderBy('users.lastname','desc')
-            ->with('users','niveles_has_anios.niveles','niveles_has_anios.anios')
+            ->with('users','niveles_has_anios.niveles','niveles_has_anios.anios.periodos')
             ->get();
         $msj='Busqueda. Tabla=Alumnos, letras='.$info;
         $ev=new EventlogRegister;

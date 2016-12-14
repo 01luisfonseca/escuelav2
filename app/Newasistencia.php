@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Newasistencia extends Model
 {
     //
-    use Softdeletes;
     protected $table = 'newasistencia';
 
     public function alumnos(){

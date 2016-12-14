@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'coordinador' => \App\Http\Middleware\CoordinadorMiddleware::class,
         'permited' => \App\Http\Middleware\PermitedMiddleware::class,
         'trabajador' => \App\Http\Middleware\TrabajadorMiddleware::class,
+        'checkSerial' => \App\Http\Middleware\CheckSerial::class,
     ];
 }

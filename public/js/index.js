@@ -216,6 +216,19 @@
                         controller: 'AlumnosCtrl as vm',
                     }
                 }
+            })
+            .state('asistencia', {
+                url: "/asistencia",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/asistencia/index.html",
+                        controller: 'AsistenciasCtrl as vm',
+                    }
+                }
             });
     }
 

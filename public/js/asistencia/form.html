@@ -1,0 +1,35 @@
+<form class="form" name='formNewAsistencia' ng-submit='formNewAsistencia.$valid && vm.accion()' novalidate>
+<fieldset>
+	<legend>Creación de asistencia general: </legend>
+	<div class='row'>
+	<div class="col-md-4 form-group">
+		<label class="control-label" for="alumno"><h4>Alumno:</h4></label>
+		<input type="text" ng-model='vm.buscado' placeholder="Introduzca el texto a buscar." ng-change='vm.buscarData()' class="form-control input-md">
+		<div  ng-show='vm.buscando'><p><h4><em>Cargando información</em></h4></p></div>
+		<div ng-hide='vm.buscando' class="list-group" ng-repeat='alm in vm.alumnos.data'> 
+  			<a class="list-group-item" ng-click='vm.selAlumno($index)' ng-class='{active: vm.alumnoSel($index)}'>
+    			<h4 class="list-group-item-heading">{{ alm.users.lastname }}, {{ alm.users.name }}</h4>
+    			<p class="list-group-item-text"><em>Identificación: </em>{{ alm.users.identificacion }}</p>
+    			<p class="list-group-item-text"><em>Año: </em>{{ alm.niveles_has_anios.anios.anio }}, <em>Nivel: </em>{{ alm.niveles_has_anios.niveles.nombre }}</p>
+  			</a>
+		</div>
+	</div>
+	<div class="col-md-4 col-md-offset-1 form-group" ng-show='vm.sel.alumno>0'>
+		<label class="control-label" for="alumno"><h4>Periodos:</h4></label>
+		<div class="list-group" ng-repeat='periodo in vm.getPeriodos()'> 
+  			<a class="list-group-item" ng-click='vm.selPeriodo($index)' ng-class='{active: vm.periodoSel($index)}'>
+    			<h4 class="list-group-item-heading">{{ periodo.nombre }}</h4>
+    			<p class="list-group-item-text"><em>Inicial: </em>{{ periodo.fecha_ini }}, <em>Final: </em>{{ periodo.fecha_fin }}</p>
+    			<p class="list-group-item-text">{{ periodo.descripcion }}</p>
+  			</a>
+		</div>
+	</div>
+	</div>
+	<div class="form-group" ng-show='vm.sel.periodo>0'>
+		<label class="control-label" for="alumno">Fecha</label>
+		<input id="fecha" name="fecha" type="date" min="{{ vm.minDate() | date:'yyyy-MM-dd' }}" max="{{ vm.maxDate() | date:'yyyy-MM-dd' }}" class="form-control" ng-model='vm.sel.fecha' required>
+		<input id="hora" name="hora" type="time" class="form-control" ng-model='vm.sel.hora' required>
+	</div>
+	<input type="submit" class="btn btn-info" value="Enviar">
+</fieldset>
+</form>

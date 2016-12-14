@@ -18,6 +18,34 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	/** RUTAS MATASISTENCIA **/
+	Route::group(['prefix'=>'matasistencia','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','MatasistenciasCrl@index');
+		Route::post('/','MatasistenciasCrl@store');
+		Route::get('/{id}','MatasistenciasCrl@show');
+		Route::put('/{id}','MatasistenciasCrl@update');
+		Route::delete('/{id}','MatasistenciasCrl@destroy');
+		//Adicionales
+		Route::get('/search/{info}','MatasistenciasCrl@search');
+		Route::get('/range/{ini}','MatasistenciasCrl@index');
+		Route::get('/count/elem','MatasistenciasCrl@count');
+	});
+
+	/** RUTAS NEWASISTENCIA **/
+	Route::group(['prefix'=>'newasistencia','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','NewasistenciasCrl@index');
+		Route::post('/','NewasistenciasCrl@store');
+		Route::get('/{id}','NewasistenciasCrl@show');
+		Route::put('/{id}','NewasistenciasCrl@update');
+		Route::delete('/{id}','NewasistenciasCrl@destroy');
+		//Adicionales
+		Route::get('/search/{info}','NewasistenciasCrl@search');
+		Route::get('/range/{ini}','NewasistenciasCrl@index');
+		Route::get('/count/elem','NewasistenciasCrl@count');
+	});
+
 	/** RUTAS ALUMNOS **/
 	Route::group(['prefix'=>'alumnos','middleware'=>'coordinador'],function(){
 		//Basicos
