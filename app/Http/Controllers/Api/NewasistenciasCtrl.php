@@ -9,6 +9,7 @@ use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\Newasistencia;
+use App\Alumnos;
 
 class NewasistenciasCtrl extends Controller
 {
@@ -85,6 +86,7 @@ class NewasistenciasCtrl extends Controller
         		$obj->alumnos_id=$this->req->input('alumnos_id');
         		$obj->periodos_id=$this->req->input('periodos_id');
                 $obj->fecha=new Carbon($this->req->input('fecha'));
+                $obj->fecha->setTimeZone('America/Bogota');
         		$obj->authdevice_id=0; // No se guarda dispositivo porque fue generado desde el mismo PHP
         	}   
         	$obj->save();
@@ -143,6 +145,7 @@ class NewasistenciasCtrl extends Controller
         $obj->alumnos_id=$this->req->input('alumnos_id');
         $obj->periodos_id=$this->req->input('periodos_id');
         $obj->fecha=new Carbon($this->req->input('fecha'));
+        $obj->fecha->setTimeZone('America/Bogota');
         $obj->save();
         $msj='Modificación. Tabla=Newasistencia, id='.$id;
         $ev->registro(1,$msj,$this->req->user()->id);

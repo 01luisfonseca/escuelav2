@@ -9,6 +9,7 @@ use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\Matasistencia;
+use App\Alumnos;
 
 class MatasistenciasCtrl extends Controller
 {
@@ -86,6 +87,7 @@ class MatasistenciasCtrl extends Controller
         		$obj->alumnos_id=$this->req->input('alumnos_id');
         		$obj->materias_has_periodos_id=$this->req->input('materias_has_periodos_id');
                 $obj->fecha=new Carbon($this->req->input('fecha'));
+                $obj->fecha->setTimeZone('America/Bogota');
         		$obj->authdevice_id=0; // No se guarda dispositivo porque fue generado desde el mismo PHP
         	}   
         	$obj->save();
@@ -137,11 +139,14 @@ class MatasistenciasCtrl extends Controller
         $ev->registro(1,'Intento de modificación. Tabla=Matasistencia, id='.$id,$this->req->user()->id);
         $this->validate($this->req,[
             'alumnos_id'=>'required',
-            'materias_has_periodos_id'=>'required'
+            'materias_has_periodos_id'=>'required',
+            'fecha'=>'required'
         ]);
         $obj=Matasistencia::findOrFail($id);
         $obj->alumnos_id=$this->req->input('alumnos_id');
         $obj->materias_has_periodos_id=$this->req->input('materias_has_periodos_id');
+        $obj->fecha=new Carbon($this->req->input('fecha'));
+        $obj->fecha->setTimeZone('America/Bogota');
         $obj->save();
         $msj='Modificación. Tabla=Matasistencia, id='.$id;
         $ev->registro(1,$msj,$this->req->user()->id);

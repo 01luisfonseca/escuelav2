@@ -21,29 +21,29 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 	/** RUTAS MATASISTENCIA **/
 	Route::group(['prefix'=>'matasistencia','middleware'=>'coordinador'],function(){
 		//Basicos
-		Route::get('/','MatasistenciasCrl@index');
-		Route::post('/','MatasistenciasCrl@store');
-		Route::get('/{id}','MatasistenciasCrl@show');
-		Route::put('/{id}','MatasistenciasCrl@update');
-		Route::delete('/{id}','MatasistenciasCrl@destroy');
+		Route::get('/','MatasistenciasCtrl@index');
+		Route::post('/','MatasistenciasCtrl@store');
+		Route::get('/{id}','MatasistenciasCtrl@show');
+		Route::put('/{id}','MatasistenciasCtrl@update');
+		Route::delete('/{id}','MatasistenciasCtrl@destroy');
 		//Adicionales
-		Route::get('/search/{info}','MatasistenciasCrl@search');
-		Route::get('/range/{ini}','MatasistenciasCrl@index');
-		Route::get('/count/elem','MatasistenciasCrl@count');
+		Route::get('/search/{info}','MatasistenciasCtrl@search');
+		Route::get('/range/{ini}','MatasistenciasCtrl@index');
+		Route::get('/count/elem','MatasistenciasCtrl@count');
 	});
 
 	/** RUTAS NEWASISTENCIA **/
 	Route::group(['prefix'=>'newasistencia','middleware'=>'coordinador'],function(){
 		//Basicos
-		Route::get('/','NewasistenciasCrl@index');
-		Route::post('/','NewasistenciasCrl@store');
-		Route::get('/{id}','NewasistenciasCrl@show');
-		Route::put('/{id}','NewasistenciasCrl@update');
-		Route::delete('/{id}','NewasistenciasCrl@destroy');
+		Route::get('/','NewasistenciasCtrl@index');
+		Route::post('/','NewasistenciasCtrl@store');
+		Route::get('/{id}','NewasistenciasCtrl@show');
+		Route::put('/{id}','NewasistenciasCtrl@update');
+		Route::delete('/{id}','NewasistenciasCtrl@destroy');
 		//Adicionales
-		Route::get('/search/{info}','NewasistenciasCrl@search');
-		Route::get('/range/{ini}','NewasistenciasCrl@index');
-		Route::get('/count/elem','NewasistenciasCrl@count');
+		Route::get('/search/{info}','NewasistenciasCtrl@search');
+		Route::get('/range/{ini}','NewasistenciasCtrl@index');
+		Route::get('/count/elem','NewasistenciasCtrl@count');
 	});
 
 	/** RUTAS ALUMNOS **/

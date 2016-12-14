@@ -93,8 +93,8 @@
 					periodos_id:vm.alumnos.data[vm.sel.alumno-1].niveles_has_anios.anios.periodos[vm.sel.periodo-1].id,
 					fecha: fecha
 				};
-				console.log(data);
-				//return newDataNA(data); //Aparentemente listo
+				//console.log(data);
+				return newDataNA(data); 
 			}
 
 			function buscarData(){
@@ -103,6 +103,9 @@
 						vm.buscando=true;
 						$timeout(searchData,1500);
 					}
+				}
+				if(vm.buscado==''){
+					vm.alumnos={};
 				}
 				return false;
 			}

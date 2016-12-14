@@ -30,6 +30,6 @@
 		<input id="fecha" name="fecha" type="date" min="{{ vm.minDate() | date:'yyyy-MM-dd' }}" max="{{ vm.maxDate() | date:'yyyy-MM-dd' }}" class="form-control" ng-model='vm.sel.fecha' required>
 		<input id="hora" name="hora" type="time" class="form-control" ng-model='vm.sel.hora' required>
 	</div>
-	<input type="submit" class="btn btn-info" value="Enviar">
+	<input type="submit" class="btn btn-info" value="Enviar" ng-show='vm.sel.periodo>0'>
 </fieldset>
 </form>
