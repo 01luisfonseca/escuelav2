@@ -52,6 +52,7 @@
 			vm.minDate=minDate;
 			vm.maxDate=maxDate;
 			vm.getPeriodos=getPeriodos;
+			vm.alumnoId=alumnoId;
 
 			// Funciones adicionales
 			
@@ -164,6 +165,13 @@
 				}else{
 					return [];
 				}
+			}
+
+			function alumnoId(){
+				if (vm.sel.alumno==0) {
+					return 0;
+				}
+				return vm.alumnos.data[vm.sel.alumno-1].id;
 			}
     	}
 	}

@@ -213,4 +213,21 @@ class MatasistenciasCtrl extends Controller
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
+
+    public function showalumno($id)
+    {
+        $obj=Alumnos::with(['niveles_has_anios'=>function ($query) use ($id){
+            $query->with(['materias_has_niveles'=>function($query) use ($id){
+                $query->with(['materias_has_periodos'=>function($query) use ($id){
+                    $query->with(['materias', 'matasistencia'=>function($query) use ($id){
+                        $query->where('alumnos_id',$id)->orderBy('fecha','desc');
+                    }]);
+                }]);
+            }]);
+        }])->findOrFail($id);
+        $ev=new EventlogRegister;
+        $msj='Consulta de elemento por alumno. Tabla=Matasistencia, id='.$id;
+        $ev->registro(0,$msj,$this->req->user()->id);
+        return $obj->toJson();
+    }
 }

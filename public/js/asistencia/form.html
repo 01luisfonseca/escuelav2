@@ -1,3 +1,7 @@
+<div class="panel panel-default"> <!-- Inicio del panel -->
+	<div class="panel-heading"><h4>Area de creación de asistencias</h4></div>
+	<div class="panel-body">
+		
 <form class="form" name='formNewAsistencia' ng-submit='formNewAsistencia.$valid && vm.accion()' novalidate>
 <fieldset>
 	<legend>Creación de asistencia general: </legend>
@@ -33,3 +37,13 @@
 	<input type="submit" class="btn btn-info" value="Enviar" ng-show='vm.sel.periodo>0'>
 </fieldset>
 </form>
+
+	</div> <!-- -->
+</div> <!-- Cierre del panel -->
+
+<div class="panel panel-default" ng-show='vm.sel.alumno>0'> <!-- Inicio del panel -->
+	<div class="panel-heading"><h5>Asistencias existentes del alumno</h5></div>
+	<div class="panel-body">
+		<mod-asistencia alumnoid='vm.alumnoId()'></mod-asistencia>
+	</div> <!-- -->
+</div> <!-- Cierre del panel -->

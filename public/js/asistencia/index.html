@@ -7,34 +7,6 @@
             <mensajes></mensajes>
 	</div>
 	<div id="footer">
-			<!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active" ng-click='vm.selectTab(1)'><a aria-controls="CrearData" role="tab" data-toggle="tab">Crear</a></li>
-                  <li role="presentation" ng-click='vm.selectTab(2)'><a aria-controls="ModData" role="tab" data-toggle="tab">Modificar</a></li>
-                  <!--<li role="presentation" ng-click='vm.selectTab(3)'><a aria-controls="RelData" role="tab" data-toggle="tab">Relaciones</a></li>-->
-            </ul>
-
-             <!-- Tab panes -->
-            <div class="tab-content">
-
-                  <div role="tabpanel" class="active"  id="CrearData">
-                        <div class="panel panel-default" ng-show='vm.tabSelec(1)'>
-                              <div class="panel-body"><form-asistencia></form-asistencia></div>
-                        </div>
-                  </div>
-
-                  <div role="tabpanel" class="active"  id="ModData">
-                        <div class="panel panel-default" ng-show='vm.tabSelec(2)'>
-                              <div class="panel-body"><mod-asistencia></mod-asistencia></div>
-                        </div>
-                  </div>
-
-                  <div role="tabpanel" class="active"  id="RelData">
-                        <div class="panel panel-default" ng-show='vm.tabSelec(3)'>
-                              <div class="panel-body"><rel-asistencia></rel-asistencia></div>
-                        </div>
-                  </div>
-
-            </div>
+      <form-asistencia></form-asistencia>
 	</div>               
 </div>

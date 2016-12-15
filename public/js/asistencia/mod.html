@@ -1,40 +1,13 @@
-<div class="table-responsive desplazable-grande">
-	<button class="btn btn-xs btn-info" ng-click='vm.getDatas()'>Actualizar tabla.</button>
-	<p>Por favor escriba los criterios de busqueda. Se puede ingresar el año, el nivel, el nombre o la identificación del alumno.</p>
-	<p>Por defecto se mostrarán los últimos 50 empleados actualizados. Para volver a mostrar los alumnos por defecto, por favor limpie el campo de busqueda.</p>
-	<p><input type="text" ng-model='vm.buscado' placeholder="Introduzca el texto a buscar." ng-change='vm.buscarData()' class="form-control input-md"></p>
-	<div  ng-show='vm.buscando'><p><h4><em>Cargando información</em></h4></p></div>
-	<table class="table table-stripped" ng-hide='vm.buscando'>
-		<tr>
-			<th>Acción</th>
-			<th>Nombre</th>
-			<th>Identificación</th>
-			<th>Año</th>
-			<th>Nivel</th>
-            <th>Ult. actualiz.</th>
-		</tr>
-	     <tr ng-repeat='dt in vm.dts.data'>
-		    <td><button type="button" class="btn btn-primary btn-xs" ng-click='vm.selecPanel($index)'>Ver mas</button></td>
-		    <td>{{ dt.users.name }} {{ dt.users.lastname }}</td>
-            <td>{{ dt.users.identificacion }}</td>
-            <td>{{ dt.niveles_has_anios.anios.anio }}</td>
-            <td>{{ dt.niveles_has_anios.niveles.nombre }}</td>
-		    <td>{{ dt.updated_at }}</td>
-	     </tr>
-	</table>
-</div>
-
-<!-- PANELES -->
-<div ng-repeat='dt in vm.dts.data' class="panel panel-primary" ng-show='vm.esPanelSelec($index) && !vm.buscando'>
-	<div class="panel-heading">
-      	<h4 class="panel-title">Modificación de registro</h4>
-      </div>
-	<div class="panel-body">
-		<p>Puede cambiar los valores de la propiedad en los siguientes campos.</p>
-        <form-alumno existente='dt.id'></form-alumno>
-    </div>
-    <div class="panel-footer">
-     	<button type="button" class="btn btn-primary" ng-click='vm.cerrarPanel()'>Cerrar.</button>
-        <a class="btn btn-danger" ng-click='vm.delData($index)'>Eliminar.</a>
-    </div>				
+<div>
+	<ul>
+		<li ng-repeat='per in vm.dts.data.niveles_has_anios.anios.periodos'>
+			<p>{{ per.nombre }}</p>
+			<ul>
+				<li ng-repeat='na in per.newasistencia'>
+					<p>{{ na.fecha }}</p>
+					<p><button class="btn btn-danger btn-xs" ng-click='vm.delData(na.id)'>Eliminar asistencia</button></p>
+				</li>
+			</ul>
+		</li>
+	</ul>
 </div>

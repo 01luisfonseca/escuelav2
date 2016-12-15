@@ -13,7 +13,8 @@
             aDt: aDt,
 			mDt: mDt,
             dDt: dDt,
-            cDts: cDts
+            cDts: cDts,
+            alId: alId
 		};
 
 		return fc;
@@ -42,6 +43,9 @@
         } 
         function cDts(){
             return $http.get(fc.url+'/count/elem');
+        }
+        function alId(id){
+            return $http.get(fc.url+'/alumno/'+id);
         }     
 	}
 })();

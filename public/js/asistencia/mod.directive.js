@@ -10,6 +10,7 @@
         	templateUrl: '/js/asistencia/mod.html',
         	restrict: 'EA',
         	scope:{
+        		alumnoid: '='
         	},
         	controller: controller,
         	controllerAs: 'vm',
@@ -22,101 +23,54 @@
       		/* */
     	}
 
-    	function controller(AlumnosFactory,error,$timeout,$window){
+    	function controller(NewasistenciaFactory,error,$window, $interval){
     		var vm=this;
-    		var promise;
 
 			// Variables básicas
-			var basicFactory=AlumnosFactory;
-			vm.panel=0;
+			var basicFactory=NewasistenciaFactory;
 			vm.dts={};
-			vm.buscado='';
-			vm.buscando=false;
-			vm.yaBuscado=false;
 
 			// Variables adicionales
+			vm.anterior=0;
+			vm.alumnoid=0;
 	
 			// Funciones basicas
-			vm.getDatas=getDatas;
-			vm.buscarData=buscarData;
+			vm.getData=getData;
 			vm.delData=delData;
-			vm.selecPanel=selecPanel;
-			vm.esPanelSelec=esPanelSelec;
-			vm.cerrarPanel=cerrarPanel;
 
 			// Funciones adicionales
 
 			// Lanzamiento Automático
-			//vm.getDatas();
-			startData();
+			$interval(startData,1000);
 
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 
 			function startData(){
-				stopData();
-				vm.getDatas();
-				//promise=$interval(vm.getDatas,5000);
+				if (vm.alumnoid>0 && vm.alumnoid!=vm.anterior) {
+					vm.getData(vm.alumnoid);
+				}
+				if (vm.alumnoid==0) {
+					vm.dts={};
+				}
+				vm.anterior=vm.alumnoid;
 			}
 
-			function stopData(){
-				//$interval.cancel(promise);
-			}
-
-			function getDatas(){
-				return basicFactory.gDts().then(function(res){
+			function getData(alumnoid){
+				return basicFactory.alId(alumnoid).then(function(res){
 					vm.dts=res;
 				});
 			}
 
-			function buscarData(){
-				stopData();
-				if(vm.buscado.length>2){
-					vm.buscando=true;
-					if (!vm.yaBuscado) {
-						vm.yaBuscado=true;
-						$timeout(searchData,1000);
-					}
-				}
-				if(vm.buscado==''){
-					return startData();
-				}
-				return false;
-			}
-
-			function searchData(){
-				vm.yaBuscado=false;
-				return basicFactory.gSDt(vm.buscado).then(function(res){
-					//console.log(vm.users);
-					vm.dts=res;
-					vm.buscando=false;
-				});
-			}
-
-			function delData(index){
+			function delData(id){
 				if (!$window.confirm('¿ Seguro que desea eliminar el elemento ?')) {
 					return false;
 				}
-				return basicFactory.dDt(vm.dts.data[index].id).then(function(res){
-					vm.getDatas();
+				return basicFactory.dDt(id).then(function(res){
+					vm.getData(vm.alumnoid);
 					error.setAlerta(res.data.msj);
-					vm.selecPanel(-1);
 				});
-			}
-	
-			function selecPanel(index){
-				stopData();
-				vm.panel=index+1;
-			}
-
-			function esPanelSelec(index){
-				return vm.panel==(index+1);
-			}
-
-			function cerrarPanel(){
-				startData();
-				vm.panel=0;
 			}
     	}
 	}

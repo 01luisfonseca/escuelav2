@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::get('/search/{info}','MatasistenciasCtrl@search');
 		Route::get('/range/{ini}','MatasistenciasCtrl@index');
 		Route::get('/count/elem','MatasistenciasCtrl@count');
+		Route::get('/alumno/{id}','MatasistenciasCtrl@showalumno');
 	});
 
 	/** RUTAS NEWASISTENCIA **/
@@ -44,6 +45,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::get('/search/{info}','NewasistenciasCtrl@search');
 		Route::get('/range/{ini}','NewasistenciasCtrl@index');
 		Route::get('/count/elem','NewasistenciasCtrl@count');
+		Route::get('/alumno/{id}','NewasistenciasCtrl@showalumno');
 	});
 
 	/** RUTAS ALUMNOS **/

@@ -42,6 +42,9 @@
         } 
         function cDts(){
             return $http.get(fc.url+'/count/elem');
+        }
+        function alId(id){
+            return $http.get(fc.url+'/alumno/'+id);
         }     
 	}
 })();
