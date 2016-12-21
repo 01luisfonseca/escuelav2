@@ -13,6 +13,9 @@
         <!-- Styles -->
         <link rel="stylesheet" href="/js/node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/ng_animation.css">
+        <link rel="stylesheet" href="/js/node_modules/ng-dialog/css/ngDialog.min.css">
+        <link rel="stylesheet" href="/js/node_modules/ng-dialog/css/ngDialog-theme-default.min.css">
+
         
         <!-- Scripts -->
         <script src='/js/node_modules/angular/angular.min.js'></script>
@@ -26,6 +29,7 @@
         <script src='/js/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
         <script src='/js/node_modules/ngstorage/ngStorage.min.js'></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+        <script src='/js/node_modules/ng-dialog/js/ngDialog.min.js'></script>
         
         
         <!-- Frontend -->
@@ -55,6 +59,10 @@
         <script src='/js/app.services/alumnos.factory.js'></script>
         <script src='/js/app.services/newasistencia.factory.js'></script>
         <script src='/js/app.services/matasistencia.factory.js'></script>
+        <script src='/js/app.services/authdevice.factory.js'></script>
+        <script src='/js/app.services/notas.factory.js'></script>
+        <script src='/js/app.services/tiponota.factory.js'></script>
+        <script src='/js/app.services/indicadores.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -95,6 +103,18 @@
         <script src='/js/asistencia/form.directive.js'></script>
         <script src='/js/asistencia/mod.directive.js'></script>
         <script src='/js/asistencia/rel.directive.js'></script>
+        <script src='/js/authdevice/controller.js'></script>
+        <script src='/js/authdevice/form.directive.js'></script>
+        <script src='/js/authdevice/mod.directive.js'></script>
+        <script src='/js/authdevice/rel.directive.js'></script>
+        <script src='/js/notas/controller.js'></script>
+        <script src='/js/notas/form.directive.js'></script>
+        <script src='/js/notas/mod.directive.js'></script>
+        <script src='/js/notas/rel.directive.js'></script>
+        <script src='/js/tiponota/controller.js'></script>
+        <script src='/js/tiponota/form.directive.js'></script>
+        <script src='/js/tiponota/mod.directive.js'></script>
+        <script src='/js/tiponota/rel.directive.js'></script>
 
     </head>
     <body ng-app="escuela">

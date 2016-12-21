@@ -1,0 +1,22 @@
+<form class="form" name='formAuthdevice' ng-submit='formAuthdevice.$valid && vm.accion()' novalidate>
+<fieldset>
+	<legend>Datos de ingreso: </legend>
+	<div class="form-group">
+		<label class="control-label" for="serial">Serial</label>  
+	    <input id="serial" ng-model="vm.ndts.serial" type="text" class="form-control input-md" required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="nombre">Nombre</label>  
+	    <input id="nombre" ng-model="vm.ndts.nombre" type="text" class="form-control input-md" required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="descripcion">Descripción</label>
+		<textarea id="descripcion" ng-model="vm.ndts.descripcion" cols="3" class="form-control"></textarea> 
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="estado">Estado (0 ó 1)</label>  
+	    <input id="estado" ng-model="vm.ndts.estado" type="number" min='0' max="1" step="1" class="form-control input-md" required>
+	</div>
+	<input type="submit" class="btn btn-info" value="Enviar">
+</fieldset>
+</form>

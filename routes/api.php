@@ -18,6 +18,58 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	/** RUTAS INDICADORES **/
+	Route::group(['prefix'=>'indicadores','middleware'=>'profesor'],function(){
+		//Basicos
+		Route::get('/','IndicadoresCtrl@index');
+		Route::post('/','IndicadoresCtrl@store');
+		Route::get('/{id}','IndicadoresCtrl@show');
+		Route::put('/{id}','IndicadoresCtrl@update');
+		Route::delete('/{id}','IndicadoresCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','IndicadoresCtrl@count');
+		Route::get('/search/{info}','IndicadoresCtrl@search');
+	});
+
+	/** RUTAS TIPONOTA **/
+	Route::group(['prefix'=>'tiponota','middleware'=>'profesor'],function(){
+		//Basicos
+		Route::get('/','TipoNotasCtrl@index');
+		Route::post('/','TipoNotasCtrl@store');
+		Route::get('/{id}','TipoNotasCtrl@show');
+		Route::put('/{id}','TipoNotasCtrl@update');
+		Route::delete('/{id}','TipoNotasCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','TipoNotasCtrl@count');
+		Route::get('/search/{info}','TipoNotasCtrl@search');
+	});
+
+	/** RUTAS NOTAS **/
+	Route::group(['prefix'=>'notas','middleware'=>'profesor'],function(){
+		//Basicos
+		Route::get('/','NotasCtrl@index');
+		Route::post('/','NotasCtrl@store');
+		Route::get('/{id}','NotasCtrl@show');
+		Route::put('/{id}','NotasCtrl@update');
+		Route::delete('/{id}','NotasCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','NotasCtrl@count');
+		Route::get('/search/{info}','NotasCtrl@search');
+	});
+
+	/** RUTAS AUTHDEVICE **/
+	Route::group(['prefix'=>'authdevice','middleware'=>'admin'],function(){
+		//Basicos
+		Route::get('/','AuthdeviceCtrl@index');
+		Route::post('/','AuthdeviceCtrl@store');
+		Route::get('/{id}','AuthdeviceCtrl@show');
+		Route::put('/{id}','AuthdeviceCtrl@update');
+		Route::delete('/{id}','AuthdeviceCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','AuthdeviceCtrl@count');
+		Route::post('/status/{id}','AuthdeviceCtrl@modEstado');
+	});
+
 	/** RUTAS MATASISTENCIA **/
 	Route::group(['prefix'=>'matasistencia','middleware'=>'coordinador'],function(){
 		//Basicos
@@ -147,6 +199,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::put('/{id}','AniosCtrl@update');
 		Route::delete('/{id}','AniosCtrl@destroy');
 		//Adicionales
+		Route::get('/asignado/anio','AniosCtrl@asignado');
 	});
 
 	/** RUTAS EMPLEADOS TABLE **/

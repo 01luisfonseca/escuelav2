@@ -9,7 +9,8 @@ use App\Alumnos;
 use App\MateriasHasPeriodos;
 use App\MateriasHasNiveles;
 use App\Periodos;
-
+use App\TipoNota;
+use App\Notas;
 
 class Rellenador implements RellenadorContract
 {
@@ -106,6 +107,38 @@ class Rellenador implements RellenadorContract
             $obj->periodos_id=$val->id;
             $obj->save();
             $res.=' MHP ID: '.$obj->id.', PER ID: '.$val->id.', MHN: '.$matId.'. ';
+        }
+        return $res;
+    }
+
+    /**
+     * Rellena notas en tipos de nota.
+     *
+     * @param  int  $tipoNId
+     * @return texto de resultados
+     */
+    public function TipoNotaEnNotas($tipoNId){
+        $origen=TipoNota::with(['notas',
+            'indicadores.materias_has_periodos.materias_has_niveles.niveles_has_anios.alumnos'])
+            ->find($tipoNId);
+        $alumnos=$origen->indicadores->materias_has_periodos->materias_has_niveles->niveles_has_anios->alumnos;
+        $comparado=$origen->notas;
+        $res='Se han rellenado Notas con: ';
+        foreach ($alumnos as $val) {
+            $encontrado=false;
+            foreach ($origen->notas as $nota) {
+                if ($nota->alumnos_id == $val->id) {
+                    $encontrado=true;
+                }
+            }
+            if (!$encontrado) {
+                $obj=new Notas;
+                $obj->alumnos_id=$val->id;
+                $obj->tipo_nota_id=$tipoNId;
+                $obj->calificacion=0;
+                $obj->save();
+                $res.='; Notas ID: '.$obj->id.', Alumnos ID: '.$val->id.', TipoNota ID: '.$tipoNId.', Cal: 0';
+            }
         }
         return $res;
     }

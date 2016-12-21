@@ -4,11 +4,12 @@
 		.module('escuela',[
 			// Compartidos
 			'ngAnimate',
-      'escuela.config',
+            'escuela.config',
 			'escuela.core',
 			'ui.router',
-      'ui.router.middleware',
-      'ngStorage',
+            'ui.router.middleware',
+            'ngStorage',
+            'ngDialog',
 
 			// De aplicacion
 			'escuela.router',
@@ -227,6 +228,32 @@
                     'body':{
                         templateUrl: "/js/asistencia/index.html",
                         controller: 'AsistenciasCtrl as vm',
+                    }
+                }
+            })
+            .state('authdevice', {
+                url: "/authdevice",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/authdevice/index.html",
+                        controller: 'AuthdeviceCtrl as vm',
+                    }
+                }
+            })
+            .state('notas', {
+                url: "/notas",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/notas/index.html",
+                        controller: 'NotasCtrl as vm',
                     }
                 }
             });

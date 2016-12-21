@@ -162,4 +162,59 @@ class AniosCtrl extends Controller
         $obj=Anios::all();
         return response()->json(['registros'=>$obj->count()]);
     }
+
+    /**
+     * Entrega registros en los cuales hay derecho de verlos, hasta materias_has_periodos
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function asignado(){
+        $obj=Anios::with(['niveles_has_anios'=>function($query){
+            $query->with(['niveles','materias_has_niveles'=>function($query){
+                $query->with(['materias','materias_has_periodos'=>function($query){
+                        $query->with('periodos');
+                    }]);
+                }]);
+        }])->get();
+        //return $obj->toJson();
+        $arr=[];
+        foreach ($obj as $anio) {
+            $nivelArr=[];
+            foreach ($anio->niveles_has_anios as $nivel) {
+                $matArr=[];
+                foreach ($nivel->materias_has_niveles as $mat) {
+                    $perArr=[];
+                    foreach ($mat->materias_has_periodos as $per) {
+                        $perArr[]=[
+                            'id'=>$per->id,
+                            'nombre'=>$per->periodos->nombre
+                        ];
+                    }
+                    if($this->req->user()->tipo_usuario_id>=4){
+                        $matArr[]=[
+                            'id'=>$mat->id, 
+                            'nombre'=>$mat->materias->nombre, 
+                            'periodos'=>$perArr
+                        ];
+                    }
+                }
+                if (count($matArr)>0) {
+                    $nivelArr[]=[
+                        'id'=>$nivel->id,
+                        'nombre'=>$nivel->niveles->nombre,
+                        'materias'=>$matArr
+                    ];
+                }
+            }
+            if (count($nivelArr)) {
+                $arr[]=[
+                    'id'=>$anio->id,
+                    'anio'=>$anio->anio,
+                    'niveles'=>$nivelArr
+                ];
+            }
+        }
+        $col= collect($arr);
+        return $col->toJson();
+    }
 }

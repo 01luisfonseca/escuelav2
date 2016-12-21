@@ -1,0 +1,19 @@
+<form class="form-horizontal" name="formIndic" ng-submit="formIndic.$valid && vm.accion(vm.existente)" novalidate>
+	<div class='col-xs-12'>
+		<div class="form-group">				
+			<label class="control-label">Nombre</label>
+			<input type="text" class="form-control" ng-model="vm.data.nombre" required>
+		</div>
+	</div>
+	<div class='col-xs-12'>
+		<div class="form-group">							
+			<div class="col-xs-12">
+				<label class="control-label" for="descripcion">Descripción</label>
+			</div>
+			<div class="col-xs-12">  
+				<textarea ng-model="vm.data.descripcion" cols="3" id="descripcion" class="form-control"></textarea>
+			</div>
+		</div>
+	</div>
+	<input type="submit" class="btn btn-primary" value="Actualizar información">
+</form>

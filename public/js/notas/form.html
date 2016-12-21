@@ -1,0 +1,203 @@
+<div id="eleccion_periodo">
+	<div class='row'>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Elija un año.</label>
+			<div class="col-sm-8">
+				<select ng-model='vm.sel.anio' class='form-control' ng-change='vm.cambio("anio")'>
+					<option ng-repeat='anio in vm.anios.data' value='{{anio.id}}'>{{anio.anio}}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class='row' ng-show='vm.sel.anio != 0'>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Elija un nivel del año.</label>
+			<div class="col-sm-8">
+				<select ng-model='vm.sel.nivel' class='form-control' ng-change='vm.cambio("nivel")'>
+					<option ng-repeat='nivel in vm.datos("nivel")' value='{{nivel.id}}'>{{nivel.nombre}}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+    <div class='row' ng-show='vm.sel.anio != 0 && vm.sel.nivel != 0'>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Elija una materia del nivel.</label>
+			<div class="col-sm-8">
+				<select ng-model='vm.sel.mat' ng-change='vm.cambio("mat")' class='form-control' >
+					<option ng-repeat='materia in vm.datos("mat")' value='{{materia.id}}'>{{materia.nombre}}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class='row' ng-show='vm.sel.anio != 0 && vm.sel.mat != 0 && vm.sel.nivel != 0'>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Elija un periodo de la materia.</label>
+			<div class="col-sm-8">
+				<select ng-model='vm.sel.per' ng-change='vm.buscarIndicadores()' class='form-control'>
+					<option ng-repeat='periodo in vm.datos("per")' value='{{periodo.id}}'>{{periodo.nombre}}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class='container-fluid' ng-show='vm.cargando.indicadores || vm.cargando.notas'>
+        <p><h5><em>Cargando información del periodo, por favor espere...</em></h5></p>
+    </div>
+</div>
+<div class='container-fluid' ng-show='vm.sel.per != 0 && !vm.cargando.indicadores'>
+		<div class='row' ng-hide='vm.cargando.indicadores'>
+			<div class='col-md-6 col-xs-12'>
+				<div class='panel panel-warning'>
+					<div class="panel-heading"><h4>Indicadores existentes</h4></div>
+					<div class='panel-body desplazable-grande'>
+						<div class='container-fluid' ng-repeat='indicador in vm.indicadores'>
+						<form class="form-horizontal" name="formActInd" ng-submit="formActInd.$valid && vm.actIndicador($index)" novalidate>
+							<fieldset>
+								<legend>Indicador {{$index+1}}</legend>
+								<div class="row">
+									<div class='col-xs-5'>
+										<div class="form-group">
+    										<label class="control-label">Nombre</label>
+    										<input type="text" class="form-control" ng-model="indicador.nombre" ng-change='indicador.visible=true' required>
+    									</div>
+  									</div>
+  									<div class='col-xs-5 col-xs-offset-2'>
+										<div class="form-group">
+    										<label class="control-label">Porcentaje</label>
+    										<input type="number" class="form-control col-xs-2" min="0" max="100" step="0,1" ng-model="indicador.porcentaje" ng-change='indicador.visible=true' required><span class="input-group-addon" id="basic-addon1">%</span>
+    									</div>
+  									</div>
+  									<div class='col-xs-12'>
+										<div class="form-group">
+											<div class='row'>
+    											<div class="col-sm-3">
+        											<label class="control-label" for="descripcion">Descripción</label>
+        										</div>
+        										<div class="col-sm-9">  
+            										<textarea ng-model="indicador.descripcion" cols="3" id="descripcion" class="form-control" ng-change='indicador.visible=true'></textarea>
+        										</div>
+        									</div>
+    									</div>
+  									</div>
+  									<a href="" ng-click="vm.borrarIndicador(indicador.id)"  class="btn btn-danger"> Borrar?</a>
+  									<input type="submit" class="btn btn-warning" value="Actualizar" ng-show='indicador.visible'>
+  									<button class="btn btn-primary" ng-click='indicador.visible=false' ng-show='indicador.visible'>Cancelar cambios</button>
+  								</div>
+  							</fieldset>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='col-md-6 col-xs-12'>
+				<div class='panel panel-info'>
+					<div class="panel-heading"><h4>Crear indicador</h4></div>
+					<div class='panel-body'>
+						<form class="form-horizontal" name="formIndic" ng-submit="formIndic.$valid && vm.addIndicador()" novalidate>
+							<div class='container-fluid'>
+							<div class="row">
+								<div class='col-xs-5'>
+									<div class="form-group">									
+    									<label class="control-label">Nombre</label>
+    									<input type="text" class="form-control" ng-model="vm.nuevoIndic.nombre" required>
+    								</div>
+  								</div>
+  								<div class='col-xs-5 col-xs-offset-2'>
+  									<div class="form-group">										
+    									<label class="control-label">Porcentaje (Max. {{vm.porcentajeMaximo}})</label>
+    									<input type="number" class="form-control" min="0" max="{{vm.porcentajeMaximo}}" step="0,1" ng-model="vm.nuevoIndic.porcentaje" required>
+    									<span class="input-group-addon">%</span>
+    								</div>
+  								</div>
+  								<div class='col-xs-12'>
+ 									<div class="form-group">						
+										<div class='row'>
+   											<div class="col-sm-3">
+       											<label class="control-label" for="descripcion">Descripción</label>
+       										</div>
+       										<div class="col-sm-9">  
+           										<textarea ng-model="vm.nuevoIndic.descripcion" cols="3" id="descripcion" class="form-control"></textarea>
+       										</div>
+       									</div>
+   									</div>
+								</div>
+							</div>
+ 							<input type="submit" class="btn btn-primary" value="Guardar">
+ 							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="row" ng-show='vm.cargando.notas'>
+			<h5><em>Cargando notas...</em></h5>
+		</div>
+        <div class='row' ng-hide='vm.cargando.notas'>
+			<div class='panel'>
+			<div class='panel-body'>
+			<div class='col-xs-12'>
+				<div class='panel panel-default table-responsive'>
+					<table class='table table-bordered centrar-tabla'>
+						<tr>
+							<td  ng-show='vm.esSeleccionada(0)'>
+								<table class='table table-bordered centrar-tabla'>
+									<tr>
+										<th style="background-color: hsl(10,100%,70%)">Notas definitivas</th>
+									</tr>
+									<tr>
+										<th>Porcentaje acumulado: {{100-vm.porcentajeMaximo}}</th>
+									</tr>
+									<tr>
+										<td>
+											<table class='table table-bordered centrar-tabla'>
+												<tr>
+													<th>Alumno</th>
+													<th style="background-color: hsl({{20*($index+1)}},100%,70%);" ng-repeat='indicador in vm.promedios.indicadores' ng-click='vm.selecciona($index+1)'>Ir a indicador {{$index+1}}: {{indicador.nombre | uppercase}}. ( {{indicador.porcentaje}}% ).</th>
+													<th style="background-color: hsl(10,100%,70%)">Definitiva general</th>
+												</tr>
+												<tr ng-repeat='alumno in vm.promedios.alumnos'>
+													<td>{{alumno.lastname}}, {{alumno.name}}</td>
+													<td ng-repeat='indica in alumno.indicadores'>{{indica.def | number:1}}</td>
+													<td>{{alumno.def | number:1}}</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>								
+							</td>
+							<td ng-repeat='indicador in vm.indicadores' ng-show='vm.esSeleccionada($index+1)'>
+								<table class='table table-bordered centrar-tabla'>
+									<tr>
+										<th style="background-color: hsl({{30*($index+1)}},100%,70%);">Indicador {{$index+1}}: <em>{{indicador.nombre | uppercase}}.</em> <a href class="btn btn-default btn-xs" ng-click='vm.crearTipo(indicador.id)'>Agregar nota?</a><a href class="btn btn-success btn-xs" ng-click='vm.selecciona(0)'>Volver a definitivas</a></th>
+									</tr>
+									<tr>
+										<th>Porcentaje: {{indicador.porcentaje}}%</th>
+									</tr>
+									<tr>
+										<td>
+											<table class='table table-bordered centrar-tabla'>
+												<tr>
+													<th>Alumno</th>
+													<th ng-repeat='tipo in indicador.tipo_nota'>Nota {{$index+1}}. <em>{{tipo.nombre}}</em> <button type='button' class="btn btn-info btn-xs" ng-click='vm.modalTipo(tipo.id)'>Info</button>
+													<!-- Modal -->
+													<a href class="btn btn-danger btn-xs" ng-click='vm.eliminarTipo(tipo.id)'>Borrar?</a>
+													</th>
+													<th>Def.</th>
+												</tr>
+												<tr ng-repeat='alumno in indicador.alumnos' ng-init='parentIndex=$index'>
+													<td>{{alumno.lastname}}, {{alumno.name}}.</td>
+													<td ng-repeat='tipo in alumno.tipo_nota' ><input type="number" min="0" max="10" step="0,1" ng-model="tipo.cal" ng-blur=' vm.actNota( tipo.notas_id , tipo.cal)' required></td>
+													<td><input type="number" min="0" max="10" step="0,1" ng-model="alumno.prom" disabled></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			</div>
+			</div>
+		</div>
+	</div>
