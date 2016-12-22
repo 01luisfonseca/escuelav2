@@ -120,14 +120,23 @@ class IndicadoresCtrl extends Controller
 		// Condiciones que se repiten sea modificación o nuevo
 		// Este es el lugar que se debe modificar.
 
-		$this->validate($this->req,[
-            'nombre'=>'required',
-            'porcentaje'=>'required',
-            'materias_has_periodos_id'=>'required'
-        ]);
+		if ($id) {
+            $this->validate($this->req,[
+                'nombre'=>'required',
+                'porcentaje'=>'required'
+            ]);
+        }else{
+            $this->validate($this->req,[
+                'nombre'=>'required',
+                'porcentaje'=>'required',
+                'materias_has_periodos_id'=>'required'
+            ]);
+        }
 		$obj->nombre=$this->req->input('nombre');
 		$obj->porcentaje=$this->req->input('porcentaje');
-		$obj->materias_has_periodos_id=$this->req->input('materias_has_periodos_id');
+        if($this->req->has('materias_has_periodos_id')){
+            $obj->materias_has_periodos_id=$this->req->input('materias_has_periodos_id');
+        }
 		if($this->req->has('descripcion')){
 			$obj->descripcion=$this->req->input('descripcion');
 		}else{

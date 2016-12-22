@@ -56,7 +56,6 @@
 				return basicFactory.gDt(id).then(function(res){
 					//console.log(res);
 					vm.ndts=res.data;
-					vm.ndts.anio=parseInt(vm.ndts.anio);
 				});
 			}
 		

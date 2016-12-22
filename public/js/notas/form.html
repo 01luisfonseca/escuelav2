@@ -141,7 +141,7 @@
 							<td  ng-show='vm.esSeleccionada(0)'>
 								<table class='table table-bordered centrar-tabla'>
 									<tr>
-										<th style="background-color: hsl(10,100%,70%)">Notas definitivas</th>
+										<th style="background-color: hsl(5,100%,70%)">Notas definitivas</th>
 									</tr>
 									<tr>
 										<th>Porcentaje acumulado: {{100-vm.porcentajeMaximo}}</th>
@@ -178,8 +178,14 @@
 												<tr>
 													<th>Alumno</th>
 													<th ng-repeat='tipo in indicador.tipo_nota'>Nota {{$index+1}}. <em>{{tipo.nombre}}</em> <button type='button' class="btn btn-info btn-xs" ng-click='vm.modalTipo(tipo.id)'>Info</button>
-													<!-- Modal -->
 													<a href class="btn btn-danger btn-xs" ng-click='vm.eliminarTipo(tipo.id)'>Borrar?</a>
+													
+													<!-- Modal -->
+													<div ng-show='vm.selModal(tipo.id)'>
+														<form-tnota existente='tipo.id'></form-tnota>
+														<button ng-click='vm.modalTipo(0)' class="btn btn-primary btn-sm">Cerrar Ventana</button>
+													</div>
+													
 													</th>
 													<th>Def.</th>
 												</tr>

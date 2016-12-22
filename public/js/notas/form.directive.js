@@ -30,8 +30,7 @@
     		NotasFactory,
     		ngDialog,
     		error,
-    		$window,
-            $scope
+    		$window
     		){
     		var vm=this;
 
@@ -55,7 +54,8 @@
 				anio:0,
 				nivel:0,
 				mat:0,
-				per:0
+				per:0,
+                tnota:0
 			};
 	
 			// Funciones basicas
@@ -70,6 +70,7 @@
             vm.esSeleccionada=esSeleccionada;   	// Verifica que una ventana es seleccionada
             vm.selecciona=selecciona;           	// Selecciona una ventana a mostrar.
             vm.modalTipo=modalTipo;					// Abre ngDialog con el modal del tipo de notas
+            vm.selModal=selModal;                   // Verifica el tipo de nota seleccionado
 
 			// Funciones adicionales
 			vm.datos=datos;
@@ -119,6 +120,7 @@
 					vm.sel.mat=0;
 					case 'mat':
 					vm.sel.per=0;
+                    vm.sel.tnota=0;
 					return true;
 					break;
 				}
@@ -184,9 +186,8 @@
             function actIndicador(index){
                 return IndicadoresFactory.mDt(vm.indicadores[index].id,vm.indicadores[index]).then(
 				function(response){
-					if (response.data.estado===true) {
-                        vm.buscarIndicadores();
-					};
+					vm.indicadores[index].visible=false;
+                    actPromedio();
 				}
                 );
             }
@@ -351,13 +352,15 @@
 
             // Sobre modales con ngDialog
             function modalTipo(id){
-                $scope.id=id;
-            	ngDialog.open({
-    				template: '/js/notas/tiponota.dir.html',
-    				className: 'ngdialog-theme-plain',
-    				width: '50%',
-                    scope:$scope
-				});
+                if (id==0) {
+                    buscarIndicadores(vm.sel.per);
+                }
+                vm.sel.tnota=id;
+            }
+
+            // Ver modal
+            function selModal(id){
+                return vm.sel.tnota==id;
             }
 			
     	}
