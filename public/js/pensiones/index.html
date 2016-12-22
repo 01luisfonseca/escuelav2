@@ -1,0 +1,66 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12" ng-show='vm.panelSel(0)'>
+			
+			<p>Por favor escriba los criterios de busqueda. Por defecto se mostrarán los últimos 50 registros según su número de factura.</p>
+			<p><input type="text" ng-model='vm.buscado' placeholder="Introduzca el texto a buscar." ng-change='vm.buscarData()' class="form-control input-md"></p>
+			<p ng-show='vm.buscado!=""'>A continuación se presentan los resultados.</p>
+			<div  ng-show='vm.buscando'><p><h4><em>Cargando información</em></h4></p></div>
+			<div class="table-responsive desplazable-grande">
+				<button class="btn btn-xs btn-info" ng-click='vm.getDatas()'>Actualizar tabla.</button>
+				<table class="table table-stripped">
+					<tr>
+						<th>Acción</th>
+        			    <th>Factura</th>
+						<th>Usuario</th>
+						<th>Fecha cancelación</th>
+        			    <th>Valor</th>
+						<th>Diferencia</th>
+        			    <th>Ult. actualiz.</th>
+					</tr>
+	     			<tr ng-repeat='dt in vm.dts'>
+		    			<td><button type="button" class="btn btn-primary btn-xs" ng-click='vm.selElem(dt.id)'>Ver mas</button></td>
+		    			<td>{{ dt.numero_factura }}</td>
+		    			<td>{{ dt.alumnos.users.lastname }}, {{ dt.alumnos.users.name }}</td>
+               			<td>{{ dt.cancelado_at }}</td>
+               			<td>{{ dt.valor|currency }}</td>
+               			<td>{{ dt.faltante|currency }}</td>
+		    			<td>{{ dt.updated_at }}</td>
+	     			</tr>
+				</table>
+			</div>
+
+		</div>
+		<div class="col-md-12" ng-show='vm.panelSel(1)'>
+			<form class="form" name='formulario' ng-submit='formulario.$valid && vm.accion()' novalidate>
+				<div class="form-group">
+					<label class="control-label" for="nombre">Número de factura</label>
+					<label class="form-control">{{ vm.form.numero_factura }}</label>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="nombre">Usuario</label>  
+	    			<label class="form-control">{{ vm.form.alumnos.users.lastname }}, {{ vm.form.alumnos.users.name }}</label>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="nombre">Fecha de cancelación</label>  
+	    			<input id="fecha" ng-model="vm.form.cancelado_at" type="date" class="form-control input-md" required>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="nombre">Valor</label>
+					<span class="input-group-addon" id="basic-addon1">$</span>  
+	    			<input id="nombre" ng-model="vm.form.valor" type="number" class="form-control input-md" required>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="nombre">Diferencia</label>
+					<span class="input-group-addon" id="basic-addon1">$</span>  
+	    			<input id="nombre" ng-model="vm.form.faltante" type="number" class="form-control input-md">
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="descripcion">Notas</label>
+					<textarea id="descripcion" ng-model="vm.form.descripcion" cols="3" class="form-control"></textarea>
+				</div>
+				<input type="submit" class="btn btn-info" value="Enviar">
+			</form>
+		</div>
+	</div>
+</div>

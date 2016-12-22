@@ -256,6 +256,19 @@
                         controller: 'NotasCtrl as vm',
                     }
                 }
+            })
+            .state('ingresos', {
+                url: "/ingresos",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/ingresos/index.html",
+                        controller: 'IngresosCtrl as vm',
+                    }
+                }
             });
     }
 

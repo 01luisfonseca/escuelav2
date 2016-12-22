@@ -4,7 +4,7 @@
 			<label class="control-label">Nombre</label>
 		</div>
 		<div class="col-xs-12">
-			<input type="text" class="form-control" ng-model="vm.ndts.nombre" required>
+			<input type="text" class="form-control" ng-model="vm.ndts.nombre" ng-change='vm.ndts.visible=true' required>
 		</div>				
 	</div>
 	<div class="form-group">							
@@ -12,8 +12,8 @@
 			<label class="control-label" for="descripcion">Descripción</label>
 		</div>
 		<div class="col-xs-12">  
-			<textarea ng-model="vm.ndts.descripcion" cols="3" id="descripcion" class="form-control"></textarea>
+			<textarea ng-model="vm.ndts.descripcion" cols="3" id="descripcion" class="form-control" ng-change='vm.ndts.visible=true'></textarea>
 		</div>
 	</div>
-	<input type="submit" class="btn btn-success btn-sm" value="Actualizar información">
+	<input type="submit" class="btn btn-warning btn-md" value="Actualizar información" ng-show='vm.ndts.visible'>
 </form>

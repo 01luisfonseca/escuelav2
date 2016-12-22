@@ -151,8 +151,8 @@
 											<table class='table table-bordered centrar-tabla'>
 												<tr>
 													<th>Alumno</th>
-													<th style="background-color: hsl({{20*($index+1)}},100%,70%);" ng-repeat='indicador in vm.promedios.indicadores' ng-click='vm.selecciona($index+1)'>Ir a indicador {{$index+1}}: {{indicador.nombre | uppercase}}. ( {{indicador.porcentaje}}% ).</th>
-													<th style="background-color: hsl(10,100%,70%)">Definitiva general</th>
+													<th style="background-color: hsl({{40+10*($index+1)}},100%,70%);" ng-repeat='indicador in vm.promedios.indicadores' ng-click='vm.selecciona($index+1)'>Ir a indicador {{$index+1}}: {{indicador.nombre | uppercase}}. ( {{indicador.porcentaje}}% ).</th>
+													<th style="background-color: hsl(5,100%,70%)">Definitiva general</th>
 												</tr>
 												<tr ng-repeat='alumno in vm.promedios.alumnos'>
 													<td>{{alumno.lastname}}, {{alumno.name}}</td>
@@ -167,7 +167,7 @@
 							<td ng-repeat='indicador in vm.indicadores' ng-show='vm.esSeleccionada($index+1)'>
 								<table class='table table-bordered centrar-tabla'>
 									<tr>
-										<th style="background-color: hsl({{30*($index+1)}},100%,70%);">Indicador {{$index+1}}: <em>{{indicador.nombre | uppercase}}.</em> <a href class="btn btn-default btn-xs" ng-click='vm.crearTipo(indicador.id)'>Agregar nota?</a><a href class="btn btn-success btn-xs" ng-click='vm.selecciona(0)'>Volver a definitivas</a></th>
+										<th style="background-color: hsl({{40+10*($index+1)}},100%,70%);">Indicador {{$index+1}}: <em>{{indicador.nombre | uppercase}}.</em> <a href class="btn btn-warning btn-sm" ng-click='vm.crearTipo(indicador.id)'>Agregar nota?</a><a href class="btn btn-success btn-sm" ng-click='vm.selecciona(0)'>Volver a definitivas</a></th>
 									</tr>
 									<tr>
 										<th>Porcentaje: {{indicador.porcentaje}}%</th>
@@ -177,8 +177,8 @@
 											<table class='table table-bordered centrar-tabla'>
 												<tr>
 													<th>Alumno</th>
-													<th ng-repeat='tipo in indicador.tipo_nota'>Nota {{$index+1}}. <em>{{tipo.nombre}}</em> <button type='button' class="btn btn-info btn-xs" ng-click='vm.modalTipo(tipo.id)'>Info</button>
-													<a href class="btn btn-danger btn-xs" ng-click='vm.eliminarTipo(tipo.id)'>Borrar?</a>
+													<th ng-repeat='tipo in indicador.tipo_nota'>Nota {{$index+1}}. <em>{{tipo.nombre}}</em> <button type='button' class="btn btn-info btn-sm" ng-click='vm.modalTipo(tipo.id)'>Info</button>
+													<a href class="btn btn-danger btn-sm" ng-click='vm.eliminarTipo(tipo.id)'>Borrar?</a>
 													
 													<!-- Modal -->
 													<div ng-show='vm.selModal(tipo.id)'>

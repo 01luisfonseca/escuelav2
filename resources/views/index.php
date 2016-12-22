@@ -63,6 +63,7 @@
         <script src='/js/app.services/notas.factory.js'></script>
         <script src='/js/app.services/tiponota.factory.js'></script>
         <script src='/js/app.services/indicadores.factory.js'></script>
+        <script src='/js/app.services/pension.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -115,6 +116,9 @@
         <script src='/js/tiponota/form.directive.js'></script>
         <script src='/js/tiponota/mod.directive.js'></script>
         <script src='/js/tiponota/rel.directive.js'></script>
+        <script src='/js/ingresos/controller.js'></script>
+        <script src='/js/ingresos/form.directive.js'></script>
+        <script src='/js/pensiones/directive.js'></script>
 
     </head>
     <body ng-app="escuela">

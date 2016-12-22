@@ -1,0 +1,45 @@
+<div  id="ingresos" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Gestión de Ingresos</h2>
+	</div>
+	<div id="content">
+		<p>En el siguiente espacio se puede gestionar los ingresos por concepto de cobros por pensiones, matrículas y otros.</p>
+            <mensajes></mensajes>
+	</div>
+	<div id="footer">
+			<!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active" ng-click='vm.selectTab(1)'><a aria-controls="CrearData" role="tab" data-toggle="tab">Crear</a></li>
+                  <li role="presentation" ng-click='vm.selectTab(2)'><a aria-controls="Pensiones" role="tab" data-toggle="tab">Pensiones</a></li>
+                  <li role="presentation" ng-click='vm.selectTab(3)'><a aria-controls="Matriculas" role="tab" data-toggle="tab">Matrículas</a></li>
+                  <li role="presentation" ng-click='vm.selectTab(4)'><a aria-controls="Otros_pagos" role="tab" data-toggle="tab">Otros Cobros</a></li>
+            </ul>
+
+             <!-- Tab panes -->
+            <div class="tab-content">
+
+                  <div role="tabpanel" class="active"  id="CrearData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(1)'>
+                              <div class="panel-body"><form-ingreso></form-ingreso></div>
+                        </div>
+                  </div>
+
+                  <div role="tabpanel" class="active"  id="Pensiones">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(2)'>
+                              <div class="panel-body"><pensiones></pensiones></div>
+                        </div>
+                  </div>
+
+                  <div role="tabpanel" class="active"  id="Matriculas">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(3)'>
+                              <div class="panel-body"><matriculas></matriculas></div>
+                        </div>
+                  </div>
+                  <div role="tabpanel" class="active"  id="Otros_pagos">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(4)'>
+                              <div class="panel-body"><otros></otros></div>
+                        </div>
+                  </div>
+            </div>
+	</div>               
+</div>

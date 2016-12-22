@@ -18,6 +18,19 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	/** RUTAS PAGO PENSION **/
+	Route::group(['prefix'=>'pension','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','PensionCtrl@index');
+		Route::post('/','PensionCtrl@store');
+		Route::get('/{id}','PensionCtrl@show');
+		Route::put('/{id}','PensionCtrl@update');
+		Route::delete('/{id}','PensionCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','PensionCtrl@count');
+		Route::get('/search/{info}','PensionCtrl@search');
+	});
+
 	/** RUTAS INDICADORES **/
 	Route::group(['prefix'=>'indicadores','middleware'=>'profesor'],function(){
 		//Basicos
