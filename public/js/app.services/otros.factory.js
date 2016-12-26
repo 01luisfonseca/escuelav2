@@ -1,25 +1,25 @@
 (function(){
-    'use strict';
-    angular.module('escuela')
-    .factory('PensionFactory',factory);
+	'use strict';
+	angular.module('escuela')
+	.factory('OtrosFactory',factory);
 
-    function factory($http){
-        var url= '/api/pension';
-        var fc={
-            gDt: gDt,
-            gDts: gDts,
+	function factory($http){
+        var url= '/api/otros';
+		var fc={
+			gDt: gDt,
+			gDts: gDts,
             gSDt:gSDt,
             gRDts: gRDts,
             aDt: aDt,
-            mDt: mDt,
+			mDt: mDt,
             dDt: dDt,
             gEFac:gEFac,
             gAl:gAl
-        };
+		};
 
-        return fc;
+		return fc;
 
-        /////////////////
+		/////////////////
         function gDt(id){
             return $http.get(url+'/'+id);
         }
@@ -47,5 +47,5 @@
         function gAl(id){
             return $http.get(url+'/alumno/'+id);
         }      
-    }
+	}
 })();

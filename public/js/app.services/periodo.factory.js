@@ -12,7 +12,8 @@
             gRDts: gRDts,
             aDt: aDt,
 			mDt: mDt,
-            dDt: dDt
+            dDt: dDt,
+            gEFac:gEFac
 		};
 
 		return fc;
@@ -38,6 +39,9 @@
         }
         function dDt(id){
             return $http.delete(url+'/'+id);
-        }      
+        }
+        function gEFac(fac){
+            return $http.delete(url+'/fac/'+fac);
+        }       
 	}
 })();

@@ -1,14 +1,132 @@
-<form class="form" name='formMateria' ng-submit='formMateria.$valid && vm.accion()' novalidate>
-<fieldset>
-	<legend>Datos de ingreso: </legend>
-	<div class="form-group">
-		<label class="control-label" for="nombre">Nombre</label>  
-	    <input id="nombre" ng-model="vm.ndts.nombre" type="text" class="form-control input-md" required>
+<div class="panel panel-primary">
+	<div class="panel-body">
+    	<form class="form" name="formCobros" ng-submit="formCobros.$valid && vm.accion()" novalidate>
+			<fieldset>
+    			<legend>Formulario de registro de cobro</legend>
+    			<div class="form-group">
+    				<div class="row">
+    					<div class="col-sm-3">
+    						<label class="control-label">Seleccione tipo de cobro.</label>
+    					</div>
+    					<div class="col-sm-9">
+    						<label class="form-control">
+    							<input  type="radio" name="selectType" ng-model="vm.pago.tipo" value="pension" ng-change="vm.verificarPago()"> Pensión
+    						</label>
+    						<label class="form-control">
+    							<input type="radio" name="selectType" ng-model="vm.pago.tipo" value="matricula" ng-change="vm.verificarPago()"> Matrícula
+    						</label>
+    						<label class="form-control">
+    							<input type="radio" name="selectType" ng-model="vm.pago.tipo" value="otros" ng-change="vm.verificarPago()"> Otros pagos
+    						</label>
+    					</div>
+    				</div>
+    				</div>
+    				<div class="form-group">
+    					<div class="row">
+        					<div class="col-sm-3">
+        						<label class="control-label" for="valor">Alumno</label>
+        					</div>
+        					<div class="col-sm-9">
+                                <input name="alumno" class="form-control" ng-class="{ 'has-error' : formCobros.alumno.$invalid && !formCobros.alumno.$pristine }" type="text" ng-model="vm.pago.alumnoTxt" ng-keyup="vm.buscarAlumnos()" required>
+                                <p ng-show='vm.yaBuscado'><strong><em>Cargando información...</em></strong></p>
+        						<div class='list-group desplazable'>
+                                    <div ng-repeat="alumno in vm.alumnos">
+                                    <a href class="list-group-item" ng-click="vm.seleccionarAlumno(alumno.id,alumno.pension,alumno.matricula)" ng-class="{active: vm.esSeleccion(alumno.id)}">
+                                        <h4 class="list-group-item-heading"><em>{{alumno.users.lastname}}, {{alumno.users.name}}</em> de <u>{{alumno.niveles_has_anios.niveles.nombre}}, {{alumno.niveles_has_anios.anios.anio}}</u></h4>
+                                        <p class='list-group-item-text'>Identificación: {{alumno.users.identificacion}}; Pensión: {{alumno.pension | currency}}; Matrícula: {{alumno.matricula | currency}}</p>
+                                    </a>
+                                    </div>                  
+                                </div>
+        					</div>
+        				</div>
+                        <p ng-show="formCobros.alumno.$invalid && !formCobros.alumno.$pristine" class="help-block">El alumno es requerido.</p>
+    				</div>
+    				<div class="form-group">
+        				<div class="row">
+        					<div class="col-sm-3">
+        						<label class="control-label" for="valor">Código de Factura</label>
+        					</div>
+        					<div class="col-sm-9">  
+        						<input name="factura" class="form-control" ng-class="{ 'has-error' : formCobros.factura.$invalid && !formCobros.factura.$pristine }" type="text" ng-model="vm.pago.numero_factura" ng-blur='vm.verificarFactura(vm.pago.numero_factura)' required>
+        					</div>
+        				</div>
+                        <p ng-show="formCobros.factura.$invalid && !formCobros.factura.$pristine" class="help-block">El código de factura es requerido.</p>
+    				</div>
+    				<div class="form-group">
+    					<div class="row" ng-show="vm.esPension()">
+    						<div class="col-sm-3">
+        						<label class="control-label" for="mes">Mes</label> 
+        					</div>
+        					<div class="col-sm-9"> 
+        					<select id="mes_id" class="form-control"  ng-model="vm.pago.mes_id">
+                    			<option ng-repeat="mes in vm.meses" value="{{mes.id}}">{{mes.nombre}}</option>
+                			</select>
+        					</div>
+        				</div>
+    				</div>
+    				<div class="form-group">
+    					<div class="row">
+    						<div class="col-sm-3">
+        						<label class="control-label" for="valor">Valor a cobrar</label>
+        					</div>
+        					<div class="col-sm-9">  
+        						<div class="input-group">
+            						<span class="input-group-addon" id="basic-addon1">$</span>
+            						<input name="valor" type="number" class="form-control" ng-class="{ 'has-error' : formCobros.valor.$invalid && formCobros.valor.$pristine }" ng-model="vm.pago.valor" ng-change="vm.verificarRestante()" required>
+        						</div>
+        					</div>
+        				</div>
+                        <p ng-show="formCobros.valor.$invalid && !formCobros.valor.$pristine" class="help-block">El valor es requerido.</p>
+    				</div>
+    				<div class="form-group">
+    					<div class="row" ng-hide="vm.esOtros()">
+    						<div class="col-sm-3">
+        						<label class="control-label" for="faltante">Saldo a favor de la institución, poner valor positivo. Saldo a favor del estudiante, poner número negativo</label>  
+        					</div>
+        					<div class="col-sm-9">
+        						<div class="input-group">
+            						<span class="input-group-addon" id="basic-addon1">$</span>
+            						<input type="number" class="form-control" ng-model="vm.pago.faltante" >
+        						</div>
+        					</div>
+        				</div>
+    				</div>
+    				<div class="form-group">
+    					<div class="row">
+    						<div class="col-sm-3">
+        						<label class="control-label" for="descripcion">Notas sobre el pago</label>
+        					</div>
+        					<div class="col-sm-9">  
+            					<textarea ng-model="vm.pago.descripcion" cols="3" class="form-control"></textarea>
+        					</div>
+        				</div>
+    				</div>
+			</fieldset>
+			<input type="submit" class="btn btn-primary" value="Guardar">
+		</form>
+        <p ng-show="formCobros.$invalid" class="label label-danger">Falta información. No se ha enviado la solicitud.</p>
+        <p><h4>Información del estudiante según la opción elegida.</h4></p>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+            <tr class="success">
+                <th>Acción</th>
+                <th>No. Factura</th>
+                <th>Mes (Si aplica)</th>
+                <th>Nivel asociado</th>
+                <th>Valor pagado</th>
+                <th>Fecha de creación</th>
+            </tr>
+            <tr ng-repeat="dato in vm.historial">
+                <td>
+                    <a href="/#/facturacobro/{{vm.pago.tipo}}/{{dato.numero_factura}}" target="_blank">Tirilla</a>
+                </td>
+                <td>{{dato.numero_factura}}</td>
+                <td>{{dato.meses.nombre}}</td>
+                <td>{{dato.alumnos.niveles_has_anios.niveles.nombre}}</td>
+                <td>{{dato.valor}}</td>
+                <td>{{dato.created_at}}</td>
+            </tr>
+            </table>
+        </div>
 	</div>
-	<div class="form-group">
-		<label class="control-label" for="descripcion">Descripción</label>
-		<textarea id="descripcion" ng-model="vm.ndts.descripcion" cols="3" class="form-control"></textarea> 
-	</div>
-	<input type="submit" class="btn btn-info" value="Enviar">
-</fieldset>
-</form>
+</div>

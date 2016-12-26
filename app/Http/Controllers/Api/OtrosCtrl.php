@@ -10,9 +10,9 @@ use App\Helpers\Verificador;
 use App\Helpers\Rellenador;
 use App\Helpers\Borrador;
 use Log;
-use App\PagoPension;
+use App\PagoOtros;
 
-class PensionCtrl extends Controller
+class OtrosCtrl extends Controller
 {
     /**
      * @var Request
@@ -22,7 +22,7 @@ class PensionCtrl extends Controller
     public function __construct(Request $request)//Dependency injection
     {
         $this->req = $request;
-        $this->rel=['alumnos.users','alumnos.niveles_has_anios.anios','alumnos.niveles_has_anios.niveles','meses'];
+        $this->rel=['alumnos.users','alumnos.niveles_has_anios.anios','alumnos.niveles_has_anios.niveles'];
     }
 
     /**
@@ -32,11 +32,11 @@ class PensionCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=PagoPension::with($this->rel)
+        $obj=PagoOtros::with($this->rel)
             ->orderBy('numero_factura','desc')
             ->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
-        $msj='Consulta registros. Tabla=PagoPension.';
+        $msj='Consulta registros. Tabla=PagoOtros.';
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
@@ -50,7 +50,7 @@ class PensionCtrl extends Controller
     public function store()
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de guardar en tabla=PagoPension.',$this->req->user()->id);
+        $ev->registro(1,'Intento de guardar en tabla=PagoOtros.',$this->req->user()->id);
         $msj=$this->setMod();
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
@@ -64,9 +64,9 @@ class PensionCtrl extends Controller
      */
     public function show($id)
     {
-        $obj=PagoPension::with($this->rel)->findOrFail($id);
+        $obj=PagoOtros::with($this->rel)->findOrFail($id);
         $ev=new EventlogRegister;
-        $msj='Consulta de elemento. Tabla=PagoPension, id='.$id;
+        $msj='Consulta de elemento. Tabla=PagoOtros, id='.$id;
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
@@ -81,7 +81,7 @@ class PensionCtrl extends Controller
     public function update($id)
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de modificación. Tabla=PagoPension, id='.$id,$this->req->user()->id);
+        $ev->registro(1,'Intento de modificación. Tabla=PagoOtros, id='.$id,$this->req->user()->id);
         $msj= $this->setMod($id);
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
@@ -96,10 +96,10 @@ class PensionCtrl extends Controller
     public function destroy($id)
     {
         $ev=new EventlogRegister;
-        $ev->registro(2,'Intento de eliminación. Tabla=PagoPension, id='.$id,$this->req->user()->id);
+        $ev->registro(2,'Intento de eliminación. Tabla=PagoOtros, id='.$id,$this->req->user()->id);
         $res=new Borrador;
-        $res->delPagoPension($id); // Usando el borrador de cascada.
-        $msj='Borrado. Tabla=PagoPension, id='.$id;
+        $res->delPagoOtros($id); // Usando el borrador de cascada.
+        $msj='Borrado. Tabla=PagoOtros, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -111,9 +111,9 @@ class PensionCtrl extends Controller
      */
     private function setMod($id=0){
 		$resultado='Operación rechazada por falta de información';
-		$obj=new PagoPension;	// Si es nuevo registro
+		$obj=new PagoOtros;	// Si es nuevo registro
 		if($id>0){
-			$obj=PagoPension::findOrFail($id); // Si es modificacion
+			$obj=PagoOtros::findOrFail($id); // Si es modificacion
 		}	
 
 		//////////////////////////////////////////////////////
@@ -123,16 +123,13 @@ class PensionCtrl extends Controller
         if ($id) {
             $this->validate($this->req,[
                 'cancelado_at'=>'required',
-                'valor'=>'required',
-                'faltante'=>'required'
+                'valor'=>'required'
             ]);
         }else{
             $this->validate($this->req,[
             	'numero_factura'=>'required',
             	'alumnos_id'=>'required',
-                'valor'=>'required',
-                'faltante'=>'required',
-                'mes_id'=>'required'
+                'valor'=>'required'
             ]);
             $ver=new Verificador;
             if($ver->existeFactura($this->req->input('numero_factura'))){
@@ -141,8 +138,6 @@ class PensionCtrl extends Controller
 
         }
 		$obj->valor=$this->req->input('valor');
-        $obj->mes_id=$this->req->input('mes_id');
-		$obj->faltante=$this->req->input('faltante');
 		if($this->req->has('numero_factura')){
             $obj->numero_factura=$this->req->input('numero_factura');
         }
@@ -167,9 +162,9 @@ class PensionCtrl extends Controller
 
 		// Guardar y finalizar
 		if ($id>0) {
-			$resultado='Modificación. Tabla=PagoPension, id='.$id;
+			$resultado='Modificación. Tabla=PagoOtros, id='.$id;
 		}else{
-			$resultado='Elemento Creado. Tabla=PagoPension, id='.$obj->id;
+			$resultado='Elemento Creado. Tabla=PagoOtros, id='.$obj->id;
 		}
 		return $resultado;
 	}
@@ -184,19 +179,19 @@ class PensionCtrl extends Controller
      * @return \Illuminate\Http\Response
      */
     public function count(){
-        $obj=PagoPension::all();
+        $obj=PagoOtros::all();
         return response()->json(['registros'=>$obj->count()]);
     }
 
     /**
-     * Busca PagoPension con los periodos ID. Corelaciona a los alumnos con su nota.
+     * Busca PagoOtros con los periodos ID. Corelaciona a los alumnos con su nota.
      *
      * @return \Illuminate\Http\Response
      */
     public function search($info){
-        $obj=PagoPension::join('alumnos','alumnos_id','=','alumnos.id')
+        $obj=PagoOtros::join('alumnos','alumnos_id','=','alumnos.id')
             ->join('users','alumnos.users_id','=','users.id')
-            ->select('pago_pension.*')
+            ->select('pago_otro.*')
             ->where('users.name','LIKE','%'.$info.'%')
             ->orWhere('users.lastname','LIKE','%'.$info.'%')
             ->orWhere('users.identificacion','LIKE','%'.$info.'%')
@@ -204,7 +199,7 @@ class PensionCtrl extends Controller
             ->orderBy('users.lastname','desc')
             ->with($this->rel)
             ->get();
-        $msj='Busqueda. Tabla=PagoPension, letras='.$info;
+        $msj='Busqueda. Tabla=PagoOtros, letras='.$info;
         $ev=new EventlogRegister;
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
@@ -217,7 +212,7 @@ class PensionCtrl extends Controller
      */
     public function verificarFactura($fac=0)
     {
-        $obj=PagoPension::with($this->rel)->where('numero_factura',$fac)->firstOrFail();
+        $obj=PagoOtros::with($this->rel)->where('numero_factura',$fac)->firstOrFail();
         return $obj->toJson();
     }
 
@@ -229,9 +224,9 @@ class PensionCtrl extends Controller
      */
     public function verificarAlumno($id)
     {
-        $obj=PagoPension::with($this->rel)->where('alumnos_id',$id)->get();
+        $obj=PagoOtros::with($this->rel)->where('alumnos_id',$id)->get();
         $ev=new EventlogRegister;
-        $msj='Consulta de elementos según alumnos. Tabla=PagoPension, alumnos_id='.$id;
+        $msj='Consulta de elementos según alumnos. Tabla=PagoOtros, alumnos_id='.$id;
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }

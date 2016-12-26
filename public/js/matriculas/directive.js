@@ -2,12 +2,12 @@
 	'use strict';
 	angular
 		.module('escuela')
-		.directive('pensiones',directive);
+		.directive('matriculas',directive);
 
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/pensiones/index.html',
+        	templateUrl: '/js/matriculas/index.html',
         	restrict: 'EA',
         	scope:{
         		reg:'='
@@ -23,11 +23,11 @@
       		/* */
     	}
 
-    	function controller(PensionFactory,error,$timeout,$window){
+    	function controller(MatriculasFactory,error,$timeout,$window){
     		var vm=this;
 
 			// Variables básicas
-			var basicFactory=PensionFactory;
+			var basicFactory=MatriculasFactory;
 			vm.id=0;
 			vm.dts={}; // Datos del periodo
 			vm.form={}; // Para formulario

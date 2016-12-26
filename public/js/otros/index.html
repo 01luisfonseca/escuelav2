@@ -17,19 +17,18 @@
 						<th>Nivel</th>
 						<th>Fecha cancelación</th>
         			    <th>Valor</th>
-						<th>Diferencia</th>
         			    <th>Ult. actualiz.</th>
 					</tr>
 	     			<tr ng-repeat='dt in vm.dts'>
-		    			<td><button type="button" class="btn btn-primary btn-xs" ng-click='vm.selElem(dt.id)'>Ver mas</button>
-		    			<a href="/#/facturacobro/pension/{{dt.numero_factura}}" target="_blank">Tirilla</a>
+		    			<td>
+		    			<button type="button" class="btn btn-primary btn-xs" ng-click='vm.selElem(dt.id)'>Ver mas</button>
+		    			<a href="/#/facturacobro/otros/{{dt.numero_factura}}" target="_blank">Tirilla</a>
 		    			</td>
 		    			<td>{{ dt.numero_factura }}</td>
 		    			<td>{{ dt.alumnos.users.lastname }}, {{ dt.alumnos.users.name }}</td>
 		    			<td>{{ dt.alumnos.niveles_has_anios.niveles.nombre }}, {{ dt.alumnos.niveles_has_anios.anios.anio }}</td>
                			<td>{{ dt.cancelado_at }}</td>
                			<td>{{ dt.valor|currency }}</td>
-               			<td>{{ dt.faltante|currency }}</td>
 		    			<td>{{ dt.updated_at }}</td>
 	     			</tr>
 				</table>
@@ -55,11 +54,6 @@
 					<label class="control-label" for="nombre">Valor</label>
 					<span class="input-group-addon" id="basic-addon1">$</span>  
 	    			<input id="nombre" ng-model="vm.form.valor" type="number" class="form-control input-md" required>
-				</div>
-				<div class="form-group">
-					<label class="control-label" for="nombre">Diferencia</label>
-					<span class="input-group-addon" id="basic-addon1">$</span>  
-	    			<input id="nombre" ng-model="vm.form.faltante" type="number" class="form-control input-md">
 				</div>
 				<div class="form-group">
 					<label class="control-label" for="descripcion">Notas</label>

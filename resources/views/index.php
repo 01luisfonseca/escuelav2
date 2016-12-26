@@ -13,6 +13,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="/js/node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/ng_animation.css">
+        <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="/js/node_modules/ng-dialog/css/ngDialog.min.css">
         <link rel="stylesheet" href="/js/node_modules/ng-dialog/css/ngDialog-theme-default.min.css">
 
@@ -64,6 +65,9 @@
         <script src='/js/app.services/tiponota.factory.js'></script>
         <script src='/js/app.services/indicadores.factory.js'></script>
         <script src='/js/app.services/pension.factory.js'></script>
+        <script src='/js/app.services/matriculas.factory.js'></script>
+        <script src='/js/app.services/otros.factory.js'></script>
+        <script src='/js/app.services/mes.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -119,6 +123,9 @@
         <script src='/js/ingresos/controller.js'></script>
         <script src='/js/ingresos/form.directive.js'></script>
         <script src='/js/pensiones/directive.js'></script>
+        <script src='/js/matriculas/directive.js'></script>
+        <script src='/js/otros/directive.js'></script>
+        <script src='/js/facturacobro/controller.js'></script>
 
     </head>
     <body ng-app="escuela">

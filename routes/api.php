@@ -18,6 +18,47 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	/** RUTAS PAGO OTROS **/
+	Route::group(['prefix'=>'otros','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','OtrosCtrl@index');
+		Route::post('/','OtrosCtrl@store');
+		Route::get('/{id}','OtrosCtrl@show');
+		Route::put('/{id}','OtrosCtrl@update');
+		Route::delete('/{id}','OtrosCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','OtrosCtrl@count');
+		Route::get('/search/{info}','OtrosCtrl@search');
+		Route::get('/fac/{fac}','OtrosCtrl@verificarFactura');
+		Route::get('/alumno/{id}','OtrosCtrl@verificarAlumno');
+	});
+
+	/** RUTAS PAGO MATRICULA **/
+	Route::group(['prefix'=>'matricula','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','MatriculaCtrl@index');
+		Route::post('/','MatriculaCtrl@store');
+		Route::get('/{id}','MatriculaCtrl@show');
+		Route::put('/{id}','MatriculaCtrl@update');
+		Route::delete('/{id}','MatriculaCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','MatriculaCtrl@count');
+		Route::get('/search/{info}','MatriculaCtrl@search');
+		Route::get('/fac/{fac}','MatriculaCtrl@verificarFactura');
+		Route::get('/alumno/{id}','MatriculaCtrl@verificarAlumno');
+	});
+
+	/** RUTAS MESES **/
+	Route::group(['prefix'=>'meses','middleware'=>'profesor'],function(){
+		//Basicos
+		Route::get('/','MesesCtrl@index');
+		Route::post('/','MesesCtrl@store');
+		Route::get('/{id}','MesesCtrl@show');
+		Route::put('/{id}','MesesCtrl@update');
+		Route::delete('/{id}','MesesCtrl@destroy');
+		//Adicionales
+	});
+
 	/** RUTAS PAGO PENSION **/
 	Route::group(['prefix'=>'pension','middleware'=>'coordinador'],function(){
 		//Basicos
@@ -29,6 +70,8 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		//Adicionales
 		Route::get('/count/elem','PensionCtrl@count');
 		Route::get('/search/{info}','PensionCtrl@search');
+		Route::get('/fac/{fac}','PensionCtrl@verificarFactura');
+		Route::get('/alumno/{id}','PensionCtrl@verificarAlumno');
 	});
 
 	/** RUTAS INDICADORES **/

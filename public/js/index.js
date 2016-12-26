@@ -269,6 +269,19 @@
                         controller: 'IngresosCtrl as vm',
                     }
                 }
+            })
+            .state('facturacobro', {
+                url: "/facturacobro/{tipo}/{factura}",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/facturacobro/index.html",
+                        controller: 'facturacobroCtrl as vm',
+                    }
+                }
             });
     }
 
