@@ -10,7 +10,7 @@
                   <a href="/#/authhome"><i class="fa fa-dashboard fa-lg"></i> Inicio</a>
                 </li>
 
-                <li  data-toggle="collapse" data-target="#institucion" class="collapsed">
+                <li data-toggle="collapse" data-target="#institucion" class="collapsed"  ng-show="vm.esAdmin()">
                   <a href> <i class="fa fa-building-o fa-lg"></i> Institución<span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="institucion">
@@ -23,15 +23,15 @@
                   <a href><i class="fa fa-graduation-cap fa-lg"></i> Escuela<span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="escuela">
-                	<li><a href="/#/plan"> Plan escolar</a></li>
-                    <li><a href="/#/alumnos"> Alumnos</a></li>
-                    <li><a href="/#/asistencia"> Asistencia</a></li>
-                    <li><a href="/#/notas"> Notas</a></li>
-                    <li><a href="/#/estudiantil"> Registro estudiantil</a></li>
+                	 <li ng-show="vm.esCoord()"><a href="/#/plan"> Plan escolar</a></li>
+                    <li ng-show="vm.esCoord()"><a href="/#/alumnos"> Alumnos</a></li>
+                    <li ng-show="vm.esCoord()"><a href="/#/asistencia"> Asistencia</a></li>
+                    <li ng-show="vm.esProfe()"><a href="/#/notas"> Notas</a></li>
+                    <li ng-show="vm.esSoloAlumno()"><a href="/#/estudiantil"> Registro estudiantil</a></li>
                 </ul>
 
 
-                <li data-toggle="collapse" data-target="#pagos" class="collapsed">
+                <li data-toggle="collapse" data-target="#pagos" class="collapsed" ng-show="vm.esAdmin()">
                   <a href> <i class="fa fa-money fa-lg"></i> Financiera<span class="arrow"></span></a>
                 </li>  
                 <ul class="sub-menu collapse" id="pagos">
@@ -39,7 +39,7 @@
                   <li><a href="/#/egresos"> Egresos</a></li>
                 </ul>
 
-                 <li data-toggle="collapse" data-target="#analisis" class="collapsed">
+                 <li data-toggle="collapse" data-target="#analisis" class="collapsed" ng-show="vm.esAdmin()">
                   <a href><i class="fa fa-first-order fa-lg"></i> Análisis<span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="analisis">
@@ -48,7 +48,7 @@
                   <li><a href="/#/analisis/financiera"> Financiera</a></li>
                 </ul>
 
-                <li data-toggle="collapse" data-target="#application" class="collapsed">
+                <li data-toggle="collapse" data-target="#application" class="collapsed" ng-show="vm.esAdmin()">
                   <a href><i class="fa fa-rocket fa-lg"></i> Aplicación<span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="application">

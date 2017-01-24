@@ -258,15 +258,15 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 	});
 
 	/** RUTAS ANIOS TABLE **/
-	Route::group(['prefix'=>'anios','middleware'=>'coordinador'],function(){
+	Route::group(['prefix'=>'anios'],function(){
 		//Basicos
-		Route::get('/','AniosCtrl@index');
-		Route::post('/','AniosCtrl@store');
-		Route::get('/{id}','AniosCtrl@show');
-		Route::put('/{id}','AniosCtrl@update');
-		Route::delete('/{id}','AniosCtrl@destroy');
+		Route::get('/','AniosCtrl@index')->middleware('coordinador');
+		Route::post('/','AniosCtrl@store')->middleware('coordinador');
+		Route::get('/{id}','AniosCtrl@show')->middleware('coordinador');
+		Route::put('/{id}','AniosCtrl@update')->middleware('coordinador');
+		Route::delete('/{id}','AniosCtrl@destroy')->middleware('coordinador');
 		//Adicionales
-		Route::get('/asignado/anio','AniosCtrl@asignado');
+		Route::get('/asignado/anio','AniosCtrl@asignado')->middleware('profesor');
 	});
 
 	/** RUTAS EMPLEADOS TABLE **/

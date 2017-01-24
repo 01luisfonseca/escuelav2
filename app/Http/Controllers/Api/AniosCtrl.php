@@ -9,6 +9,7 @@ use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\Anios;
+use App\Empleados;
 
 class AniosCtrl extends Controller
 {
@@ -176,7 +177,6 @@ class AniosCtrl extends Controller
                     }]);
                 }]);
         }])->get();
-        //return $obj->toJson();
         $arr=[];
         foreach ($obj as $anio) {
             $nivelArr=[];
@@ -190,12 +190,23 @@ class AniosCtrl extends Controller
                             'nombre'=>$per->periodos->nombre
                         ];
                     }
-                    if($this->req->user()->tipo_usuario_id>=4){
+                    if($this->req->user()->tipo_usuario_id>=5){
                         $matArr[]=[
                             'id'=>$mat->id, 
                             'nombre'=>$mat->materias->nombre, 
                             'periodos'=>$perArr
                         ];
+                    }else{
+                        $empleado=Empleados::where('users_id',$this->req->user()->id)->first();
+                        if ($empleado) {
+                            if ($empleado->id==$mat->empleados_id) {
+                                $matArr[]=[
+                                    'id'=>$mat->id, 
+                                    'nombre'=>$mat->materias->nombre, 
+                                    'periodos'=>$perArr
+                                ];
+                            }
+                        }
                     }
                 }
                 if (count($matArr)>0) {

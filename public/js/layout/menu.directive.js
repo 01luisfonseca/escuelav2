@@ -31,6 +31,10 @@
             // Functiones
             vm.existeStorage=existeStorage;
             vm.nombreUser=nombreUser;
+            vm.esAdmin=esAdmin;
+            vm.esCoord=esCoord;
+            vm.esProfe=esProfe;
+            vm.esSoloAlumno=esSoloAlumno;
 
             // Automaticas
 
@@ -43,6 +47,18 @@
             }
             function nombreUser(){
                 return perfil.getInfo().name;
+            }
+            function esAdmin(){
+                return perfil.getInfo().tipo_usuario_id==6;
+            }
+            function esCoord(){
+                return perfil.getInfo().tipo_usuario_id>=5;
+            }
+            function esProfe(){
+                return perfil.getInfo().tipo_usuario_id>=4;
+            }
+            function esSoloAlumno(){
+                return perfil.getInfo().tipo_usuario_id==2;
             }
     	}
 	}
