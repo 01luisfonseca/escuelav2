@@ -1,0 +1,41 @@
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" ng-class='{active: vm.tabSelec(-1)}' ng-click='vm.setTab(-1)'><a data-toggle="tab">Explicación</a></li>
+            <li role="presentation" ng-repeat='nivel in vm.niveles.data' ng-class='{active: vm.tabSelec($index)}' ng-click='vm.setTab($index)'><a data-toggle="tab">{{nivel.niveles_has_anios.anios.anio}}, {{nivel.niveles_has_anios.niveles.nombre}}</a></li>
+        </ul>
+        <div class="tab-content desplazable-grande">
+            <div ng-show='vm.tabSelec(-1)'><explicrendim-dir></explicrendim-dir></div>
+            <div ng-repeat='nivel in vm.niveles.data' ng-show='vm.tabSelec($index)'>
+                <div class='panel panel-default' ng-repeat='materia in vm.infoNivel.data.niveles_has_anios.materias_has_niveles' ng-Init='materiaIndex=$index'>
+                    <div class="panel-heading">
+                        <h4 style="color: green"><strong>{{materia.materias.nombre}}</strong>. Profesor: <em>{{materia.empleados.users.name}} {{materia.empleados.users.lastname}}</em></h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th ng-repeat='periodo in materia.materias_has_periodos'>{{periodo.periodos.nombre}}</th>
+                                <th>Definitiva</th>
+                            </tr>
+                            <tr>
+                                <td ng-repeat='periodo in materia.materias_has_periodos'>
+                                    <table class="table table-condensed">
+                                        <tr ng-repeat='indicador in periodo.indicadores'>
+                                            <th>{{indicador.nombre}}, <em>al {{indicador.porcentaje}}%</em></th>
+                                            <td>{{indicador.descripcion}}</td>
+                                            <td>{{vm.promedioIndicador(indicador.id)| number:2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: red" colspan="2">Definitiva Periodo</th>
+                                            <td style="color: red">{{vm.promedioPeriodo(periodo.id) | number:2}}</td>
+                                        </tr>                                       
+                                    </table>
+                                </td>
+                                <td style="color: brown">{{promedioMateria(materia.id)| number:2}}</td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

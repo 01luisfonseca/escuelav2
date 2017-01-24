@@ -282,6 +282,19 @@
                         controller: 'facturacobroCtrl as vm',
                     }
                 }
+            })
+            .state('rendimiento', {
+                url: "/estudiantil",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/estudiantil/index.html",
+                        controller: 'EstudiantilCtrl as vm',
+                    }
+                }
             });
     }
 

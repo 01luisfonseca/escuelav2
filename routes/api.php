@@ -18,6 +18,17 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	/** RUTAS RENDIMIENTO **/
+	Route::group(['prefix'=>'rendimiento','middleware'=>'alumno'],function(){
+		//Basicos
+		Route::get('/','RendimientoCtrl@index');
+		Route::post('/','RendimientoCtrl@store');
+		Route::get('/{id}','RendimientoCtrl@show');
+		Route::put('/{id}','RendimientoCtrl@update');
+		Route::delete('/{id}','RendimientoCtrl@destroy');
+		//Adicionales
+	});
+
 	/** RUTAS PAGO OTROS **/
 	Route::group(['prefix'=>'otros','middleware'=>'coordinador'],function(){
 		//Basicos

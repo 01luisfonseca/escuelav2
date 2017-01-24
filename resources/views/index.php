@@ -68,6 +68,7 @@
         <script src='/js/app.services/matriculas.factory.js'></script>
         <script src='/js/app.services/otros.factory.js'></script>
         <script src='/js/app.services/mes.factory.js'></script>
+        <script src='/js/app.services/rendimiento.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -126,6 +127,9 @@
         <script src='/js/matriculas/directive.js'></script>
         <script src='/js/otros/directive.js'></script>
         <script src='/js/facturacobro/controller.js'></script>
+        <script src='/js/estudiantil/controller.js'></script>
+        <script src='/js/estudiantil/form.directive.js'></script>
+        <script src='/js/estudiantil/explicacion.directive.js'></script>
 
     </head>
     <body ng-app="escuela">
