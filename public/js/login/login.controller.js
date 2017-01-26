@@ -4,7 +4,7 @@
 		.module('escuela')
 		.controller('loginCtrl',controller);
 
-		function controller($location, $localStorage, AuthenticationFactory,animPage){
+		function controller($location, $localStorage, AuthenticationFactory,animPage,perfil,$window){
 			var vm=this;
 			vm.login={
 				username:'',
@@ -29,9 +29,12 @@
 				//console.log(typeof($localStorage.currentUser));
                 if (result === true) {
                     $location.path('/authhome');
+                    perfil.buscarInfo();
+                    console.log('Sesión iniciada.');
                 } else {
                     vm.error = 'Usuario o contraseña incorrectos';
                     vm.loading = false;
+                    $window.alert(vm.error);
                 }
 			}
 

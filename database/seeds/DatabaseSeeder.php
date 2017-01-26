@@ -67,6 +67,11 @@ class DatabaseSeeder extends Seeder
             'descripcion'=>'Nombre de la organización de la aplicación.',
         ]);
         DB::table('generales')->insert([
+            'nombre'=>'NIT',
+            'valor'=>'123.456.789-0',
+            'descripcion'=>'Identificación tributaria de la entidad.',
+        ]);
+        DB::table('generales')->insert([
             'nombre'=>'Logo',
             'valor'=>'',
             'descripcion'=>'Ruta URL donde se encuentra el logo o escudo .',

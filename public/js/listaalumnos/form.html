@@ -1,0 +1,49 @@
+<div>
+    <div class='row'>
+        <div class="row">
+            <label class="col-sm-2 control-label">Elija un año.</label>
+            <div class="col-sm-8">
+                <select ng-model='vm.sel.anioIdx' class='form-control'>
+                    <option ng-repeat='anio in vm.anios.data' value='{{$index}}'>{{anio.anio}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" ng-show='vm.sel.anioIdx >= 0'>
+            <label class="col-sm-2 control-label">Elija un nivel.</label>
+            <div class="col-sm-8">
+                <select ng-model='vm.sel.nivel' ng-change='vm.buscarAlumnos()' class='form-control'>
+                    <option ng-repeat='nivel in vm.buscarNiveles(vm.sel.anioIdx)' value='{{nivel.id}}'>{{nivel.niveles.nombre}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class='row' ng-show='vm.sel.nivel > 0'>
+        <div class='panel desplazable'>
+        <div class='table-responsive'>
+            <table class='table table-condensed'>
+                <tr>
+                    <th>Identificación</th>
+                    <th>Apellidos</th>
+                    <th>Nombres</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Acudiente</th>
+                    <th>Acción</th>
+                </tr>
+                <tr ng-repeat='alumno in vm.alumnos.data'>
+                    <td>{{alumno.identificacion}}</td>
+                    <td>{{alumno.lastname}}</td>
+                    <td>{{alumno.name}}</td>
+                    <td>{{alumno.direccion}}</td>
+                    <td>{{alumno.telefono}}</td>
+                    <td>{{alumno.acudiente}}</td>
+                    <td>
+                        <a class="btn btn-default" href='/#/usuarios/{{alumno.users.id}}'>Editar usuario</a>
+                        <a class="btn btn-default" href='/#/alumnos/{{alumno.id}}'>Editar alumno</a></td>
+                </tr>
+            </table>
+        </div>
+        </div>
+        <a class="btn btn-success" ng-click="vm.exportarAlumnos(vm.sel.nivel)">Exportar a Excel</a>
+    </div>
+</div>

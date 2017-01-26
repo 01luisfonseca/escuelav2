@@ -19,6 +19,7 @@
 
 		// Automáticas
 		vm.buscarInfo();
+		$interval(buscarInfo,20000);
 
 		/////////
 		function buscarInfo(){

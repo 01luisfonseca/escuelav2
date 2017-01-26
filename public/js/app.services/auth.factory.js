@@ -36,7 +36,9 @@
                         callback(false);
                     }
                 }
-			});
+			},function(res){
+                callback(false);
+            });
 		}
 		function pLogin(user){
 			var data={

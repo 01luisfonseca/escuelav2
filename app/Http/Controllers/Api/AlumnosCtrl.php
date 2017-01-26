@@ -59,6 +59,7 @@ class AlumnosCtrl extends Controller
         $ev->registro(1,'Intento de guardar en tabla=Alumnos.',$this->req->user()->id);
         $this->validate($this->req,[
             'users_id'=>'required',
+            'acudiente'=>'required',
             'niveles_has_anios_id'=>'required',
             'pension'=>'required',
             'matricula'=>'required'
@@ -71,6 +72,8 @@ class AlumnosCtrl extends Controller
         }
         $obj=new Alumnos;
         $obj->users_id=$this->req->input('users_id');
+        $obj->acudiente=$this->req->input('acudiente');
+        $obj->email_acudiente=$this->req->has('email_acudiente')? $this->req->input('email_acudiente') : '';
         $obj->niveles_has_anios_id=$this->req->input('niveles_has_anios_id');
         if($this->req->has('descripcion_pen')){
             $obj->descripcion_pen=$this->req->input('descripcion_pen');
@@ -130,6 +133,7 @@ class AlumnosCtrl extends Controller
         $obj=Alumnos::findOrFail($id);
         $this->validate($this->req,[
             'pension'=>'required',
+            'acudiente'=>'required',
             'matricula'=>'required'
         ]);
         if($this->req->has('descripcion_pen')){
@@ -142,6 +146,8 @@ class AlumnosCtrl extends Controller
         }else{
             $obj->descripcion_mat='';
         }
+        $obj->email_acudiente=$this->req->has('email_acudiente')? $this->req->input('email_acudiente') : '';
+        $obj->acudiente=$this->req->input('acudiente');
         $obj->matricula=$this->req->input('matricula');
         $obj->pension=$this->req->input('pension');
         $obj->save();

@@ -18,6 +18,16 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	Route::group(['prefix'=>'listados','middleware'=>'coordinador'],function(){
+		Route::group(['prefix'=>'alumnos'],function(){
+			//Basicos
+			Route::get('/','ListadosCtrl@index'); // Obtener niveles
+			Route::get('/{id}','ListadosCtrl@show'); // Obtener Alumnos
+			//Adicionales
+			Route::get('/exportar/{id}','ListadosCtrl@exportarAlumnos');
+		});
+	});
+
 	/** RUTAS RENDIMIENTO **/
 	Route::group(['prefix'=>'rendimiento','middleware'=>'alumno'],function(){
 		//Basicos

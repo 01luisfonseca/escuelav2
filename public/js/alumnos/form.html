@@ -22,8 +22,16 @@
 		<input id="alumno" name="alumno" type="text" class="form-control" value='{{vm.ndts.niveles_has_anios.niveles.nombre}}' disabled>
 	</div>
 	<div class="form-group">
+		<label class="control-label" for="acudiente">Acudiente</label>
+		<input id="acudiente" name="acudiente" type="text" class="form-control" ng-model='vm.ndts.acudiente' required>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="e_acudiente">Correo acudiente</label>
+		<input id="e_acudiente" name="e_acudiente" type="email" class="form-control" ng-model='vm.ndts.email_acudiente'>
+	</div>
+	<div class="form-group">
 		<label class="control-label" for="pension">Pensión mensual asignada</label>
-		<input id="pension" name="pension" type="number" step="1" class="form-control" ng-model='vm.ndts.pension'>  
+		<input id="pension" name="pension" type="number" step="1" class="form-control" ng-model='vm.ndts.pension' required>  
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-3" for="descripcion_pen">Descripcion de la pensión</label>
@@ -33,7 +41,7 @@
 	</div>
 	<div class="form-group">
 		<label class="control-label" for="matricula">Matrícula del alumno</label>
-		<input id="matricula" name="matricula" type="number" step="1" class="form-control" ng-model='vm.ndts.matricula'>  
+		<input id="matricula" name="matricula" type="number" step="1" class="form-control" ng-model='vm.ndts.matricula' required>  
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-3" for="descripcion_mat">Descripcion de la matrícula</label>

@@ -19,6 +19,7 @@
 
         
         <!-- Scripts -->
+        <script src='/js/assets/FileSaver.min.js'></script>
         <script src='/js/node_modules/angular/angular.min.js'></script>
         <script src="/js/node_modules/angular-cookies/angular-cookies.min.js"></script>
         <script src="/js/node_modules/query-string/query-string.js"></script>
@@ -29,7 +30,7 @@
         <script src='/js/node_modules/jquery/dist/jquery.min.js'></script>
         <script src='/js/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
         <script src='/js/node_modules/ngstorage/ngStorage.min.js'></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+        <script src='/js/assets/tm/TweenMax.min.js'></script>
         <script src='/js/node_modules/ng-dialog/js/ngDialog.min.js'></script>
         
         
@@ -69,6 +70,7 @@
         <script src='/js/app.services/otros.factory.js'></script>
         <script src='/js/app.services/mes.factory.js'></script>
         <script src='/js/app.services/rendimiento.factory.js'></script>
+        <script src='/js/app.services/listaalumnos.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -102,6 +104,7 @@
         <script src='/js/materias/rel.directive.js'></script>
         <script src='/js/profesores/controller.js'></script>
         <script src='/js/alumnos/controller.js'></script>
+        <script src='/js/alumnos/alumnoInfo.controller.js'></script>
         <script src='/js/alumnos/form.directive.js'></script>
         <script src='/js/alumnos/mod.directive.js'></script>
         <script src='/js/alumnos/rel.directive.js'></script>
@@ -130,6 +133,8 @@
         <script src='/js/estudiantil/controller.js'></script>
         <script src='/js/estudiantil/form.directive.js'></script>
         <script src='/js/estudiantil/explicacion.directive.js'></script>
+        <script src='/js/listaalumnos/controller.js'></script>
+        <script src='/js/listaalumnos/form.directive.js'></script>
 
     </head>
     <body ng-app="escuela">

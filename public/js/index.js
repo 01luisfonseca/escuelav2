@@ -218,6 +218,19 @@
                     }
                 }
             })
+            .state('alumnoinfo', {
+                url: "/alumnos/{id}",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/alumnos/alumnoInfo.html",
+                        controller: 'alumnoInfoCtrl as vm',
+                    }
+                }
+            })
             .state('asistencia', {
                 url: "/asistencia",
                 middleware: 'autorizado',   
@@ -293,6 +306,19 @@
                     'body':{
                         templateUrl: "/js/estudiantil/index.html",
                         controller: 'EstudiantilCtrl as vm',
+                    }
+                }
+            })
+            .state('listaalumnos', {
+                url: "/listaalumnos",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/listaalumnos/index.html",
+                        controller: 'ListaAlumnosCtrl as vm',
                     }
                 }
             });
