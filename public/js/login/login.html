@@ -1,7 +1,7 @@
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <div class="container" id="login">
         <div class="card card-container" id="header">
-            <img id="profile-img" class="profile-img-card"/>
+            <img id="profile-img" class="profile-img-card" src="{{vm.logo.valor}}" />
             <p id="profile-name" class="profile-name-card"></p>
             <form name="formLogin" ng-submit="formLogin.$valid && vm.loginUser()" novalidate>
                 <span id="reauth-email" class="reauth-email"></span>

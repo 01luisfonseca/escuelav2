@@ -71,6 +71,7 @@
         <script src='/js/app.services/mes.factory.js'></script>
         <script src='/js/app.services/rendimiento.factory.js'></script>
         <script src='/js/app.services/listaalumnos.factory.js'></script>
+        <script src='/js/app.services/opciones.service.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>

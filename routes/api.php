@@ -293,13 +293,13 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 	});
 
 	/** RUTAS GENERALES TABLE **/
-	Route::group(['prefix'=>'generales','middleware'=>'admin'],function(){
+	Route::group(['prefix'=>'generales'],function(){
 		//Basicos
 		Route::get('/','GenCtrl@index');
-		Route::post('/','GenCtrl@store');
-		Route::get('/{id}','GenCtrl@show');
-		Route::put('/{id}','GenCtrl@update');
-		Route::delete('/{id}','GenCtrl@destroy');
+		Route::post('/','GenCtrl@store')->middleware('admin');
+		Route::get('/{id}','GenCtrl@show')->middleware('admin');
+		Route::put('/{id}','GenCtrl@update')->middleware('admin');
+		Route::delete('/{id}','GenCtrl@destroy')->middleware('admin');
 		//Adicionales
 	});
 

@@ -4,18 +4,21 @@
 		.module('escuela')
 		.controller('loginCtrl',controller);
 
-		function controller($location, $localStorage, AuthenticationFactory,animPage,perfil,$window){
+		function controller($location, $localStorage, AuthenticationFactory,animPage,perfil,$window,GeneralesFactory){
 			var vm=this;
 			vm.login={
 				username:'',
 				password:'',
 			};
+			vm.logo={};
 				// Funciones
 			vm.loginUser=loginUser;
 			vm.logoutUser=logoutUser;
+			vm.getLogo=getLogo;
 
 			// Lanzamiento automático
 			animPage.show('login',function(){});
+			vm.getLogo();
 			vm.logoutUser();
 			
 			///////////////
@@ -36,6 +39,12 @@
                     vm.loading = false;
                     $window.alert(vm.error);
                 }
+			}
+
+			function getLogo(){
+				return GeneralesFactory.gLogo().then(function(res){
+					vm.logo=res.data;
+				});
 			}
 
 			function logoutUser(){

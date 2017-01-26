@@ -72,9 +72,24 @@ class DatabaseSeeder extends Seeder
             'descripcion'=>'Identificación tributaria de la entidad.',
         ]);
         DB::table('generales')->insert([
+            'nombre'=>'DANE',
+            'valor'=>'110033212',
+            'descripcion'=>'Identificación ante el DANE.',
+        ]);
+        DB::table('generales')->insert([
+            'nombre'=>'Aprobación',
+            'valor'=>'Decreto ...',
+            'descripcion'=>'Decreto de aprobación de la institución.',
+        ]);
+        DB::table('generales')->insert([
             'nombre'=>'Logo',
             'valor'=>'',
             'descripcion'=>'Ruta URL donde se encuentra el logo o escudo .',
+        ]);
+        DB::table('generales')->insert([
+            'nombre'=>'Slogan',
+            'valor'=>'',
+            'descripcion'=>'Ruta URL donde se encuentra la imagen del Slogan.',
         ]);
         DB::table('generales')->insert([
             'nombre'=>'Servidor principal',

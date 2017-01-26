@@ -15,6 +15,8 @@ Route::get('/',function(){
     return view('index');
 });
 
+Route::get('/logo','Api\GenCtrl@getLogo');
+
 Route::group(['middleware'=>'checkSerial', 'namespace'=>'registro'],function(){
 	Route::group(['prefix'=>'{serial}/device'],function(){
 		Route::get('/status',function(){

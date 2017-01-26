@@ -22,11 +22,12 @@
     	function link(scope, element, attrs) {
       	/* */
     	}
-    	function controller($http,$localStorage,perfil,$interval){
+    	function controller($http,$localStorage,perfil,$interval,GeneralesFactory){
     		var vm=this;
 
             // Variables
             vm.usuario={};
+            vm.logo={};
 
             // Functiones
             vm.existeStorage=existeStorage;
@@ -35,8 +36,10 @@
             vm.esCoord=esCoord;
             vm.esProfe=esProfe;
             vm.esSoloAlumno=esSoloAlumno;
+            vm.getLogo=getLogo
 
             // Automaticas
+            vm.getLogo();
 
             /////////////
             function existeStorage(){
@@ -59,6 +62,11 @@
             }
             function esSoloAlumno(){
                 return perfil.getInfo().tipo_usuario_id==2;
+            }
+            function getLogo(){
+                return GeneralesFactory.gLogo().then(function(res){
+                    vm.logo=res.data;
+                });
             }
     	}
 	}

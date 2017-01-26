@@ -131,7 +131,7 @@ class GenCtrl extends Controller
     {
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminación. Tabla=generales, id='.$id,$this->req->user()->id);
-        if ($id<=4) {
+        if ($id<=8) {
             return response()->json(['msj'=>'No se pueden eliminar las opciones fundamentales.']);
         }
         $obj=Generales::findOrFail($id);
@@ -153,6 +153,16 @@ class GenCtrl extends Controller
     public function count(){
         $obj=Generales::all();
         return response()->json(['registros'=>$obj->count()]);
+    }
+
+    /**
+     * Genera el logo por bd
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLogo(){
+        $obj=Generales::where('nombre','Logo')->first();
+        return $obj->toJson();
     }
 
     /**

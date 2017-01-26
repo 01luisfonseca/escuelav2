@@ -12,7 +12,8 @@
             gRDts: gRDts,
             aDt: aDt,
 			mDt: mDt,
-            dDt: dDt
+            dDt: dDt,
+            gLogo: gLogo
 		};
 
 		return fc;
@@ -38,6 +39,9 @@
         }
         function dDt(id){
             return $http.delete(fc.url+'/'+id);
-        }        
+        }
+        function gLogo(){
+            return $http.get('/logo');
+        }       
 	}
 })();
