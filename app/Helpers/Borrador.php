@@ -30,6 +30,7 @@ use App\PagoSalario;
 use App\Pension;
 use App\Tarjetas;
 use App\TipoUsuario;
+use App\AlumnosHasIndicadores;
 
 
 class Borrador implements BorradorContract
@@ -337,7 +338,7 @@ class Borrador implements BorradorContract
     }
 
     public function delAlumnos($id){
-        $elem=Alumnos::with('pago_matricula','pago_pension','pago_otro','notas','newasistencia', 'matasistencia')->findOrFail($id);
+        $elem=Alumnos::with('pago_matricula','pago_pension','pago_otro','notas','newasistencia', 'matasistencia','alumnos_has_indicadores')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->pago_matricula as $hijo) {
                 $this->delPagoMatricula($hijo->id); // Borrar hijos
@@ -356,6 +357,9 @@ class Borrador implements BorradorContract
             }
             foreach ($elem->matasistencia as $hijo) {
                 $this->delMatasistencia($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->alumnos_has_indicadores as $hijo) {
+                $this->delAlumnosHasIndicadores($hijo->id); // Borrar hijos
             }
             $elem->delete(); // Borrar el elemento en si
             return true;
@@ -460,10 +464,13 @@ class Borrador implements BorradorContract
     }
 
     public function delIndicadores($id){
-        $elem=Indicadores::with('tipo_nota')->findOrFail($id);
+        $elem=Indicadores::with('tipo_nota','alumnos_has_indicadores')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->tipo_nota as $hijo) {
                 $this->delTipoNota($hijo->id); // Borrar hijos
+            }
+            foreach ($elem->alumnos_has_indicadores as $hijo) {
+                $this->delAlumnosHasIndicadores($hijo->id); // Borrar hijos
             }
             $elem->delete(); // Borrar el elemento en si
             return true;
@@ -472,12 +479,15 @@ class Borrador implements BorradorContract
     }
 
     public function delTipoNota($id){
-        $elem=TipoNota::with('notas')->findOrFail($id);
+        $elem=TipoNota::with('notas','indicadores')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->notas as $hijo) {
                 $this->delNota($hijo->id);
             }
             $elem->delete();
+            // Cuando se borre se actualiza el indicador
+            $alumind=new AlumInd;
+            $alumind->actPromPorIndic($elem->indicadores->id);
             // Borrar hijos
             return true;
         }
@@ -485,7 +495,17 @@ class Borrador implements BorradorContract
     }
 
     public function delNota($id){
-        $elem=Notas::findOrFail($id);
+        $elem=Notas::with('tipo_nota.indicadores')->findOrFail($id);
+        if($this->esUtil($elem)){
+            $elem->delete();
+            // Borrar hijos
+            return true;
+        }
+        return false;
+    }
+
+    public function delAlumnosHasIndicadores($id){
+        $elem=AlumnosHasIndicadores::findOrFail($id);
         if($this->esUtil($elem)){
             $elem->delete();
             // Borrar hijos

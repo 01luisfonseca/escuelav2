@@ -43,4 +43,8 @@ class Alumnos extends Model
     public function matasistencia(){
         return $this->hasMany('App\Matasistencia');
     }
+
+    public function alumnos_has_indicadores(){
+        return $this->hasMany('App\AlumnosHasIndicadores');
+    }
 }

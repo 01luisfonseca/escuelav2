@@ -18,4 +18,8 @@ class Indicadores extends Model
     	return $this->belongsTo('App\MateriasHasPeriodos');
     }
 
+    public function alumnos_has_indicadores(){
+        return $this->hasMany('App\AlumnosHasIndicadores');
+    }
+
 }

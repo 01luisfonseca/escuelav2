@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
+use App\Helpers\AlumInd;
 use Carbon\Carbon;
 use Log;
 use App\Notas;
@@ -139,6 +140,11 @@ class NotasCtrl extends Controller
 			$obj->calificacion=0;
 		}
 		$obj->save();
+
+        // Para actualizar el promedio de indicadores
+        $nota=Notas::with('tipo_nota.indicadores')->find($obj->id);
+        $alumind=new AlumInd;
+        $alumind->actProm($nota->alumnos_id, $nota->tipo_nota->indicadores->id);
 		
 		// De aqui para abajo no se toca nada
 		////////////////////////////////////

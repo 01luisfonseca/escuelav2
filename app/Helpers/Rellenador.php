@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Helpers\Contracts\RellenadorContract;
 use Illuminate\Http\Request;
+use App\Helpers\AlumInd;
 use App\NivelesHasAnios;
 use App\Alumnos;
 use App\MateriasHasPeriodos;
@@ -33,6 +34,7 @@ class Rellenador implements RellenadorContract
                 if ($periodo->indicadores->count()>0) {
                 foreach ($periodo->indicadores as $indicador) {
                     // En cada indicador
+                    $notaAdd=false;
                     if ($indicador->tipo_nota->count()>0) {
                     foreach ($indicador->tipo_nota as $tipo) {
                         // En cada tipo
@@ -47,6 +49,7 @@ class Rellenador implements RellenadorContract
                         }
                         // Si no se encontró al alumno, se crea una nota vacía.
                         if(!$encontrado){
+                            $notaAdd=true;
                             $obj=new Notas;
                             $obj->tipo_nota_id=$tipo->id;
                             $obj->calificacion=0;
@@ -67,6 +70,10 @@ class Rellenador implements RellenadorContract
                         }
                         }
                     }
+                    }
+                    if ($notaAdd) {
+                        $ind=new AlumInd;
+                        $ind->addActProm($alumno->id,$indicador_id);
                     }
                 }
                 }
@@ -138,6 +145,9 @@ class Rellenador implements RellenadorContract
                 $obj->calificacion=0;
                 $obj->save();
                 $res.='; Notas ID: '.$obj->id.', Alumnos ID: '.$val->id.', TipoNota ID: '.$tipoNId.', Cal: 0';
+                // Actualiza el promedio si hay modificaciones
+                $alumind=new AlumInd;
+                $alumind->addActProm($obj->alumnos_id,$origen->indicadores->id);
             }
         }
         return $res;

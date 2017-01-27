@@ -27,6 +27,7 @@ Interface BorradorContract
     public function delIndicadores($id);
     public function delTipoNota($id);
     public function delNota($id);
+    public function delAlumnosHasIndicadores($id);
     public function delMatasistencia($id);
     public function delNewasistencia($id);
     public function delEmpleados($id);
