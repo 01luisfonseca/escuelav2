@@ -1,0 +1,33 @@
+<div  id="egresos" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Gestión de Egresos</h2>
+	</div>
+	<div id="content">
+		<p>En el siguiente espacio se puede gestionar los egresos según el concepto.</p>
+            <mensajes></mensajes>
+	</div>
+	<div id="footer">
+			<!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active" ng-click='vm.selectTab(1)'><a aria-controls="CrearData" role="tab" data-toggle="tab">Crear</a></li>
+                  <li role="presentation" ng-click='vm.selectTab(2)'><a aria-controls="Gasto" role="tab" data-toggle="tab">Gasto General</a></li>
+            </ul>
+
+             <!-- Tab panes -->
+            <div class="tab-content">
+
+                  <div role="tabpanel" class="active"  id="CrearData">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(1)'>
+                              <div class="panel-body"><form-egreso></form-egreso></div>
+                        </div>
+                  </div>
+
+                  <div role="tabpanel" class="active"  id="Gasto">
+                        <div class="panel panel-default" ng-show='vm.tabSelec(2)'>
+                              <div class="panel-body"><gasto></gasto></div>
+                        </div>
+                  </div>
+
+            </div>
+	</div>               
+</div>

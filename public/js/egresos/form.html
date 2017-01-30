@@ -1,0 +1,6 @@
+        <div>
+            <p>Por favor seleccione el tipo de registro que desea hacer.</p>
+            <label class="radio-inline"><input type="radio" ng-model='vm.sel.gasto' value='1' name="optradio">Gastos Generales</label>
+            <label class="radio-inline"><input type="radio" ng-model='vm.sel.gasto' value='2' name="optradio" disabled>Pago de nómina</label>
+        </div>
+        <div ng-if='vm.sel.gasto==1'><gasto reg='0'></gasto></div>

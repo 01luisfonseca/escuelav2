@@ -72,6 +72,8 @@
         <script src='/js/app.services/rendimiento.factory.js'></script>
         <script src='/js/app.services/listaalumnos.factory.js'></script>
         <script src='/js/app.services/opciones.service.js'></script>
+        <script src='/js/app.services/saver.service.js'></script>
+        <script src='/js/app.services/gasto.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -136,6 +138,11 @@
         <script src='/js/estudiantil/explicacion.directive.js'></script>
         <script src='/js/listaalumnos/controller.js'></script>
         <script src='/js/listaalumnos/form.directive.js'></script>
+        <script src='/js/egresos/controller.js'></script>
+        <script src='/js/egresos/form.directive.js'></script>
+        <script src='/js/gasto/directive.js'></script>
+        <script src='/js/liqcaja/controller.js'></script>
+        <script src='/js/tirillacaja/controller.js'></script>
 
     </head>
     <body ng-app="escuela">

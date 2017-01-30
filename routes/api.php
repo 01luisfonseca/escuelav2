@@ -18,6 +18,20 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	/** RUTAS PAGO GASTOS **/
+	Route::group(['prefix'=>'gasto','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','PagoGastoCtrl@index');
+		Route::post('/','PagoGastoCtrl@store');
+		Route::get('/{id}','PagoGastoCtrl@show');
+		Route::put('/{id}','PagoGastoCtrl@update');
+		Route::delete('/{id}','PagoGastoCtrl@destroy');
+		//Adicionales
+		Route::get('/count/elem','PagoGastoCtrl@count');
+		Route::get('/search/{info}','PagoGastoCtrl@search');
+	});
+
+	/** RUTAS LISTADOS **/
 	Route::group(['prefix'=>'listados','middleware'=>'coordinador'],function(){
 		Route::group(['prefix'=>'alumnos'],function(){
 			//Basicos
@@ -52,6 +66,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::get('/search/{info}','OtrosCtrl@search');
 		Route::get('/fac/{fac}','OtrosCtrl@verificarFactura');
 		Route::get('/alumno/{id}','OtrosCtrl@verificarAlumno');
+		Route::post('/valor/porfecha','OtrosCtrl@porFecha');
 	});
 
 	/** RUTAS PAGO MATRICULA **/
@@ -67,6 +82,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::get('/search/{info}','MatriculaCtrl@search');
 		Route::get('/fac/{fac}','MatriculaCtrl@verificarFactura');
 		Route::get('/alumno/{id}','MatriculaCtrl@verificarAlumno');
+		Route::post('/valor/porfecha','MatriculaCtrl@porFecha');
 	});
 
 	/** RUTAS MESES **/
@@ -93,6 +109,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::get('/search/{info}','PensionCtrl@search');
 		Route::get('/fac/{fac}','PensionCtrl@verificarFactura');
 		Route::get('/alumno/{id}','PensionCtrl@verificarAlumno');
+		Route::post('/valor/porfecha','PensionCtrl@porFecha');
 	});
 
 	/** RUTAS INDICADORES **/

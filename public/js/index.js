@@ -321,6 +321,45 @@
                         controller: 'ListaAlumnosCtrl as vm',
                     }
                 }
+            })
+            .state('egresos', {
+                url: "/egresos",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/egresos/index.html",
+                        controller: 'EgresosCtrl as vm',
+                    }
+                }
+            })
+            .state('liquicaja', {
+                url: "/liquicaja",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/liqcaja/index.html",
+                        controller: 'LiqCajaCtrl as vm',
+                    }
+                }
+            })
+            .state('tirilladia', {
+                url: "/tirilladia",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/tirillacaja/index.html",
+                        controller: 'TirillaCajaCtrl as vm',
+                    }
+                }
             });
     }
 

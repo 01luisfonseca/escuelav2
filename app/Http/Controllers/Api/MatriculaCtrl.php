@@ -233,5 +233,21 @@ class MatriculaCtrl extends Controller
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
+
+    /**
+     * Muestra resultados según fecha.
+     *
+     * @param  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function porFecha()
+    {
+        $fecha=substr($this->req->input('fecha'), 0, 10);
+        $objeto=PagoMatricula::with(['alumnos.users'])
+            ->where('created_at','LIKE','%'.$fecha.'%')
+            ->orderBy('numero_factura','asc')
+            ->get();
+        return $objeto->toJson();
+    }
     
 }

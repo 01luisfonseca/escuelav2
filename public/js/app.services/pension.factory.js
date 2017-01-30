@@ -14,7 +14,8 @@
             mDt: mDt,
             dDt: dDt,
             gEFac:gEFac,
-            gAl:gAl
+            gAl:gAl,
+            gFDts:gFDts
         };
 
         return fc;
@@ -46,6 +47,11 @@
         }
         function gAl(id){
             return $http.get(url+'/alumno/'+id);
+        }
+        function gFDts(fecha){
+            var fec={};
+            fec.fecha=fecha;
+            return $http.post(url+'/valor/porfecha',fec);
         }      
     }
 })();
