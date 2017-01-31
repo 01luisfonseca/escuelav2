@@ -249,6 +249,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::delete('/{id}','NivelesHasAniosCtrl@destroy');
 		//Adicionales
 		Route::get('add/nivelables','NivelesHasAniosCtrl@nivelables');
+		Route::get('pagados/{id}','NivelesHasAniosCtrl@pagados');
 	});
 
 	/** RUTAS PERIODOS TABLE **/

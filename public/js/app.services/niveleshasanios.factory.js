@@ -13,7 +13,8 @@
             aDt: aDt,
 			mDt: mDt,
             dDt: dDt,
-            getNivelables:getNivelables
+            getNivelables:getNivelables,
+            gPAl: gPAl
 		};
 
 		return fc;
@@ -42,6 +43,9 @@
         }
         function getNivelables(){
             return $http.get(url+'/add/nivelables');
+        }
+        function gPAl(id){
+            return $http.get(url+'/pagados/'+id);
         }
 	}
 })();

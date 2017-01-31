@@ -16,8 +16,7 @@
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="/js/node_modules/ng-dialog/css/ngDialog.min.css">
         <link rel="stylesheet" href="/js/node_modules/ng-dialog/css/ngDialog-theme-default.min.css">
-
-        
+    
         <!-- Scripts -->
         <script src='/js/assets/FileSaver.min.js'></script>
         <script src='/js/node_modules/angular/angular.min.js'></script>
@@ -32,7 +31,8 @@
         <script src='/js/node_modules/ngstorage/ngStorage.min.js'></script>
         <script src='/js/assets/tm/TweenMax.min.js'></script>
         <script src='/js/node_modules/ng-dialog/js/ngDialog.min.js'></script>
-        
+        <script src="/js/node_modules/canvasjs/dist/canvasjs.min.js"></script>
+        <script src="/js/node_modules/moment/min/moment.min.js"></script>      
         
         <!-- Frontend -->
         <script src='/js/index.js'></script>
@@ -143,6 +143,7 @@
         <script src='/js/gasto/directive.js'></script>
         <script src='/js/liqcaja/controller.js'></script>
         <script src='/js/tirillacaja/controller.js'></script>
+        <script src='/js/matypen/controller.js'></script>
 
     </head>
     <body ng-app="escuela">

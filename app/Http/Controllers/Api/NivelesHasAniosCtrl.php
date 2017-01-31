@@ -180,4 +180,29 @@ class NivelesHasAniosCtrl extends Controller
             ->get();
         return $obj->toJson();
     }
+
+    /**
+     * Devuelve los registros con ultimos pagos de todos los alumnos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pagados($id){
+        $obj=NivelesHasAnios::with(['niveles', 'alumnos'=>function($query){
+            $query->with(['pago_matricula'=>function($query){
+                $query->orderBy('created_at','desc')->take(1);
+            },
+            'pago_pension'=>function($query){
+                $query->orderBy('mes_id','desc')->take(1);
+            }])
+                ->join('users','users_id','=','users.id')
+                ->select('alumnos.*')
+                ->orderBy('users.lastname','asc');
+        }])
+            ->join('niveles','niveles_id','=','niveles.id')
+            ->select('niveles_has_anios.*')
+            ->orderBy('niveles.nombre','asc')
+            ->where('anios_id',$id)
+            ->get();
+        return $obj->toJson();
+    }
 }

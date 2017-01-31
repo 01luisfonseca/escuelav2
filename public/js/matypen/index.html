@@ -1,0 +1,33 @@
+<div  id="matypen" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Análisis de Matrículas y Pensiones</h2>
+	</div>
+	<div id="content">
+            <div class='row'>
+                  <p>En el gráfico a continuación se presentará el estado de pago de los alumnos en su matrícula y pensión.</p>
+            </div>
+            <div class='row'>
+            <div class="form-group">
+                  <label class="col-sm-2 control-label">Elija un año.</label>
+                  <div class="col-sm-8">
+                        <select ng-model='vm.sel.anio' class='form-control' ng-change='vm.cambioAnio()'>
+                              <option ng-repeat='anio in vm.anios' value='{{anio.id}}'>{{anio.anio}}</option>
+                        </select>
+                  </div>
+            </div>
+      </div>
+      <div class='row' ng-show='vm.sel.anio != 0'>
+            <div class="form-group">
+                  <label class="col-sm-2 control-label">Elija un mes del año.</label>
+                  <div class="col-sm-8">
+                        <select ng-model='vm.sel.mes' class='form-control' ng-change='vm.cambioMes()'>
+                              <option ng-repeat='mes in vm.meses' value='{{mes.id}}'>{{mes.nombre}}</option>
+                        </select>
+                  </div>
+            </div>
+      </div>
+	</div>
+	<div id="footer">
+            <div id="chartContainer" style="height: 100%; width: 100%;" ng-show='vm.cargando'></div>
+	</div>               
+</div>

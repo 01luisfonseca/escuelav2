@@ -96,7 +96,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/usuarios/usuarioinfo.html",
+                        templateUrl: "/js/usuarios/usuarioInfo.html",
                         controller: 'usuarioInfoCtrl as vm',
                     }
                 }
@@ -358,6 +358,19 @@
                     'body':{
                         templateUrl: "/js/tirillacaja/index.html",
                         controller: 'TirillaCajaCtrl as vm',
+                    }
+                }
+            })
+            .state('matypen', {
+                url: "/analisis/matypen",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/matypen/index.html",
+                        controller: 'MatYPenCtrl as vm',
                     }
                 }
             });
