@@ -72,6 +72,7 @@
 				return UsersFactory.getUser(id).then(function(res){
 					vm.user=res.data;
 					vm.user.birday=new Date(vm.user.birday);
+					vm.user.estado=parseInt(vm.user.estado);
 				})
 			}
 
