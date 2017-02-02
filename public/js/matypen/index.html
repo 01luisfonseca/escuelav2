@@ -6,6 +6,14 @@
             <div class='row'>
                   <p>En el gráfico a continuación se presentará el estado de pago de los alumnos en su matrícula y pensión.</p>
             </div>
+            <div class="row">
+                  <div class="radio">
+                        <label><input type="radio" name="optradio" ng-model='vm.sel.type' value='pen' ng-change='vm.mostrarGraficos()' selected>Pensiones</label>
+                  </div>
+                  <div class="radio">
+                        <label><input type="radio" name="optradio" ng-model='vm.sel.type' value='mat' ng-change='vm.mostrarGraficos()'>Matrículas</label>
+                  </div>
+            </div>
             <div class='row'>
             <div class="form-group">
                   <label class="col-sm-2 control-label">Elija un año.</label>
@@ -15,8 +23,13 @@
                         </select>
                   </div>
             </div>
+            <div class="row">
+            <div class="form-group">
+                  <button class="btn btn-warning btn-sm" ng-click='vm.mostrarGraficos()'>Volver al primer gráfico</button>
+            </div>
+            </div>
       </div>
-      <div class='row' ng-show='vm.sel.anio != 0'>
+      <!--  <div class='row' ng-show='vm.sel.anio != 0 && vm.sel.type=="pen"'>
             <div class="form-group">
                   <label class="col-sm-2 control-label">Elija un mes del año.</label>
                   <div class="col-sm-8">
@@ -25,9 +38,9 @@
                         </select>
                   </div>
             </div>
-      </div>
+      </div> -->
 	</div>
 	<div id="footer">
-            <div id="chartContainer" style="height: 100%; width: 100%;" ng-show='vm.cargando'></div>
+            <div id="chartContainer" style="height: 100%; width: 100%;"></div>
 	</div>               
 </div>

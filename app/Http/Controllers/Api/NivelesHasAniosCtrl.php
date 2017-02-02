@@ -187,7 +187,7 @@ class NivelesHasAniosCtrl extends Controller
      * @return \Illuminate\Http\Response
      */
     public function pagados($id){
-        $obj=NivelesHasAnios::with(['niveles', 'alumnos'=>function($query){
+        $obj=NivelesHasAnios::with(['anios','niveles', 'alumnos'=>function($query){
             $query->with(['pago_matricula'=>function($query){
                 $query->orderBy('created_at','desc')->take(1);
             },
