@@ -31,11 +31,13 @@
     		OtrosFactory,
     		error,
     		$window,
-    		$timeout)
+    		$timeout,
+    		$http)
 		{
     		var vm=this;
 
 			// Variables básicas
+			vm.ufac={};
 			vm.yaBuscado=false;
 			vm.alumnos={};
 			vm.historial={};
@@ -73,11 +75,28 @@
 
 			// Lanzamiento obligatorio
 			vm.buscarMeses();
+			buscarUFac();
 
 			///////////////////////// FUNCIONES ADICIONALES /////////////////////////////
 			
 
 			/////////////////////////// FUNCIONES BASICAS //////////////////////////////
+			function buscarUFac(){
+				$http.get('/api/ultimafac').then(function(res){
+					vm.ufac=res.data;
+					ajustaFactura();
+				},function(res){
+					$window.alert('Se han presentado problemas de conexión. Por favor revise la conexión y actualice la página.');
+					vm.ufac.numero_factura='Desconocido / Error';
+				}
+				);
+				////////////
+				function ajustaFactura(){
+					var num=parseInt(vm.ufac.numero_factura.replace(/[^0-9]/i,''));
+					var cab=vm.ufac.numero_factura.replace(/\d+/i,'');
+					vm.pago.numero_factura=''+cab+(num+1);
+				}
+			}
 			function actualizarHistorial(id){
 				var factory=obtenerFactory();
 				factory.gAl(id).then(

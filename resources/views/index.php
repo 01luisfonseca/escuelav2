@@ -74,6 +74,7 @@
         <script src='/js/app.services/opciones.service.js'></script>
         <script src='/js/app.services/saver.service.js'></script>
         <script src='/js/app.services/gasto.factory.js'></script>
+        <script src='/js/app.services/ingreyegre.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -143,7 +144,9 @@
         <script src='/js/gasto/directive.js'></script>
         <script src='/js/liqcaja/controller.js'></script>
         <script src='/js/tirillacaja/controller.js'></script>
-        <script src='/js/matypen/controller.js'></script>
+        <script src='/js/matypen/controller.js'></script>        
+        <script src='/js/ingreyegre/controller.js'></script>
+
 
     </head>
     <body ng-app="escuela">

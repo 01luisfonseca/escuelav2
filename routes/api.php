@@ -18,6 +18,22 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 
+	/** RUTAS ULTIMAS FACTURAS **/
+	Route::group(['prefix'=>'ultimafac','middleware'=>'coordinador'],function(){
+		//Basicos
+		Route::get('/','UltimaFacCtrl@index');
+		//Adicionales
+	});
+
+	/** RUTAS INGRESOS Y EGRESOS **/
+	Route::group(['prefix'=>'ingreyegre','middleware'=>'admin'],function(){
+		//Basicos
+		Route::get('/{anio}','IngreyEgreCtrl@index');
+		Route::get('/exportar/{anio}/{mes}','IngreyEgreCtrl@show');
+		//Adicionales
+		Route::get('/count/elem','IngreyEgreCtrl@count');
+	});
+
 	/** RUTAS PAGO GASTOS **/
 	Route::group(['prefix'=>'gasto','middleware'=>'coordinador'],function(){
 		//Basicos

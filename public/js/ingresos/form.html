@@ -50,6 +50,7 @@
         						<input name="factura" class="form-control" ng-class="{ 'has-error' : formCobros.factura.$invalid && !formCobros.factura.$pristine }" type="text" ng-model="vm.pago.numero_factura" ng-blur='vm.verificarFactura(vm.pago.numero_factura)' required>
         					</div>
         				</div>
+                        <p>La ultima factura creada en es sistema es la <em style="color:red;">{{ vm.ufac.numero_factura }}</em></p>
                         <p ng-show="formCobros.factura.$invalid && !formCobros.factura.$pristine" class="help-block">El código de factura es requerido.</p>
     				</div>
     				<div class="form-group">

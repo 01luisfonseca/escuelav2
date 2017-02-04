@@ -373,6 +373,19 @@
                         controller: 'MatYPenCtrl as vm',
                     }
                 }
+            })
+            .state('ingreyegre', {
+                url: "/analisis/ingreyegre",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/ingreyegre/index.html",
+                        controller: 'IngreyEgreCtrl as vm',
+                    }
+                }
             });
     }
 
