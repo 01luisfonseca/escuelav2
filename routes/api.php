@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], function () {
+Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api','throttle:150'], function () {
 	Route::get('/user', function (Request $request) {
     	return $request->user(); // Info del usuario logueado
 	});
