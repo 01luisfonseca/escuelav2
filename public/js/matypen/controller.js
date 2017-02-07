@@ -200,7 +200,7 @@
  				container="chartContainer";
  			}
  			var datapoint=[];
- 			for (var i = 0; i < 3; i++) {
+ 			for (var i = 0; i < data.name.length; i++) {
  				datapoint.push({
  					y: data.value[i],
  					label: data.name[i]
