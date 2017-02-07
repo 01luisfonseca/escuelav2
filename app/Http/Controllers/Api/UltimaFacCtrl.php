@@ -38,7 +38,10 @@ class UltimaFacCtrl extends Controller
         $ev=new EventlogRegister;
         $msj='Consulta registros para determinar la ultima factura generada.';
         $ev->registro(0,$msj,$this->req->user()->id);
-        return $mayor->toJson();
+        if ($mayor) {
+            return $mayor->toJson();
+        }
+        return response()->json(["numero_factura",0]);
     }
 
     /**
