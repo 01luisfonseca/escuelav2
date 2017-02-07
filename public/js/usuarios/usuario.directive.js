@@ -23,7 +23,7 @@
       		/* */
     	}
 
-    	function controller(UsersFactory,TipoFactory,animMsj,$timeout,perfil){
+    	function controller(UsersFactory,TipoFactory,animMsj,$timeout,perfil,$window){
     		var vm=this;
 
     		// Variables
@@ -46,6 +46,7 @@
     		vm.validaPass=validaPass;
     		vm.esAdmin=esAdmin;
     		vm.esElMismo=esElMismo;
+    		vm.delData=delData;
 
     		// Lanzamiento Automático
 			vm.autoIni();
@@ -187,6 +188,14 @@
 				animMsj.hide(elem,function(){
 					callback();
 				});
+			}
+			function delData(){
+				if ($window.confirm('¿Seguro que desea eliminar el usuario? Se borrarán los registros asociados.')) {
+					return UsersFactory.delUser(vm.existente).then(function(res){
+						$window.alert('Se ha borrado el usuario correctamente');
+						$window.history.back();
+					});
+				}
 			}
     	}
 	}

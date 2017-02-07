@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
+use App\Helpers\Borrador;
 use Carbon\Carbon;
 use App\User;
 use Log;
@@ -175,15 +176,14 @@ class UserCtrl extends Controller
      */
     public function destroy($user)
     {
-        return response()->json($this->req->all());
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminar usuario. id='.$user,$this->req->user()->id);
         if ($user==1) {
             return response()->json(['msj'=>'No se puede eliminar al administrador']);
         }
-        $obj=User::findOrFail($user);
-        $obj->delete();
-        $msj='Se ha borrado el registro '.$obj->id;
+        $obj=new Borrador;
+        $obj->delUser($user);
+        $msj='Se ha borrado el registro '.$user;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

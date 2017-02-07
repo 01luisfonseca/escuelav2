@@ -191,7 +191,7 @@
  			return 2;
  		}
  		function dibujaGrafico(title,data,callback,container){
- 			console.log(data);
+ 			//console.log(data);
  			if (typeof callback=='undefined') {
  				callback=function(e){
  					console.log(e);

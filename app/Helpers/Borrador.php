@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Helpers\Contracts\BorradorContract;
 use Illuminate\Http\Request;
+use App\Users;
 use App\Alumnos;
 use App\Anios;
 use App\Asiserved;
@@ -26,6 +27,7 @@ use App\Notas;
 use App\PagoMatricucula;
 use App\PagoOtros;
 use App\PagoPension;
+use App\PagoMatricula;
 use App\PagoSalario;
 use App\Pension;
 use App\Tarjetas;
@@ -323,7 +325,7 @@ class Borrador implements BorradorContract
     // Eliminar registros en cadena.
 
     public function delUser($id){
-        $elem=User::with('alumnos','empleados')->findOrFail($id);
+        $elem=Users::with('alumnos','empleados')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->alumnos as $hijo) {
                 $this->delAlumnos($hijo->id); // Borrar hijos

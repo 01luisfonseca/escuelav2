@@ -60,5 +60,6 @@
       <input id="tarjeta" name="tarjeta" type="password" placeholder="Vuelva a colocar contraseña" class="form-control input-md" ng-model='vm.user.repassword' ng-blur='vm.validaPass()'>
       </div>
       <input type="submit" class="btn btn-primary" value="Guardar">
+      <a ng-if='!vm.esElMismo() && vm.esAdmin() && vm.existente' ng-click='vm.delData()' class="btn btn-danger">Borrar usuario.</a>
     </form>
   </div> 
