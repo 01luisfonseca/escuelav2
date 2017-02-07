@@ -41,7 +41,7 @@ class UltimaFacCtrl extends Controller
         if ($mayor) {
             return $mayor->toJson();
         }
-        return response()->json(["numero_factura"=>0]);
+        return response()->json(["numero_factura"=>"0"]);
     }
 
     /**
