@@ -233,6 +233,7 @@
 							faltante:0,
 							alumnos_id:0
 						};
+						buscarUFac();
 					},
 					function(response){
 						error.setError('El registro no se almacena. Por favor verifique la información.');

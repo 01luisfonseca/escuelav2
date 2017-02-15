@@ -145,6 +145,7 @@
         <script src='/js/liqcaja/controller.js'></script>
         <script src='/js/tirillacaja/controller.js'></script>
         <script src='/js/matypen/controller.js'></script>        
+        <script src='/js/matypen/table.controller.js'></script>        
         <script src='/js/ingreyegre/controller.js'></script>
 
 

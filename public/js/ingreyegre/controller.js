@@ -100,6 +100,7 @@
  			}
  		}
  		function mostrarGraficos(){
+ 			var tipo;
  			if (vm.sel.type=='pen') {
  				dibujaGrafico('Estado de pensiones según el año.',vm.status.pen,llamadaPension);
  			}else{
@@ -107,15 +108,20 @@
  			}
  			/////////////////////////////////////
  			function llamadaPension(e){
- 				var index=verTipo(e.dataPoint.label);
-    			dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index]);
+ 				tipo=e.dataPoint.label;
+ 				var index=verTipo(tipo);
+    			dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index], tablaExportar);
  			}
  			function llamadaMatricula(e){
- 				var index=verTipo(e.dataPoint.label);
-    			dibujaGrafico('Resultados de matrículas por: '+e.dataPoint.label,vm.status.pen.niveles[index]);
+ 				tipo=e.dataPoint.label;
+ 				var index=verTipo(tipo);
+    			dibujaGrafico('Resultados de matrículas por: '+e.dataPoint.label,vm.status.mat.niveles[index], tablaExportar);
+ 			}
+    		function tablaExportar(e){
+ 				var sel=e.dataPoint.label;
+ 				console.log(sel, tipo, vm.sel.type);
  			}
  			function verTipo(tipo){
- 				console.log(tipo);
     			switch(tipo){
     				case 'Al día':
     					return 0;

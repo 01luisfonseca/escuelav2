@@ -195,7 +195,7 @@ class NivelesHasAniosCtrl extends Controller
                 $query->orderBy('mes_id','desc')->take(1);
             }])
                 ->join('users','users_id','=','users.id')
-                ->select('alumnos.*')
+                ->select('alumnos.*','users.lastname','users.name','users.identificacion')
                 ->orderBy('users.lastname','asc');
         }])
             ->join('niveles','niveles_id','=','niveles.id')

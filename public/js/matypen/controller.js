@@ -4,10 +4,11 @@
 		.module('escuela')
 		.controller('MatYPenCtrl',controller);
 
-	function controller(animPage,NivelesHasAniosFactory,AniosFactory,MesesFactory){
+	function controller(animPage,NivelesHasAniosFactory,AniosFactory,MesesFactory, Saver, $timeout, $window){
 		var vm=this;
 
 		// Variables básicas
+		vm.selecData={};
 		vm.ahora=new Date();
 		vm.ahora=moment(vm.ahora);
 		vm.limite={
@@ -22,7 +23,8 @@
 		vm.sel={
 			anio: 0,
 			mes: 0,
-			type: 'pen'
+			type: 'pen',
+			tabla: false
 		};
 	
 		// Funciones basicas
@@ -48,19 +50,22 @@
 							tipo: 'Al día',
 							ids:[],
 							name: [],
-							value: []
+							value: [],
+							levels:[]
 						},
 						{
 							tipo: 'Retrasados',
 							ids:[],
 							name: [],
-							value: []
+							value: [],
+							levels:[]
 						},
 						{
 							tipo: 'Morosos',
 							ids:[],
 							name: [],
-							value: []
+							value: [],
+							levels:[]
 						}
 					]
 				},
@@ -72,19 +77,22 @@
 							tipo: 'Al día',
 							ids:[],
 							name: [],
-							value: []
+							value: [],
+							levels:[]
 						},
 						{
 							tipo: 'Retrasados',
 							ids:[],
 							name: [],
-							value: []
+							value: [],
+							levels:[]
 						},
 						{
 							tipo: 'Morosos',
 							ids:[],
 							name: [],
-							value: []
+							value: [],
+							levels:[]
 						}
 					]
 				}
@@ -112,6 +120,9 @@
  			initObjeto();
  		}
  		function mostrarGraficos(){
+ 			vm.sel.tabla= false;
+ 			vm.selecData= {};
+ 			var tipo;
  			if (vm.sel.type=='pen') {
  				dibujaGrafico('Estado de pensiones según el año.',vm.status.pen,llamadaPension);
  			}else{
@@ -119,15 +130,20 @@
  			}
  			/////////////////////////////////////
  			function llamadaPension(e){
- 				var index=verTipo(e.dataPoint.label);
-    			dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index]);
+ 				tipo=e.dataPoint.label;
+ 				var index=verTipo(tipo);
+    			dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
  			}
  			function llamadaMatricula(e){
- 				var index=verTipo(e.dataPoint.label);
-    			dibujaGrafico('Resultados de matrículas por: '+e.dataPoint.label,vm.status.pen.niveles[index]);
+ 				tipo=e.dataPoint.label;
+ 				var index=verTipo(tipo);
+    			dibujaGrafico('Resultados de matrículas por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
+ 			}
+ 			function tablaExportar(e){
+ 				var sel=e.dataPoint.label;
+ 				exportarLista(sel, tipo, vm.sel.type);
  			}
  			function verTipo(tipo){
- 				console.log(tipo);
     			switch(tipo){
     				case 'Al día':
     					return 0;
@@ -136,10 +152,28 @@
    						return 1;
    						break;
     				case 'Morosos':
-    					return 0;
+    					return 2;
     					break;
   				}
  			}
+ 			function exportarLista(nivel, clase, tipo){
+ 				vm.sel.tabla=true;
+ 				for (var i = 0; i < vm.status[tipo].name.length; i++) {
+ 					if(vm.status[tipo].name[i]==clase){
+ 						for (var j = 0; j < vm.status[tipo].niveles[i].levels.length; j++) {
+ 							if(vm.status[tipo].niveles[i].levels[j].name==nivel){
+ 								vm.status[tipo].niveles[i].levels[j].tipo=tipo;
+ 								vm.status[tipo].niveles[i].levels[j].clase=vm.status[tipo].name[i];
+ 								Saver.setData('matypen',vm.status[tipo].niveles[i].levels[j]); // Parece que hay que implementar promesas ya que en la primera no funciona.
+								$timeout(function(){
+									$window.open('/#/matypentable'); 
+								},500);
+ 							}
+ 						}
+ 						
+ 					}
+ 				}
+			}
  		}
  		function calcularDatos(dts){
  			for (var i = 0; i < dts.length; i++) {
@@ -147,15 +181,37 @@
  					vm.status.mat.niveles[x].ids.push(dts[i].id);
  					vm.status.mat.niveles[x].name.push(dts[i].niveles.nombre);
  					vm.status.mat.niveles[x].value.push(0);
+ 					vm.status.mat.niveles[x].levels.push({ id: dts[i].id, name: dts[i].niveles.nombre, alumnos: []});
  					vm.status.pen.niveles[x].ids.push(dts[i].id);
  					vm.status.pen.niveles[x].name.push(dts[i].niveles.nombre);
  					vm.status.pen.niveles[x].value.push(0);
+ 					vm.status.pen.niveles[x].levels.push({ id: dts[i].id, name: dts[i].niveles.nombre, alumnos: []});
  				}
  				for (var j = 0; j < dts[i].alumnos.length; j++) {// Acumulando el alumno según su tipo.
  					var pagoMat=verifyPago(dts[i].alumnos[j].pago_matricula);
- 					var pagoPen=verifyPago(dts[i].alumnos[j].pago_pension,'pen');
+ 					var pagoPen=verifyPago(dts[i].alumnos[j].pago_pension, 'pen');
  					vm.status.mat.niveles[pagoMat].value[i]+=1;
  					vm.status.pen.niveles[pagoPen].value[i]+=1;
+ 					var alu=dts[i].alumnos[j], obj=undefined;
+ 					if (alu.name) {
+ 						obj={
+ 							name: alu.name, 
+ 							lastname: alu.lastname, 
+ 							identificacion: alu.identificacion,
+ 							valor:0,
+ 							fecha:0
+ 						};
+ 					}
+ 					if (vm.status.mat.niveles[pagoMat].levels[i]) {
+ 						obj.fecha=dts[i].alumnos[j].pago_matricula[0]? dts[i].alumnos[j].pago_matricula[0].created_at : 0;
+ 						obj.valor=dts[i].alumnos[j].pago_matricula[0]? dts[i].alumnos[j].pago_matricula[0].valor : 0;
+ 						vm.status.mat.niveles[pagoMat].levels[i].alumnos.push(obj);
+ 					}
+ 					if (vm.status.pen.niveles[pagoPen].levels[i]) {
+ 						obj.fecha=dts[i].alumnos[j].pago_pension[0]? dts[i].alumnos[j].pago_pension[0].created_at : 0;
+ 						obj.valor=dts[i].alumnos[j].pago_pension[0]? dts[i].alumnos[j].pago_pension[0].valor : 0;
+ 						vm.status.pen.niveles[pagoPen].levels[i].alumnos.push(obj);
+ 					}
  				}
  			}
  			promediarRes();
@@ -170,7 +226,7 @@
  				}
  			}
  		}
- 		function verifyPago(obj,type){
+ 		function verifyPago(obj, type){
  			if (obj.length) {
  				var pago=moment(obj[0].created_at);
  				if (type=='pen') {
@@ -191,7 +247,6 @@
  			return 2;
  		}
  		function dibujaGrafico(title,data,callback,container){
- 			//console.log(data);
  			if (typeof callback=='undefined') {
  				callback=function(e){
  					console.log(e);

@@ -386,6 +386,19 @@
                         controller: 'IngreyEgreCtrl as vm',
                     }
                 }
+            })
+            .state('matypentable', {
+                url: "/matypentable",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/matypen/table.index.html",
+                        controller: 'MatYPenTableCtrl as vm',
+                    }
+                }
             });
     }
 
