@@ -1,16 +1,10 @@
 <div  id="ingreyegre" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
 	<div id="header">
-		<h2>Análisis de Matrículas y Pensiones</h2>
+		<h2>Análisis de Ingresos y Egresos</h2>
 	</div>
 	<div id="content">
             <div class='row'>
-                  <p>En el gráfico a continuación se presentará el estado de pago de los alumnos en su matrícula y pensión. Haga click en la barra que desee tener mas información.</p>
-            </div>
-            <div class="row">
-                  <p style="text-align: center;">
-                  <label class="radio-inline"><input type="radio" name="optradio" ng-model='vm.sel.type' value='pen' ng-change='vm.mostrarGraficos()' selected>Pensiones</label>
-                  <label class="radio-inline"><input type="radio" name="optradio" ng-model='vm.sel.type' value='mat' ng-change='vm.mostrarGraficos()'>Matrículas</label>
-                  </p>
+                  <p>En el gráfico a continuación se presentará el estado de los ingresos y los egresos en la institución. Haga click en la barra que desee tener mas información.</p>
             </div>
             <div class='row'>
             <div class="form-group col-xs-12">
@@ -22,7 +16,7 @@
                   </div>
             </div>
             <div class="row">
-            <div class="form-group col-xs-12">
+            <div class="form-group col-xs-offset-1 col-xs-10">
                   <button class="btn btn-warning btn-sm" ng-click='vm.mostrarGraficos()'>Volver al primer gráfico</button>
             </div>
             </div>

@@ -25,61 +25,8 @@
 
 		// Lanzamiento Automático
 		animPage.show('ingreyegre',function(){});
-		initObjeto();
 		getAnios();
 		/////////////////////////// FUNCIONES BASICAS //////////////////////////////
- 		function initObjeto(){
- 			vm.status={
-				mat:{
-					name:['Al día', 'Retrasados', 'Morosos'],
-					value:[0,0,0],
-					niveles:[
-						{
-							tipo: 'Al día',
-							ids:[],
-							name: [],
-							value: []
-						},
-						{
-							tipo: 'Retrasados',
-							ids:[],
-							name: [],
-							value: []
-						},
-						{
-							tipo: 'Morosos',
-							ids:[],
-							name: [],
-							value: []
-						}
-					]
-				},
-				pen:{
-					name:['Al día', 'Retrasados', 'Morosos'],
-					value:[0,0,0],
-					niveles:[
-						{
-							tipo: 'Al día',
-							ids:[],
-							name: [],
-							value: []
-						},
-						{
-							tipo: 'Retrasados',
-							ids:[],
-							name: [],
-							value: []
-						},
-						{
-							tipo: 'Morosos',
-							ids:[],
-							name: [],
-							value: []
-						}
-					]
-				}
-			};
- 		}
  		function getAnios(){
  			return AniosFactory.gDts().then(function(res){
  				vm.anios=res.data;
@@ -99,6 +46,7 @@
  				}
  			}
  		}
+ 		/////////////// Aca vamos /////////// Hay que dibujar el objeto
  		function mostrarGraficos(){
  			var tipo;
  			if (vm.sel.type=='pen') {
