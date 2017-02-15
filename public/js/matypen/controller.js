@@ -269,9 +269,6 @@
      			axisX:{
    					interval: 1,
  				},
- 				axisY:{
-   					interval: 1,
- 				},
             	data: [
                 	{
                 		click: callback,
