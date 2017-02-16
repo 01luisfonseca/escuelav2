@@ -91,7 +91,8 @@ class IngreyEgreCtrl extends Controller
     	$pS=PagoSalario::select('pago_salario.salario_pagado','pago_salario.created_at')
     		->whereBetween('created_at', [$from, $to])
     		->get();
-    	$porMes=[];
+        $porMesIngreso=[];
+    	$porMesGasto=[];
     	$ingresos=0;
     	$gastos=0;
     	for ($i=1; $i <= 12; $i++) { 
@@ -102,48 +103,56 @@ class IngreyEgreCtrl extends Controller
     		$gasto=$this->acumuladorMes($pG,$i);
     		$gasto+=$this->acumuladorMes($pS,$i);
     		$gastos+=$gasto;
-    		array_push($porMes,['name'=>['Mes','Ingreso'],'value'=>[$this->resMes($i),$ingreso]],['name'=>['Mes','Gasto'],'value'=>[$this->resMes($i),$gasto]]);
+    		array_push($porMesIngreso,
+                ['label'=>$this->resMes($i),'y'=>$ingreso]
+            );
+            array_push($porMesGasto,
+                ['label'=>$this->resMes($i),'y'=>$gasto]
+            );
     	}
-    	$gen=['name'=>['Ingreso','Gasto'],'value'=>[$ingresos, $gastos], 'Meses'=>$porMes];
+    	$gen=[
+            'Ingresos'=>['valores'=>$porMesIngreso,'total'=>$ingresos],
+            'Gastos'=>['valores'=>$porMesGasto,'total'=> $gastos]
+        ];
     	return collect($gen);
     }
     private function resMes($id){
     	switch ($id) {
     		case 1:
-    			return 'Enero';
+    			return 'Ene';
     			break;
 			case 2:
-    			return 'Febrero';
+    			return 'Feb';
     			break;
     		case 3:
-    			return 'Marzo';
+    			return 'Mar';
     			break;
     		case 4:
-    			return 'Abril';
+    			return 'Abr';
     			break;
     		case 5:
-    			return 'Mayo';
+    			return 'May';
     			break;
     		case 6:
-    			return 'Junio';
+    			return 'Jun';
     			break;
     		case 7:
-    			return 'Julio';
+    			return 'Jul';
     			break;
     		case 8:
-    			return 'Agosto';
+    			return 'Ago';
     			break;
     		case 9:
-    			return 'Septiembre';
+    			return 'Sep';
     			break;
     		case 10:
-    			return 'Octubre';
+    			return 'Oct';
     			break;
     		case 11:
-    			return 'Noviembre';
+    			return 'Nov';
     			break;
     		case 12:
-    			return 'Diciembre';
+    			return 'Dic';
     			break;
     	}
     }
