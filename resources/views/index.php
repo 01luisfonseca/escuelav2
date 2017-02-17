@@ -147,6 +147,8 @@
         <script src='/js/matypen/controller.js'></script>        
         <script src='/js/matypen/table.controller.js'></script>        
         <script src='/js/ingreyegre/controller.js'></script>
+        <script src='/js/juicios/controller.js'></script>        
+        <script src='/js/juicios/table.controller.js'></script>  
 
 
     </head>

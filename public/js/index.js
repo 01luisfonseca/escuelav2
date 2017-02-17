@@ -399,6 +399,32 @@
                         controller: 'MatYPenTableCtrl as vm',
                     }
                 }
+            })
+            .state('juicios', {
+                url: "/analisis/juicios",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/juicios/index.html",
+                        controller: 'JuiciosCtrl as vm',
+                    }
+                }
+            })
+            .state('tablajuicios', {
+                url: "/analisis/tablajuicios/{nivel}",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/juicios/tabla.index.html",
+                        controller: 'JuiciosTableCtrl as vm',
+                    }
+                }
             });
     }
 

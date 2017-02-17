@@ -1,0 +1,38 @@
+<div  id="juicios" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Informe de Juicios de Valor.</h2>
+	</div>
+	<div id="content">
+            <div class='row'>
+                  <p>Por favor elija un año y un nivel. Con esta información genere la tabla correspondiente.</p>
+            </div>
+            <div class='row'>
+            <div class="form-group col-xs-12">
+                  <label class="col-sm-2 control-label">Elija un año.</label>
+                  <div class="col-sm-8">
+                        <select ng-model='vm.sel.anio' class='form-control'>
+                              <option ng-repeat='anio in vm.anios' value='{{$index}}'>{{anio.anio}}</option>
+                        </select>
+                  </div>
+            </div>
+            </div>
+            <div class='row' ng-if='vm.sel.anio >= 0'>
+            <div class="form-group col-xs-12">
+                  <label class="col-sm-2 control-label">Elija un nivel.</label>
+                  <div class="col-sm-8">
+                        <select ng-model='vm.sel.nivel' class='form-control'>
+                              <option ng-repeat='nivel in vm.anios[vm.sel.anio].niveles_has_anios' value='{{nivel.id}}'>{{nivel.niveles.nombre}}</option>
+                        </select>
+                  </div>
+            </div>
+            </div>
+            <div class="row" ng-if='vm.sel.nivel >= 0'>
+            <div class="form-group col-xs-offset-1 col-xs-10">
+                  <a ng-href='#/analisis/tablajuicios/{{ vm.sel.nivel }}' class="btn btn-warning btn-sm">Crear tabla</a>
+            </div>
+            </div>
+	</div>
+	<div id="footer">
+            <div id="chartContainer" style="height: 100%; width: 100%;"></div>
+	</div>               
+</div>
