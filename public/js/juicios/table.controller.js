@@ -9,15 +9,21 @@
 
 		// Variables básicas
 		vm.nhaId=$stateParams.nivel;
+		vm.data={};
 	
 		// Funciones basicas
 
 		// Lanzamiento Automático
+		activate();
 
 		/////////////////////////// FUNCIONES BASICAS //////////////////////////////
- 		function getAnios(){
- 			return AniosFactory.gDts().then(function(res){
- 				vm.anios=res.data;
+		function activate(){
+			getDatas();
+		}
+ 		function getDatas(){
+ 			return NivelesHasAniosFactory.gNAl(vm.nhaId).then(function(res){
+ 				vm.data=res.data;
+ 				console.log(vm.data);
  			});
  		}		
 	}

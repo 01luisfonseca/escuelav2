@@ -1,1 +1,25 @@
-<div>Entrega {{vm.nhaId}}</div>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<legend>SEGUIMIENTO POR JUICIOS DE VALOR</legend>
+		<thead>
+			<tr>
+				<th ng-repeat='tit in vm.data.titulos'>{{tit}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat='alumno in vm.data.alumnos'>
+				<td>{{alumno.lastname}}, {{alumno.name}}</td>
+				<td ng-repeat='mat in alumno.materias'>
+					<table>
+						<tr ng-repeat='per in mat.periodo'>
+							<td>{{per.prom | number:1}}</td>
+						</tr>
+						<tr>
+							<td>{{mat.prom | number: 1}}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

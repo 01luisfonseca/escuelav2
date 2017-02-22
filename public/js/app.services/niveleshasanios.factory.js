@@ -14,7 +14,8 @@
 			mDt: mDt,
             dDt: dDt,
             getNivelables:getNivelables,
-            gPAl: gPAl
+            gPAl: gPAl,
+            gNAl: gNAl
 		};
 
 		return fc;
@@ -46,6 +47,9 @@
         }
         function gPAl(id){
             return $http.get(url+'/pagados/'+id);
+        }
+        function gNAl(id){
+            return $http.get(url+'/notas/'+id);
         }
 	}
 })();

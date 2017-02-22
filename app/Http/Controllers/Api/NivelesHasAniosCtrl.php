@@ -205,4 +205,74 @@ class NivelesHasAniosCtrl extends Controller
             ->get();
         return $obj->toJson();
     }
+    public function notasnivel($id){
+        $nivel=NivelesHasAnios::with(
+            'anios',
+            'niveles', 
+            'alumnos.users',
+            'materias_has_niveles.empleados.users',
+            'materias_has_niveles.materias_has_periodos.periodos', 
+            'materias_has_niveles.materias_has_periodos.indicadores.alumnos_has_indicadores'
+        )->findOrFail($id);
+        $alumnos=$nivel->alumnos;
+        $resultado=[
+            'anio'=>$nivel->anios->anio,
+            'curso'=>$nivel->niveles->nombre,
+            'titulos'=>[],
+            'alumnos'=>[],
+        ];
+        $resultado['titulos'][]='Estudiantes';
+        foreach ($nivel->alumnos as $alm) { // Creación de alumnos en el acumulador
+            $resultado['alumnos'][]=[
+                'id'=>$alm->id,
+                'name'=>$alm->users->name,
+                'lastname'=>$alm->users->lastname,
+                'materias'=>[]
+            ];
+        }
+        foreach ($nivel->materias_has_niveles as $materia) {
+            $resultado['titulos'][]=$materia->materias->nombre;
+        }
+        foreach ($resultado['alumnos'] as $k1 => $alm) { // Para jugar con cada alumno y buscarlo en la gran tabla.
+            foreach ($nivel->materias_has_niveles as $materia) {
+                $profe='Sin profesor.';
+                if ($materia->empleados_id>0) {
+                    $profe= $materia->empleados->users->name.' '.$materia->empleados->users->lastname;
+                }
+                $arrPeriodo=[];
+                $promMat=0;
+                foreach ($materia->materias_has_periodos as $periodo) {
+                    $promPer=0;
+                    foreach ($periodo->indicadores as $indicador) {
+                        $promIndic=0;
+                        foreach ($indicador->alumnos_has_indicadores as $aHi) {
+                            if ($resultado['alumnos'][$k1]['id']==$aHi->alumnos_id) {
+                                $promIndic=$aHi->prom;
+                            }
+                        }
+                        $promPer+=$promIndic*$indicador->porcentaje/100;
+                    }
+                    //dd($promPer);
+                    $arrPeriodo[]=[
+                        'nombre'=>$periodo->periodos->nombre,
+                        'prom'=>$promPer
+                    ];
+
+                    //$promMat += $promPer;
+                }
+                /*if (count($arrPeriodo)>0) {
+                    $promMat /= count($arrPeriodo);
+                }*/
+                $resultado['alumnos'][$k1]['materias'][]=[
+                    'nombre'=>$materia->materias->nombre,
+                    'profesor'=>$profe,
+                    'periodo'=>$arrPeriodo,
+                    'prom'=>$promMat
+                ];
+
+            }
+        }
+        $nivel=collect($resultado);
+        return $nivel->toJson();
+    }
 }
