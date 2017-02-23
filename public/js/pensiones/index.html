@@ -1,7 +1,6 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12" ng-show='vm.panelSel(0)'>
-			
 			<p>Por favor escriba los criterios de busqueda. Por defecto se mostrarán los últimos 50 registros según su número de factura.</p>
 			<p><input type="text" ng-model='vm.buscado' placeholder="Introduzca el texto a buscar." ng-change='vm.buscarData()' class="form-control input-md"></p>
 			<p ng-show='vm.buscado!=""'>A continuación se presentan los resultados.</p>
@@ -9,10 +8,11 @@
 			<div class="desplazable-grande">
 			<div class="table-responsive">
 				<button class="btn btn-xs btn-info" ng-click='vm.getDatas()'>Actualizar tabla.</button>
-				<table class="table table-stripped">
+				<table class="table table-stripped table-bordered">
 					<tr>
 						<th>Acción</th>
         			    <th>Factura</th>
+						<th>Mes</th>
 						<th>Usuario</th>
 						<th>Nivel</th>
 						<th>Fecha cancelación</th>
@@ -25,6 +25,7 @@
 		    			<a href="/#/facturacobro/pension/{{dt.numero_factura}}" target="_blank">Tirilla</a>
 		    			</td>
 		    			<td>{{ dt.numero_factura }}</td>
+		    			<td>{{ dt.mes_id }}</td>
 		    			<td>{{ dt.alumnos.users.lastname }}, {{ dt.alumnos.users.name }}</td>
 		    			<td>{{ dt.alumnos.niveles_has_anios.niveles.nombre }}, {{ dt.alumnos.niveles_has_anios.anios.anio }}</td>
                			<td>{{ dt.cancelado_at }}</td>
@@ -46,6 +47,10 @@
 				<div class="form-group">
 					<label class="control-label" for="nombre">Usuario</label>  
 	    			<label class="form-control">{{ vm.form.alumnos.users.lastname }}, {{ vm.form.alumnos.users.name }}</label>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="nombre">Mes</label>  
+	    			<label class="form-control">{{ vm.form.mes_id }}</label>
 				</div>
 				<div class="form-group">
 					<label class="control-label" for="nombre">Fecha de cancelación</label>  

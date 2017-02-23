@@ -19,19 +19,19 @@
             <div class="tab-content">
 
                   <div role="tabpanel" class="active"  id="CrearData">
-                        <div class="panel panel-default" ng-show='vm.tabSelec(1)'>
+                        <div class="panel panel-default" ng-if='vm.tabSelec(1)'>
                               <div class="panel-body"><form-ingreso></form-ingreso></div>
                         </div>
                   </div>
 
                   <div role="tabpanel" class="active"  id="Pensiones">
-                        <div class="panel panel-default" ng-show='vm.tabSelec(2)'>
+                        <div class="panel panel-default" ng-if='vm.tabSelec(2)'>
                               <div class="panel-body"><pensiones></pensiones></div>
                         </div>
                   </div>
 
                   <div role="tabpanel" class="active"  id="Matriculas">
-                        <div class="panel panel-default" ng-show='vm.tabSelec(3)'>
+                        <div class="panel panel-default" ng-if='vm.tabSelec(3)'>
                               <div class="panel-body"><matriculas></matriculas></div>
                         </div>
                   </div>
