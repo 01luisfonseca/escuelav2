@@ -23,7 +23,7 @@
       		/* */
     	}
 
-    	function controller(UsersFactory,TipoFactory,animMsj,$timeout,perfil,$window){
+    	function controller(UsersFactory,TipoFactory,animMsj,$timeout,perfil,$window, $location){
     		var vm=this;
 
     		// Variables
@@ -70,11 +70,18 @@
 			}
 
 			function getInfoUser(id){
-				return UsersFactory.getUser(id).then(function(res){
-					vm.user=res.data;
+				if (vm.perfil.id==id) {
+					vm.user=perfil.getInfo();
 					vm.user.birday=new Date(vm.user.birday);
 					vm.user.estado=parseInt(vm.user.estado);
-				})
+					return true;
+				}else{
+					return UsersFactory.getUser(id).then(function(res){
+						vm.user=res.data;
+						vm.user.birday=new Date(vm.user.birday);
+						vm.user.estado=parseInt(vm.user.estado);
+					});
+				}
 			}
 
 			function obtenerTipos(){
@@ -119,6 +126,7 @@
 			function actUser(data){
 				return UsersFactory.modUser(vm.existente,data).then(function(res){
 					lanzaAlerta(res.data.msj);
+                    $location.path('/usuarios');
 				},function(res){
 					lanzaError('Falta información para almacenar el usuario');
 				});				
@@ -127,6 +135,7 @@
 			function actPerfil(data){
 				return perfil.setInfo(data).then(function(res){
 					lanzaAlerta(res.data.msj);
+                    $location.path('/authhome');
 				},function(res){
 					lanzaError('Falta información para actualizar el perfil');
 				});

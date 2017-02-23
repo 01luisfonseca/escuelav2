@@ -1,9 +1,11 @@
 <div class="table-responsive">
 	<table class="table table-striped">
-		<legend>SEGUIMIENTO POR JUICIOS DE VALOR</legend>
+		<legend style="text-align: center;"><h2>{{vm.institucion | uppercase}}</h2></legend>
+		<legend style="text-align: center;">SEGUIMIENTO POR JUICIOS DE VALOR</legend>
+		<p style="text-align: center;"><h4><em>Año:</em> {{vm.data.anio}}.        <em>Curso:</em> {{vm.data.curso}}</h4></p>
 		<thead>
 			<tr>
-				<th ng-repeat='tit in vm.data.titulos'>{{tit}}</th>
+				<th ng-repeat='tit in vm.data.titulos'>{{vm.recortar(tit) | uppercase}}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -15,7 +17,7 @@
 							<td>{{per.prom | number:1}}</td>
 						</tr>
 						<tr>
-							<td>{{mat.prom | number: 1}}</td>
+							<td><strong><em>{{mat.prom | number: 1}}</em></strong></td>
 						</tr>
 					</table>
 				</td>

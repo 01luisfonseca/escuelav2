@@ -258,11 +258,11 @@ class NivelesHasAniosCtrl extends Controller
                         'prom'=>$promPer
                     ];
 
-                    //$promMat += $promPer;
+                    $promMat += $promPer;
                 }
-                /*if (count($arrPeriodo)>0) {
+                if (count($arrPeriodo)>0) {
                     $promMat /= count($arrPeriodo);
-                }*/
+                }
                 $resultado['alumnos'][$k1]['materias'][]=[
                     'nombre'=>$materia->materias->nombre,
                     'profesor'=>$profe,

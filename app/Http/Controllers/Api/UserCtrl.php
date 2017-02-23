@@ -136,6 +136,7 @@ class UserCtrl extends Controller
         $obj=User::findOrFail($user);
         if($this->req->has('password')){
             $obj->password=bcrypt($this->req->input('password'));
+            $obj->save();
         }else{
             $this->validate($this->req,[
                 'name'=>'required',
