@@ -74,12 +74,14 @@
 					vm.user=perfil.getInfo();
 					vm.user.birday=new Date(vm.user.birday);
 					vm.user.estado=parseInt(vm.user.estado);
+					vm.user.identificacion=parseInt(vm.user.identificacion);
 					return true;
 				}else{
 					return UsersFactory.getUser(id).then(function(res){
 						vm.user=res.data;
 						vm.user.birday=new Date(vm.user.birday);
 						vm.user.estado=parseInt(vm.user.estado);
+						vm.user.identificacion=parseInt(vm.user.identificacion);
 					});
 				}
 			}
