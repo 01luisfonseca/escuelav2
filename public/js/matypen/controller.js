@@ -108,6 +108,10 @@
  				$rootScope.$broadcast('cargando',false);
  				vm.cargando=false;
  				vm.anios=res.data;
+ 			},function(e){
+ 				$rootScope.$broadcast('cargando',false);
+ 				$window.alert('El servidor presenta molestias en la conexión.');
+ 				console.log(e);
  			});
  		}
  		function getMeses(){
@@ -123,6 +127,10 @@
  				vm.datosRaw=res.data;
  				calcularDatos(res.data);
  				mostrarGraficos();
+ 			},function(e){
+ 				$rootScope.$broadcast('cargando',false);
+ 				$window.alert('El servidor presenta molestias en la conexión.');
+ 				console.log(e);
  			});
  		}
  		function cambioMes(){
