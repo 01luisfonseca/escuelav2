@@ -4,7 +4,7 @@
 		.module('escuela')
 		.controller('MatYPenCtrl',controller);
 
-	function controller(animPage,NivelesHasAniosFactory,AniosFactory,MesesFactory, Saver, $timeout, $window){
+	function controller(animPage,NivelesHasAniosFactory,AniosFactory,MesesFactory, Saver, $timeout, $window, $rootScope){
 		var vm=this;
 
 		// Variables básicas
@@ -34,12 +34,16 @@
 
 
 		// Lanzamiento Automático
-		animPage.show('matypen',function(){});
-		initObjeto();
-		getAnios();
-		getMeses();
+		animPage.show('matypen',function(){
+			activate();
+		});
 
 		/////////////////////////// FUNCIONES BASICAS //////////////////////////////
+		function activate(){
+			initObjeto();
+			getAnios();
+			getMeses();
+		}
  		function initObjeto(){
  			vm.status={
 				mat:{
@@ -99,7 +103,10 @@
 			};
  		}
  		function getAnios(){
+ 			$rootScope.$broadcast('cargando',true);
  			return AniosFactory.gDts().then(function(res){
+ 				$rootScope.$broadcast('cargando',false);
+ 				vm.cargando=false;
  				vm.anios=res.data;
  			});
  		}
@@ -109,8 +116,10 @@
  			});
  		}
  		function cambioAnio(){
+ 			$rootScope.$broadcast('cargando',true);
  			initObjeto();
  			return NivelesHasAniosFactory.gPAl(vm.sel.anio).then(function(res){
+ 				$rootScope.$broadcast('cargando',false);
  				vm.datosRaw=res.data;
  				calcularDatos(res.data);
  				mostrarGraficos();
@@ -137,7 +146,7 @@
  			function llamadaMatricula(e){
  				tipo=e.dataPoint.label;
  				var index=verTipo(tipo);
-    			dibujaGrafico('Resultados de matrículas por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
+    			dibujaGrafico('Resultados de matrículas por: '+e.dataPoint.label,vm.status.mat.niveles[index],tablaExportar);
  			}
  			function tablaExportar(e){
  				var sel=e.dataPoint.label;
@@ -228,15 +237,15 @@
  		}
  		function verifyPago(obj, type){
  			if (obj.length) {
- 				var pago=moment(obj[0].created_at);
- 				if (type=='pen') {
+ 				var pago;
+ 				if (type==='pen') {
  					var fecha=new Date(vm.datosRaw[0].anios.anio, obj[0].mes_id, 1, 0, 0, 0, 0);
  					pago=moment(fecha);
  				}else{
- 					return 0;
+ 					return 0; // Existe matrícula, por lo que se cuenta como pagada.
  				}
- 				pago=vm.ahora.diff(pago, 'days');
- 				if (pago<=vm.limite.mora) {
+ 				pago=vm.ahora.diff(pago, 'days'); // Calculo de la diferencia de días
+ 				if (pago <= vm.limite.mora) {
  					if (pago>vm.limite.retraso) {
  						return 1;
  					}else{
@@ -244,7 +253,7 @@
  					}
  				}
  			}
- 			return 2;
+ 			return 2; // Si un elemento no tiene nada, entonces es porque no han pagado. Tambien aplica para los morosos
  		}
  		function dibujaGrafico(title,data,callback,container){
  			if (typeof callback=='undefined') {

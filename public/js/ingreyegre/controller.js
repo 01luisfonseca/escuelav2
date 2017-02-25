@@ -46,6 +46,7 @@
  			}
  		}
  		function mostrarGraficos(elems){
+            //console.log(elems);
  			dibujaGrafico('Estado de Ingresos y Egresos según el año.',[elems.Ingresos.valores,elems.Gastos.valores],llamadaPension);
  			/////////////////////////////////////
  			function llamadaPension(e){

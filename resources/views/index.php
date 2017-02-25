@@ -40,6 +40,7 @@
         <script src='/js/index.core.js'></script>
         <script src='/js/index.router.js'></script>
         <script src='/js/index.presentacion.js'></script>
+        <script src='/js/aaspecialmodules/lfmod/lfmod.js'></script>
         <script src='/js/app.services/oauth.value.js'></script>
         <script src='/js/app.services/auth.factory.js'></script>
         <script src='/js/app.services/animPages.service.js'></script>
@@ -153,6 +154,7 @@
 
     </head>
     <body ng-app="escuela">
+        <lf-charge></lf-charge>
         <div class="container-fluid">
             <div ui-view='menu'></div>
             <div class="row">

@@ -9,6 +9,8 @@ use App\Helpers\Borrador;
 use Carbon\Carbon;
 use Log;
 use App\NivelesHasAnios;
+use App\PagoPension;
+use App\PagoMatricula;
 
 class NivelesHasAniosCtrl extends Controller
 {
@@ -188,22 +190,22 @@ class NivelesHasAniosCtrl extends Controller
      */
     public function pagados($id){
         $obj=NivelesHasAnios::with(['anios','niveles', 'alumnos'=>function($query){
-            $query->with(['pago_matricula'=>function($query){
-                $query->orderBy('created_at','desc')->take(1);
-            },
-            'pago_pension'=>function($query){
-                $query->orderBy('mes_id','desc')->take(1);
-            }])
-                ->join('users','users_id','=','users.id')
-                ->select('alumnos.*','users.lastname','users.name','users.identificacion')
-                ->orderBy('users.lastname','asc');
-        }])
-            ->join('niveles','niveles_id','=','niveles.id')
-            ->select('niveles_has_anios.*')
-            ->orderBy('niveles.nombre','asc')
-            ->where('anios_id',$id)
-            ->get();
-        return $obj->toJson();
+            $query->join('users','users_id','=','users.id')->select('alumnos.*','users.lastname','users.name','users.identificacion')->orderBy('users.lastname','asc');
+        }])->join('niveles','niveles_id','=','niveles.id')->select('niveles_has_anios.*')->orderBy('niveles.nombre','asc')->where('anios_id',$id)->get();
+        $elemen=$obj->toArray();
+        for ($i=0; $i < count($elemen); $i++) { 
+            for ($j=0; $j < count($elemen[$i]['alumnos']); $j++) {
+                $pen=PagoPension::where('alumnos_id', $elemen[$i]['alumnos'][$j]["id"])->orderBy('mes_id','desc')->take(1)->get();
+                $mat=PagoMatricula::where('alumnos_id', $elemen[$i]['alumnos'][$j]["id"])->orderBy('id','desc')->take(1)->get();
+                $pent= $pen->toArray();
+                $matt= $mat->toArray();
+                $elemen[$i]['alumnos'][$j]["pago_matricula"]=$matt;
+                $elemen[$i]['alumnos'][$j]["pago_pension"]=$pent;
+            }
+        }
+        //dd($elemen[18]);
+        $tmp=collect($elemen);
+        return $tmp->toJson();
     }
     public function notasnivel($id){
         $nivel=NivelesHasAnios::with(

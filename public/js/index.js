@@ -10,6 +10,7 @@
             'ui.router.middleware',
             'ngStorage',
             'ngDialog',
+            'lfmod',
 
 			// De aplicacion
 			'escuela.router',
