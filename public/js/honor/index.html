@@ -1,0 +1,28 @@
+<div  id="honor" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Cuadros de Honor.</h2>
+	</div>
+	<div id="content">
+            <div class='row'>
+                  <p>Seleccione alguna de las opciones a continuación. Puede elegir en generar la tabla de honor general o por curso. Las tablas de honor están separadas por periodo.</p>
+            </div>
+            <div class='row'>
+            <div class="form-group col-xs-12">
+                  <label class="col-sm-2 control-label">Elija un año.</label>
+                  <div class="col-sm-8">
+                        <select ng-model='vm.sel.anio' class='form-control'>
+                              <option ng-repeat='anio in vm.anios' value='{{$index}}'>{{anio.anio}}</option>
+                        </select>
+                  </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="form-group col-xs-offset-1 col-xs-10">
+                  <a ng-href='#/analisis/tablajuicios/{{ vm.sel.nivel }}' class="btn btn-warning btn-sm">Crear tabla</a>
+            </div>
+            </div>
+	</div>
+	<div id="footer">
+            <div id="chartContainer" style="height: 100%; width: 100%;"></div>
+	</div>               
+</div>

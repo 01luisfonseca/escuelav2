@@ -30,7 +30,7 @@ class PagoGastoCtrl extends Controller
     public function index($ini=0)
     {
         $obj=PagoGasto::with($this->rel)
-            ->orderBy('numero_factura','desc')
+            ->orderBy('created_at','desc')
             ->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=PagoGasto.';

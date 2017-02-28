@@ -33,7 +33,7 @@ class OtrosCtrl extends Controller
     public function index($ini=0)
     {
         $obj=PagoOtros::with($this->rel)
-            ->orderBy('numero_factura','desc')
+            ->orderBy('created_at','desc')
             ->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=PagoOtros.';

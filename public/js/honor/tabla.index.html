@@ -1,0 +1,27 @@
+<div class="table-responsive">
+	<table class="table table-striped">
+		<legend style="text-align: center;"><h2>{{vm.institucion | uppercase}}</h2></legend>
+		<legend style="text-align: center;">SEGUIMIENTO POR JUICIOS DE VALOR</legend>
+		<p style="text-align: center;"><h4><em>Año:</em> {{vm.data.anio}}.        <em>Curso:</em> {{vm.data.curso}}</h4></p>
+		<thead>
+			<tr>
+				<th ng-repeat='tit in vm.data.titulos'>{{vm.recortar(tit) | uppercase}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat='alumno in vm.data.alumnos'>
+				<td>{{alumno.lastname}}, {{alumno.name}}</td>
+				<td ng-repeat='mat in alumno.materias'>
+					<table>
+						<tr ng-repeat='per in mat.periodo'>
+							<td>{{per.prom | number:1}}</td>
+						</tr>
+						<tr>
+							<td><strong><em>{{mat.prom | number: 1}}</em></strong></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -28,9 +28,9 @@ class UltimaFacCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $ptP=PagoPension::select('numero_factura')->where('id','>',0)->orderBy('numero_factura','desc')->first();
-        $ptM=PagoMatricula::select('numero_factura')->where('id','>',0)->orderBy('numero_factura','desc')->first();        
-        $ptO=PagoOtros::select('numero_factura')->where('id','>',0)->orderBy('numero_factura','desc')->first();
+        $ptP=PagoPension::select('numero_factura')->where('id','>',0)->orderBy('created_at','desc')->first();
+        $ptM=PagoMatricula::select('numero_factura')->where('id','>',0)->orderBy('created_at','desc')->first();        
+        $ptO=PagoOtros::select('numero_factura')->where('id','>',0)->orderBy('created_at','desc')->first();
         $pP=$ptP? $this->sacaNumeros($ptP->numero_factura) : 0;
         $pM=$ptM? $this->sacaNumeros($ptM->numero_factura) : 0;
         $pO=$ptO? $this->sacaNumeros($ptO->numero_factura) : 0;

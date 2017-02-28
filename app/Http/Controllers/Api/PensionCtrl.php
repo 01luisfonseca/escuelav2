@@ -33,7 +33,7 @@ class PensionCtrl extends Controller
     public function index($ini=0)
     {
         $obj=PagoPension::with($this->rel)
-            ->orderBy('numero_factura','desc')
+            ->orderBy('created_at','desc')
             ->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=PagoPension.';
@@ -199,8 +199,8 @@ class PensionCtrl extends Controller
             ->select('pago_pension.*')
             ->where('users.name','LIKE','%'.$info.'%')
             ->orWhere('users.lastname','LIKE','%'.$info.'%')
-            ->orWhere('users.identificacion','LIKE','%'.$info.'%')
             ->orWhere('numero_factura','LIKE','%'.$info.'%')
+            ->orWhere('users.identificacion','LIKE','%'.$info.'%')
             ->orderBy('users.lastname','desc')
             ->with($this->rel)
             ->get();

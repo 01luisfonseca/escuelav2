@@ -33,7 +33,7 @@ class MatriculaCtrl extends Controller
     public function index($ini=0)
     {
         $obj=PagoMatricula::with($this->rel)
-            ->orderBy('numero_factura','desc')
+            ->orderBy('created_at','desc')
             ->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=PagoMatricula.';
@@ -197,8 +197,8 @@ class MatriculaCtrl extends Controller
             ->select('pago_matricula.*')
             ->where('users.name','LIKE','%'.$info.'%')
             ->orWhere('users.lastname','LIKE','%'.$info.'%')
-            ->orWhere('users.identificacion','LIKE','%'.$info.'%')
             ->orWhere('numero_factura','LIKE','%'.$info.'%')
+            ->orWhere('users.identificacion','LIKE','%'.$info.'%')
             ->orderBy('users.lastname','desc')
             ->with($this->rel)
             ->get();
