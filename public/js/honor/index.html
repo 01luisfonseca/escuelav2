@@ -16,9 +16,30 @@
                   </div>
             </div>
             </div>
+            <div class='row'>
+            <div class="form-group col-xs-12" ng-show='vm.sel.anio>=0'>
+                  <label class="col-sm-2 control-label">Elija un periodo.</label>
+                  <div class="col-sm-8">
+                        <select ng-model='vm.sel.pers' class='form-control'>
+                              <option ng-repeat='pers in vm.anios[vm.sel.anio].periodos track by pers.nombre' value='{{$index}}'>{{pers.nombre}}</option>
+                        </select>
+                  </div>
+            </div>
+            </div>
+            <div class='row'>
+            <div class="form-group col-xs-12" ng-show='vm.perSel()'>
+                  <label class="col-sm-2 control-label">Elija un nivel (Opcional).</label>
+                  <div class="col-sm-8">
+                        <select ng-model='vm.sel.nivel' class='form-control'>
+                              <option ng-repeat='nivel in vm.anios[vm.sel.anio].niveles_has_anios' value='{{$index}}'>{{nivel.niveles.nombre}}</option>
+                        </select>
+                  </div>
+            </div>
+            </div>
             <div class="row">
             <div class="form-group col-xs-offset-1 col-xs-10">
-                  <a ng-href='#/analisis/tablajuicios/{{ vm.sel.nivel }}' class="btn btn-warning btn-sm">Crear tabla</a>
+                  <a class="btn btn-warning btn-sm" ng-click='vm.calcGen()' ng-disabled='!vm.perSel()'>Calcular general</a>
+                  <a class="btn btn-warning btn-sm" ng-click='vm.calcNivel()' ng-disabled='!vm.nivelSel()'>Calcular por nivel</a>
             </div>
             </div>
 	</div>

@@ -30,7 +30,7 @@ class AniosCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=Anios::with(['niveles_has_anios'=>function($query){
+        $obj=Anios::with(['periodos','niveles_has_anios'=>function($query){
             $query->with('niveles','materias_has_niveles.materias','materias_has_niveles.empleados.users.tipo_usuario');
         }])->skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
         $ev=new EventlogRegister;

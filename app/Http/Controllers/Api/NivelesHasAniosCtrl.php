@@ -207,15 +207,20 @@ class NivelesHasAniosCtrl extends Controller
         $tmp=collect($elemen);
         return $tmp->toJson();
     }
-    public function notasnivel($id){
-        $nivel=NivelesHasAnios::with(
+    public function notasnivel($id,$perId=0){
+        $nivel=NivelesHasAnios::with([
             'anios',
             'niveles', 
             'alumnos.users',
             'materias_has_niveles.empleados.users',
-            'materias_has_niveles.materias_has_periodos.periodos', 
-            'materias_has_niveles.materias_has_periodos.indicadores.alumnos_has_indicadores'
-        )->findOrFail($id);
+            'materias_has_niveles.materias_has_periodos'=>function ($query) use ($perId){
+                if ($perId==0) {
+                    $query->with('periodos', 'indicadores.alumnos_has_indicadores')->where('id',$perId);
+                }else{
+                    $query->with('periodos', 'indicadores.alumnos_has_indicadores');
+                }
+            }
+        ])->findOrFail($id);
         $alumnos=$nivel->alumnos;
         $resultado=[
             'anio'=>$nivel->anios->anio,

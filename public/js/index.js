@@ -426,6 +426,19 @@
                         controller: 'JuiciosTableCtrl as vm',
                     }
                 }
+            })
+            .state('honor', {
+                url: "/analisis/honor",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/honor/index.html",
+                        controller: 'HonorCtrl as vm',
+                    }
+                }
             });
     }
 
