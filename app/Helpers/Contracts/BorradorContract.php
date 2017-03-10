@@ -17,6 +17,7 @@ Interface BorradorContract
     public function eliminarEmpleadosHuerfanos();
     public function delUser($id);
     public function delAlumnos($id);
+    public function delAlumnoNotas($id);
     public function delAnios($id);
     public function delNiveles($id);
     public function delNivelesHasAnios($id);

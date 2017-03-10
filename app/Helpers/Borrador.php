@@ -340,8 +340,9 @@ class Borrador implements BorradorContract
     }
 
     public function delAlumnos($id){
-        $elem=Alumnos::with('pago_matricula','pago_pension','pago_otro','notas','newasistencia', 'matasistencia','alumnos_has_indicadores')->findOrFail($id);
+        $elem=Alumnos::with('pago_matricula','pago_pension','pago_otro','newasistencia', 'matasistencia')->findOrFail($id);
         if($this->esUtil($elem)){
+            $this->delAlumnoNotas($id);
             foreach ($elem->pago_matricula as $hijo) {
                 $this->delPagoMatricula($hijo->id); // Borrar hijos
             }
@@ -351,19 +352,27 @@ class Borrador implements BorradorContract
             foreach ($elem->pago_otro as $hijo) {
                 $this->delPagoOtros($hijo->id); // Borrar hijos
             }
-            foreach ($elem->notas as $hijo) {
-                $this->delNota($hijo->id); // Borrar hijos
-            }
             foreach ($elem->newasistencia as $hijo) {
                 $this->delNewasistencia($hijo->id); // Borrar hijos
             }
             foreach ($elem->matasistencia as $hijo) {
                 $this->delMatasistencia($hijo->id); // Borrar hijos
             }
+            $elem->delete(); // Borrar el elemento en si
+            return true;
+        }
+        return false;
+    }
+
+    public function delAlumnoNotas($id){
+        $elem=Alumnos::with('notas','alumnos_has_indicadores')->findOrFail($id);
+        if($this->esUtil($elem)){
+            foreach ($elem->notas as $hijo) {
+                $this->delNota($hijo->id); // Borrar hijos
+            }
             foreach ($elem->alumnos_has_indicadores as $hijo) {
                 $this->delAlumnosHasIndicadores($hijo->id); // Borrar hijos
             }
-            $elem->delete(); // Borrar el elemento en si
             return true;
         }
         return false;

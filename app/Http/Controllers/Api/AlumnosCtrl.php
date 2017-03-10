@@ -137,7 +137,8 @@ class AlumnosCtrl extends Controller
         $this->validate($this->req,[
             'pension'=>'required',
             'acudiente'=>'required',
-            'matricula'=>'required'
+            'matricula'=>'required',
+            'niveles_has_anios_id'=>'required'
         ]);
         if($this->req->has('descripcion_pen')){
             $obj->descripcion_pen=$this->req->input('descripcion_pen');
@@ -151,10 +152,21 @@ class AlumnosCtrl extends Controller
         }
         $obj->email_acudiente=$this->req->has('email_acudiente')? $this->req->input('email_acudiente') : '';
         $obj->acudiente=$this->req->input('acudiente');
+        $cambio=false;
+        if ( $obj->niveles_has_anios_id != $this->req->input('niveles_has_anios_id')) {
+            $obj->niveles_has_anios_id=$this->req->input('niveles_has_anios_id');
+            $cambio=true;
+        }
         $obj->matricula=$this->req->input('matricula');
         $obj->pension=$this->req->input('pension');
         $obj->save();
         $msj='Modificación. Tabla=Alumnos, id='.$id;
+        if ($cambio) {
+            $res=new Borrador;
+            $res->delAlumnoNotas($id); // Solo borra las notas
+            $rell=new Rellenador;
+            $rell->autoLlenarAlumno($obj->id);
+        }
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }

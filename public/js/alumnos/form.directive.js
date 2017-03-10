@@ -48,9 +48,9 @@
 			vm.getNiveles=getNiveles;
 			
 			// Lanzamiento Automático
+			vm.getNiveles();
 			if (!vm.hayExistente()) {
 				vm.getUsers();
-				vm.getNiveles();
 			}
 
 			// Lanzamiento obligatorio

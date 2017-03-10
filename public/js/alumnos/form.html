@@ -3,23 +3,20 @@
 	<legend>Datos de ingreso: </legend>
 	<div class="form-group" ng-if='!vm.hayExistente()'>
 		<label class="control-label" for="nombre_alumno">Usuario</label> 
-	    <select id="alumno_seleccionado" class="form-control" name="users_id" ng-model='vm.ndts.users_id'>
+	    <select id="alumno_seleccionado" class="form-control" name="users_id" ng-model='vm.ndts.users_id' required>
 	    	<option ng-repeat='alu in vm.users.data' value="{{alu.id}}">{{alu.lastname}}, {{alu.name}}. -- Id: {{alu.identificacion}}</option>
-	    </select>
-	</div>
-	<div class="form-group" ng-if='!vm.hayExistente()'>
-		<label class="control-label" for="nombre_alumno">Nivel</label> 
-	    <select id="nivel_seleccionado" class="form-control" name="materias_has_niveles_id" ng-model='vm.ndts.niveles_has_anios_id'>
-	    	<option ng-repeat='nivel in vm.niveles.data' value="{{nivel.id}}">Año: {{nivel.anios.anio}}. -- Nivel: {{nivel.niveles.nombre}}</option>
 	    </select>
 	</div>
 	<div class="form-group" ng-if='vm.hayExistente()'>
 		<label class="control-label" for="alumno">Usuario</label>
 		<input id="alumno" name="alumno" type="text" step="1" class="form-control" value='{{vm.ndts.users.name}} {{vm.ndts.users.lastname}}' disabled>
 	</div>
-	<div class="form-group" ng-if='vm.hayExistente()'>
-		<label class="control-label" for="alumno">Nivel</label>
-		<input id="alumno" name="alumno" type="text" class="form-control" value='{{vm.ndts.niveles_has_anios.niveles.nombre}}' disabled>
+	<div class="form-group">
+		<label class="control-label" for="nombre_alumno">Nivel</label> 
+	    <select id="nivel_seleccionado" class="form-control" name="materias_has_niveles_id" ng-model='vm.ndts.niveles_has_anios_id' required>
+	    	<option ng-if='vm.hayExistente()' value='vm.ndts.niveles_has_anios_id' selected>Actual: {{vm.ndts.niveles_has_anios.niveles.nombre}}</option>
+	    	<option ng-repeat='nivel in vm.niveles.data' value="{{nivel.id}}">Año: {{nivel.anios.anio}}. -- Nivel: {{nivel.niveles.nombre}}</option>
+	    </select>
 	</div>
 	<div class="form-group">
 		<label class="control-label" for="acudiente">Acudiente</label>
@@ -49,6 +46,6 @@
 	    	<textarea id="descripcion_mat" name="descripcion_mat" cols="3" form="crearalumno" class="form-control"></textarea ng-model='vm.ndts.descripcion_mat'>
 	    </div>
 	</div>
-	<input type="submit" class="btn btn-info" value="Enviar">
+	<input type="submit" class="btn btn-info btn-lg" value="Guardar Información">
 </fieldset>
 </form>
