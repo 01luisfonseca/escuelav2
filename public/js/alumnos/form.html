@@ -14,7 +14,7 @@
 	<div class="form-group">
 		<label class="control-label" for="nombre_alumno">Nivel</label> 
 	    <select id="nivel_seleccionado" class="form-control" name="materias_has_niveles_id" ng-model='vm.ndts.niveles_has_anios_id' required>
-	    	<option ng-if='vm.hayExistente()' value='vm.ndts.niveles_has_anios_id' selected>Actual: {{vm.ndts.niveles_has_anios.niveles.nombre}}</option>
+	    	<option ng-if='vm.hayExistente()' value='{{vm.ndts.niveles_has_anios_id}}' selected>Actual: {{vm.ndts.niveles_has_anios.niveles.nombre}}</option>
 	    	<option ng-repeat='nivel in vm.niveles.data' value="{{nivel.id}}">Año: {{nivel.anios.anio}}. -- Nivel: {{nivel.niveles.nombre}}</option>
 	    </select>
 	</div>
