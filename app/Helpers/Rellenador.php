@@ -12,6 +12,7 @@ use App\MateriasHasNiveles;
 use App\Periodos;
 use App\TipoNota;
 use App\Notas;
+use Log;
 
 class Rellenador implements RellenadorContract
 {
@@ -73,7 +74,7 @@ class Rellenador implements RellenadorContract
                     }
                     if ($notaAdd) {
                         $ind=new AlumInd;
-                        $ind->addActProm($alumno->id,$indicador_id);
+                        $ind->addActProm($alumno->id,$indicador->id);
                     }
                 }
                 }

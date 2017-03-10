@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
 use App\Helpers\Borrador;
+use App\Helpers\Rellenador;
 use Carbon\Carbon;
 use Log;
 use App\Alumnos;
@@ -30,7 +31,7 @@ class AlumnosCtrl extends Controller
     public function index($ini=0)
     {
         $obj=Alumnos::with('users.tipo_usuario','niveles_has_anios.anios','niveles_has_anios.niveles')
-            ->orderBy('updated_at','desc')->get();
+            ->orderBy('updated_at','desc')->skip($ini)->take(20)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=Alumnos.';
         $ev->registro(0,$msj,$this->req->user()->id);
@@ -88,6 +89,8 @@ class AlumnosCtrl extends Controller
         $obj->matricula=$this->req->input('matricula');
         $obj->pension=$this->req->input('pension');
         $obj->save();
+        $rell=new Rellenador;
+        $rell->autoLlenarAlumno($obj->id);
         $msj='Elemento Creado. Tabla=Alumnos, id='.$obj->id;
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);

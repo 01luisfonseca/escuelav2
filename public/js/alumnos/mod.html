@@ -25,7 +25,7 @@
 </div>
 
 <!-- PANELES -->
-<div ng-repeat='dt in vm.dts.data' class="panel panel-primary" ng-show='vm.esPanelSelec($index) && !vm.buscando'>
+<div ng-repeat='dt in vm.dts.data' class="panel panel-primary" ng-if='vm.esPanelSelec($index) && !vm.buscando'>
 	<div class="panel-heading">
       	<h4 class="panel-title">Modificación de registro</h4>
       </div>
