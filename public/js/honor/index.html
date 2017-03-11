@@ -42,6 +42,25 @@
                   <a class="btn btn-warning btn-sm" ng-click='vm.calcNivel()' ng-disabled='!vm.nivelSel()'>Calcular por nivel</a>
             </div>
             </div>
+            <div class="row" ng-if='vm.calculado'>
+                  <div class="form-group col-xs-offset-1 col-xs-10">
+                        <div class="table-responsive">
+                              <table class="table table-stripped table-condensed">
+                                    <tr>
+                                          <th>POS.</th>
+                                          <th>ALUMNO</th>
+                                          <th>PROMEDIO</th>
+                                    </tr>
+                                    <tr ng-repeat='alum in vm.notastabla.alumnos | orderBy:["-prom","lastname"]'>
+                                          <td>{{$index+1}}</td>
+                                          <td>{{alum.lastname}}, {{alum.name}}</td>
+                                          <td>{{alum.prom | number:3}}</td>
+                                    </tr>
+                              </table>
+                        </div>
+                        <a class="btn btn-info btn-sm" ng-click=''>Imprimir</a>
+                  </div>
+            </div>
 	</div>
 	<div id="footer">
             <div id="chartContainer" style="height: 100%; width: 100%;"></div>

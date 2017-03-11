@@ -15,7 +15,8 @@
             dDt: dDt,
             getNivelables:getNivelables,
             gPAl: gPAl,
-            gNAl: gNAl
+            gNAl: gNAl,
+            gNPAl:gNPAl
 		};
 
 		return fc;
@@ -48,8 +49,12 @@
         function gPAl(id){
             return $http.get(url+'/pagados/'+id);
         }
-        function gNAl(id){
+        function gNAl(id){ // Notas promedio desde indicadores
             return $http.get(url+'/notas/'+id);
+        }
+        function gNPAl(id,per){ // Notas promedio desde periodo
+            let turl=per? url+'/notaprom/'+id+'/'+per : url+'/notaprom/'+id;
+            return $http.get(turl);
         }
 	}
 })();

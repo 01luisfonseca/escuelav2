@@ -29,7 +29,7 @@ class EmpleadosCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=Empleados::with('users.tipo_usuario')->skip($ini)->take(50+$ini)->orderBy('updated_at','desc')->get();
+        $obj=Empleados::with('users.tipo_usuario')->skip($ini)->take(20)->orderBy('updated_at','desc')->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=Empleados.';
         $ev->registro(0,$msj,$this->req->user()->id);
