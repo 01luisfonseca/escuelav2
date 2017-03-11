@@ -25,4 +25,8 @@ class MateriasHasPeriodos extends Model
     public function matasistencia(){
         return $this->hasMany('App\Matasistencia');
     }
+
+    public function alumnos_has_periodos(){
+        return $this->hasMany('App\AlumnosHasPeriodos');
+    }
 }

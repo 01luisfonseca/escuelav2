@@ -47,4 +47,8 @@ class Alumnos extends Model
     public function alumnos_has_indicadores(){
         return $this->hasMany('App\AlumnosHasIndicadores');
     }
+
+    public function alumnos_has_periodos(){
+        return $this->hasMany('App\AlumnosHasPeriodos');
+    }
 }
