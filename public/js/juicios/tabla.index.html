@@ -13,7 +13,7 @@
 				<td>{{alumno.lastname}}, {{alumno.name}}</td>
 				<td ng-repeat='mat in alumno.materias'>
 					<table>
-						<tr ng-repeat='per in mat.periodo'>
+						<tr ng-repeat='per in mat.periodo | orderBy:["nombre"]'>
 							<td>{{per.prom | number:1}}</td>
 						</tr>
 						<tr>

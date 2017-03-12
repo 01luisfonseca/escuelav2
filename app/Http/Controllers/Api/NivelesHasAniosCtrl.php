@@ -215,13 +215,8 @@ class NivelesHasAniosCtrl extends Controller
             'niveles', 
             'alumnos.users',
             'materias_has_niveles.empleados.users',
-            'materias_has_niveles.materias_has_periodos'=>function ($query) use ($perId){
-                if ($perId==0) {
-                    $query->with('periodos', 'indicadores.alumnos_has_indicadores')->where('id',$perId);
-                }else{
-                    $query->with('periodos', 'indicadores.alumnos_has_indicadores');
-                }
-            }
+            'materias_has_niveles.materias_has_periodos.periodos',
+            'materias_has_niveles.materias_has_periodos.indicadores.alumnos_has_indicadores'
         ])->findOrFail($id);
         $alumnos=$nivel->alumnos;
         $resultado=[
