@@ -92,10 +92,24 @@
  					anio: nt[0].anio,
  				};
  				if (type) {
- 					console.log('General',nt);
+ 					vm.notastabla=filtrarAlumnosNotas(nt);
+ 					console.log('General',vm.notastabla);
  				}else{
  					vm.notastabla=nt[0];
  				}
+ 			}
+
+ 			function filtrarAlumnosNotas(nt){
+ 				var arr=[];
+ 				for (var i = 0; i < nt.length; i++) {
+ 					for (var j = 0; j < nt[i].alumnos.length; j++) {
+ 						arr.push({alumnos: nt[i].alumnos[j], nivel: nt[i].curso});
+ 					}
+ 				}
+ 				for (var i = 0; i < arr.length; i++) {
+ 					arr[i].alumnos.nivel=arr[i].nivel;
+ 				}
+ 				return arr;
  			}
  		}	
 	}
