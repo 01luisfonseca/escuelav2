@@ -49,11 +49,13 @@
                                     <tr>
                                           <th>POS.</th>
                                           <th>ALUMNO</th>
+                                          <th ng-if='vm.general'>NIVEL</th>
                                           <th>PROMEDIO</th>
                                     </tr>
-                                    <tr ng-repeat='alum in vm.notastabla.alumnos | orderBy:["-prom","lastname"]'>
+                                    <tr ng-repeat='alum in vm.notastabla.alumnos | orderBy:["-prom","lastname"] | limitTo:50'>
                                           <td>{{$index+1}}</td>
                                           <td>{{alum.lastname}}, {{alum.name}}</td>
+                                          <td ng-if='vm.general'>{{alum.nivel}}</td>
                                           <td>{{alum.prom | number:3}}</td>
                                     </tr>
                               </table>

@@ -30,6 +30,7 @@
 		getAnios();
 		/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 		function calcNivel(){
+			vm.general=false;
 			vm.calculado=false;
 			vm.notas=[];
 			vm.notastabla=[];
@@ -38,6 +39,7 @@
 			return getAllNiveles(arr,per);
 		}
 		function calcGen(){
+			vm.general=true;
 			vm.calculado=false;
 			vm.notas=[];
 			vm.notastabla=[];
@@ -92,8 +94,7 @@
  					anio: nt[0].anio,
  				};
  				if (type) {
- 					vm.notastabla=filtrarAlumnosNotas(nt);
- 					console.log('General',vm.notastabla);
+ 					vm.notastabla.alumnos=filtrarAlumnosNotas(nt);
  				}else{
  					vm.notastabla=nt[0];
  				}
@@ -109,7 +110,11 @@
  				for (var i = 0; i < arr.length; i++) {
  					arr[i].alumnos.nivel=arr[i].nivel;
  				}
- 				return arr;
+ 				var res=[];
+ 				for (var i = 0; i < arr.length; i++) {
+ 					res.push(arr[i].alumnos);
+ 				}
+ 				return res;
  			}
  		}	
 	}
