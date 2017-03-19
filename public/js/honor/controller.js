@@ -4,7 +4,7 @@
 		.module('escuela')
 		.controller('HonorCtrl',controller);
 
-	function controller(animPage,IngreyEgreFactory,NivelesHasAniosFactory,AniosFactory,$rootScope){
+	function controller(animPage,IngreyEgreFactory,NivelesHasAniosFactory,AniosFactory,printer,$rootScope){
 		var vm=this;
 
 		// Variables básicas
@@ -24,11 +24,15 @@
 		vm.calcNivel=calcNivel;// Obtiene la tabla de un nivel.
 		vm.perSel=perSel;   // Verifica si se hizo seleccion de periodo
 		vm.nivelSel=nivelSel;// Verifica si se hizo seleccion de nivel
+		vm.print=print; // Imprimir DIV
 
 		// Lanzamiento Automático
 		animPage.show('honor',function(){});
 		getAnios();
 		/////////////////////////// FUNCIONES BASICAS //////////////////////////////
+		function print(){
+			printer.div('imprZonaHonor');
+		}
 		function calcNivel(){
 			vm.general=false;
 			vm.calculado=false;
@@ -73,6 +77,10 @@
  					calcTheBest(vm.notas);
  					return true;
  				}
+ 			},
+ 			function (err){
+ 				$rootScope.$broadcast('cargando',false);
+ 				console.log(err);
  			});
  		}
  		function calcTheBest(notas){

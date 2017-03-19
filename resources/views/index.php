@@ -74,6 +74,7 @@
         <script src='/js/app.services/listaalumnos.factory.js'></script>
         <script src='/js/app.services/opciones.service.js'></script>
         <script src='/js/app.services/saver.service.js'></script>
+        <script src='/js/app.services/printer.service.js'></script>
         <script src='/js/app.services/gasto.factory.js'></script>
         <script src='/js/app.services/ingreyegre.factory.js'></script>
 

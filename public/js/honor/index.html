@@ -44,7 +44,10 @@
             </div>
             <div class="row" ng-if='vm.calculado'>
                   <div class="form-group col-xs-offset-1 col-xs-10">
-                        <div class="table-responsive">
+                        <div id="imprZonaHonor" class="table-responsive">
+                              <p><h3>CUADRO DE HONOR</h3></p>
+                              <p><h4>{{vm.gen.titulo}}</h4></p>
+                              <p><h4>AÑO: <em>{{vm.gen.anio}}</em></h4></p>
                               <table class="table table-stripped table-condensed">
                                     <tr>
                                           <th>POS.</th>
@@ -60,7 +63,7 @@
                                     </tr>
                               </table>
                         </div>
-                        <a class="btn btn-info btn-sm" ng-click=''>Imprimir</a>
+                        <a class="btn btn-info btn-sm" ng-click='vm.print()'>Imprimir</a>
                   </div>
             </div>
 	</div>
