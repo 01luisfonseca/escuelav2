@@ -546,7 +546,7 @@ class Borrador implements BorradorContract
     }
 
     public function delEmpleados($id){
-        $elem=Empleados::with('pago_salario')-findOrFail($id);
+        $elem=Empleados::with('pago_salario')->findOrFail($id);
         if($this->esUtil($elem)){
             foreach ($elem->pago_salario as $hijo) {
                 $this->delPagoSalario($hijo->id); // Borrar hijos

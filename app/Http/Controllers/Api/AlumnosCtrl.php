@@ -31,7 +31,7 @@ class AlumnosCtrl extends Controller
     public function index($ini=0)
     {
         $obj=Alumnos::with('users.tipo_usuario','niveles_has_anios.anios','niveles_has_anios.niveles')
-            ->orderBy('updated_at','desc')->skip($ini)->take(20)->get();
+            ->orderBy('updated_at','desc')->skip($ini)->take(10)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=Alumnos.';
         $ev->registro(0,$msj,$this->req->user()->id);

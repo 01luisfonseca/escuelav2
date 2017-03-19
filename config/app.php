@@ -181,7 +181,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\EventlogServiceProvider::class,
-
+        Laravel\Tinker\TinkerServiceProvider::class,
     ],
 
     /*
