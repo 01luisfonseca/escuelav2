@@ -247,21 +247,28 @@ class NivelesHasAniosCtrl extends Controller
                 $promMat=0;
                 foreach ($materia->materias_has_periodos as $periodo) {
                     $promPer=0;
+                    $arregloIndic=[];
                     foreach ($periodo->indicadores as $indicador) {
                         $promIndic=0;
                         foreach ($indicador->alumnos_has_indicadores as $aHi) {
                             if ($resultado['alumnos'][$k1]['id']==$aHi->alumnos_id) {
-                                $promIndic=$aHi->prom;
+                                $promIndic=$aHi->prom;// Linea donde se captura el indicador
                             }
                         }
+                        $arregloIndic[]=[
+                            'id'=>$indicador->id,
+                            'porc'=>$indicador->porcentaje,
+                            'nombre'=>$indicador->nombre,
+                            'desc'=>$indicador->descripcion,
+                            'prom'=>$promIndic
+                        ];
                         $promPer+=$promIndic*$indicador->porcentaje/100;
                     }
-                    //dd($promPer);
                     $arrPeriodo[]=[
                         'nombre'=>$periodo->periodos->nombre,
-                        'prom'=>$promPer
+                        'prom'=>$promPer,
+                        'indicadores'=>$arregloIndic
                     ];
-
                     $promMat += $promPer;
                 }
                 if (count($arrPeriodo)>0) {

@@ -439,6 +439,19 @@
                         controller: 'HonorCtrl as vm',
                     }
                 }
+            })
+            .state('boletines', {
+                url: "/boletines",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/boletines/index.html",
+                        controller: 'BoletinCtrl as vm',
+                    }
+                }
             });
     }
 

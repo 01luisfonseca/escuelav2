@@ -151,7 +151,8 @@
         <script src='/js/ingreyegre/controller.js'></script>
         <script src='/js/juicios/controller.js'></script>        
         <script src='/js/juicios/table.controller.js'></script>  
-        <script src='/js/honor/controller.js'></script>        
+        <script src='/js/honor/controller.js'></script>      
+        <script src='/js/boletines/controller.js'></script>      
 
 
     </head>
