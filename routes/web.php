@@ -17,7 +17,7 @@ Route::get('/',function(){
 
 Route::get('/logo','Api\GenCtrl@getLogo');
 
-Route::group(['middleware'=>'checkSerial', 'namespace'=>'registro'],function(){
+/*Route::group(['middleware'=>'checkSerial', 'namespace'=>'registro'],function(){
 	Route::group(['prefix'=>'{serial}/device'],function(){
 		Route::get('/status',function(){
 			return response('Habilitado',200);
@@ -27,4 +27,4 @@ Route::group(['middleware'=>'checkSerial', 'namespace'=>'registro'],function(){
 		Route::get('/asistencia','AsistenciaCtrl@getOnlyTarjetas'); // Probadas para la carga
 		Route::get('/all','AuthdeviceCtrl@getDevices');
 	});
-});
+});*/
