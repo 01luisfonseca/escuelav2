@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/authdevice/mod.html',
+        	templateUrl: 'js/authdevice/mod.html',
         	restrict: 'EA',
         	scope:{
         	},

@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/tiponota/mod.html',
+        	templateUrl: 'js/tiponota/mod.html',
         	restrict: 'EA',
         	scope:{
         	},

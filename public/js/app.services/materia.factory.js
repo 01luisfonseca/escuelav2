@@ -4,7 +4,7 @@
     .factory('MateriasFactory',factory);
 
     function factory($http){
-        var url= '/api/materias';
+        var url= 'api/materias';
         var fc={
             gDt: gDt,
             gDts: gDts,

@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/asistencia/mod.html',
+        	templateUrl: 'js/asistencia/mod.html',
         	restrict: 'EA',
         	scope:{
         		alumnoid: '='

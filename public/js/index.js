@@ -45,7 +45,7 @@
                  middleware: 'redirautenticado',
                 views:{
                     'body':{
-                        templateUrl: "/js/login/login.html",
+                        templateUrl: "js/login/login.html",
                         controller: 'loginCtrl as vm',
                     }
                 }               
@@ -58,7 +58,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/authhome/authhome.html",
+                        templateUrl: "js/authhome/authhome.html",
                         controller: 'authHomeCtrl as vm',
                     }
                 }
@@ -71,7 +71,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/usuarios/usuarios.html",
+                        templateUrl: "js/usuarios/usuarios.html",
                         controller: 'usuariosCtrl as vm',
                     }
                 }
@@ -84,7 +84,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/usuarios/profile.html",
+                        templateUrl: "js/usuarios/profile.html",
                         controller: 'profileCtrl as vm',
                     }
                 }
@@ -97,7 +97,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/usuarios/usuarioInfo.html",
+                        templateUrl: "js/usuarios/usuarioInfo.html",
                         controller: 'usuarioInfoCtrl as vm',
                     }
                 }
@@ -110,7 +110,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/generales/generales.html",
+                        templateUrl: "js/generales/generales.html",
                         controller: 'GenCtrl as vm',
                     }
                 }
@@ -123,7 +123,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/empleados/empleados.index.html",
+                        templateUrl: "js/empleados/empleados.index.html",
                         controller: 'EmpleadosCtrl as vm',
                     }
                 }
@@ -136,7 +136,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/plan/index.html",
+                        templateUrl: "js/plan/index.html",
                         controller: 'PlanCtrl as vm',
                     }
                 }
@@ -149,7 +149,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/anios/index.html",
+                        templateUrl: "js/anios/index.html",
                         controller: 'AniosCtrl as vm',
                     }
                 }
@@ -162,7 +162,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/periodos/index.html",
+                        templateUrl: "js/periodos/index.html",
                         controller: 'PeriodosCtrl as vm',
                     }
                 }
@@ -175,7 +175,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/niveles/index.html",
+                        templateUrl: "js/niveles/index.html",
                         controller: 'NivelesCtrl as vm',
                     }
                 }
@@ -188,7 +188,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/materias/index.html",
+                        templateUrl: "js/materias/index.html",
                         controller: 'MateriasCtrl as vm',
                     }
                 }
@@ -201,7 +201,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/profesores/index.html",
+                        templateUrl: "js/profesores/index.html",
                         controller: 'ProfesorCtrl as vm',
                     }
                 }
@@ -214,7 +214,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/alumnos/index.html",
+                        templateUrl: "js/alumnos/index.html",
                         controller: 'AlumnosCtrl as vm',
                     }
                 }
@@ -227,7 +227,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/alumnos/alumnoInfo.html",
+                        templateUrl: "js/alumnos/alumnoInfo.html",
                         controller: 'alumnoInfoCtrl as vm',
                     }
                 }
@@ -240,7 +240,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/asistencia/index.html",
+                        templateUrl: "js/asistencia/index.html",
                         controller: 'AsistenciasCtrl as vm',
                     }
                 }
@@ -253,7 +253,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/authdevice/index.html",
+                        templateUrl: "js/authdevice/index.html",
                         controller: 'AuthdeviceCtrl as vm',
                     }
                 }
@@ -266,7 +266,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/notas/index.html",
+                        templateUrl: "js/notas/index.html",
                         controller: 'NotasCtrl as vm',
                     }
                 }
@@ -279,7 +279,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/ingresos/index.html",
+                        templateUrl: "js/ingresos/index.html",
                         controller: 'IngresosCtrl as vm',
                     }
                 }
@@ -292,7 +292,7 @@
                         template:'<div></div>'
                     },
                     'body':{
-                        templateUrl: "/js/facturacobro/index.html",
+                        templateUrl: "js/facturacobro/index.html",
                         controller: 'facturacobroCtrl as vm',
                     }
                 }
@@ -305,7 +305,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/estudiantil/index.html",
+                        templateUrl: "js/estudiantil/index.html",
                         controller: 'EstudiantilCtrl as vm',
                     }
                 }
@@ -318,7 +318,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/listaalumnos/index.html",
+                        templateUrl: "js/listaalumnos/index.html",
                         controller: 'ListaAlumnosCtrl as vm',
                     }
                 }
@@ -331,7 +331,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/egresos/index.html",
+                        templateUrl: "js/egresos/index.html",
                         controller: 'EgresosCtrl as vm',
                     }
                 }
@@ -344,7 +344,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/liqcaja/index.html",
+                        templateUrl: "js/liqcaja/index.html",
                         controller: 'LiqCajaCtrl as vm',
                     }
                 }
@@ -357,7 +357,7 @@
                         template:'<div></div>'
                     },
                     'body':{
-                        templateUrl: "/js/tirillacaja/index.html",
+                        templateUrl: "js/tirillacaja/index.html",
                         controller: 'TirillaCajaCtrl as vm',
                     }
                 }
@@ -370,7 +370,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/matypen/index.html",
+                        templateUrl: "js/matypen/index.html",
                         controller: 'MatYPenCtrl as vm',
                     }
                 }
@@ -383,7 +383,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/ingreyegre/index.html",
+                        templateUrl: "js/ingreyegre/index.html",
                         controller: 'IngreyEgreCtrl as vm',
                     }
                 }
@@ -396,7 +396,7 @@
                         template:'<div></div>'
                     },
                     'body':{
-                        templateUrl: "/js/matypen/table.index.html",
+                        templateUrl: "js/matypen/table.index.html",
                         controller: 'MatYPenTableCtrl as vm',
                     }
                 }
@@ -409,7 +409,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/juicios/index.html",
+                        templateUrl: "js/juicios/index.html",
                         controller: 'JuiciosCtrl as vm',
                     }
                 }
@@ -422,7 +422,7 @@
                         template:'<div></div>'
                     },
                     'body':{
-                        templateUrl: "/js/juicios/tabla.index.html",
+                        templateUrl: "js/juicios/tabla.index.html",
                         controller: 'JuiciosTableCtrl as vm',
                     }
                 }
@@ -435,7 +435,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/honor/index.html",
+                        templateUrl: "js/honor/index.html",
                         controller: 'HonorCtrl as vm',
                     }
                 }
@@ -448,7 +448,7 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/boletines/index.html",
+                        templateUrl: "js/boletines/index.html",
                         controller: 'BoletinCtrl as vm',
                     }
                 }

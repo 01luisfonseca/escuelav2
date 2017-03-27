@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/profesor',
+            url: 'api/profesor',
 			gDt: gDt,
 			gDts: gDts,
             gSDt:gSDt,

@@ -4,7 +4,7 @@
 	.factory('OtrosFactory',factory);
 
 	function factory($http){
-        var url= '/api/otros';
+        var url= 'api/otros';
 		var fc={
 			gDt: gDt,
 			gDts: gDts,

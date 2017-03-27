@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/authdevice',
+            url: 'api/authdevice',
 			gDt: gDt,
 			gDts: gDts,
             gSDt: gSDt,

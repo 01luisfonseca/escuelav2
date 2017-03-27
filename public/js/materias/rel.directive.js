@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/materias/rel.html',
+        	templateUrl: 'js/materias/rel.html',
         	restrict: 'EA',
         	scope:{
         	},

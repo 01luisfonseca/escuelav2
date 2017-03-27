@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/niveles/mod.html',
+        	templateUrl: 'js/niveles/mod.html',
         	restrict: 'EA',
         	scope:{
         	},

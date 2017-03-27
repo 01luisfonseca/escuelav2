@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/gasto/index.html',
+        	templateUrl: 'js/gasto/index.html',
         	restrict: 'EA',
         	scope:{
         		reg:'='

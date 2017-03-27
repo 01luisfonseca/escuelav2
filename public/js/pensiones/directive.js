@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/pensiones/index.html',
+        	templateUrl: 'js/pensiones/index.html',
         	restrict: 'EA',
         	scope:{
         		reg:'='

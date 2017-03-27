@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/tipo',
+            url: 'api/tipo',
 			getTipo: getTipo,
 			getTipos: getTipos,
             addTipo: addTipo,

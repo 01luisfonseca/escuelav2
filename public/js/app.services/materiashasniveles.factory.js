@@ -4,7 +4,7 @@
 	.factory('MateriasHasNivelesFactory',factory);
 
 	function factory($http){
-		var url= '/api/materiashasniveles';
+		var url= 'api/materiashasniveles';
         var fc={
 			gDt: gDt,
 			gDts: gDts,

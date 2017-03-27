@@ -4,7 +4,7 @@
 	.factory('MatriculasFactory',factory);
 
 	function factory($http){
-        var url= '/api/matricula';
+        var url= 'api/matricula';
 		var fc={
 			gDt: gDt,
 			gDts: gDts,

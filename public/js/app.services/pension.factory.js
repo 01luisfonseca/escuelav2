@@ -4,7 +4,7 @@
     .factory('PensionFactory',factory);
 
     function factory($http){
-        var url= '/api/pension';
+        var url= 'api/pension';
         var fc={
             gDt: gDt,
             gDts: gDts,

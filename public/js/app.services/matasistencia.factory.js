@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/matasistencia',
+            url: 'api/matasistencia',
 			gDt: gDt,
 			gDts: gDts,
             gSDt:gSDt,

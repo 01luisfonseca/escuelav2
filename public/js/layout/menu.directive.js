@@ -12,7 +12,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/layout/menu.html',
+        	templateUrl: 'js/layout/menu.html',
         	restrict: 'EA',
         	controller: controller,
         	controllerAs:'vm'

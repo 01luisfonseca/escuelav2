@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/ingreyegre',
+            url: 'api/ingreyegre',
 			eDt: eDt,
 			gDts: gDts,
 		};

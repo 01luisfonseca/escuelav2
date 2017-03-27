@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/notas/form.html',
+        	templateUrl: 'js/notas/form.html',
         	restrict: 'EA',
         	scope:{
         		existente: '='

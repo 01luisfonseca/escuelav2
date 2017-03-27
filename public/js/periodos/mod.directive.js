@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/periodos/mod.html',
+        	templateUrl: 'js/periodos/mod.html',
         	restrict: 'EA',
         	scope:{
         	},

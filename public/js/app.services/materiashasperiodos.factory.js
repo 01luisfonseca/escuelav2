@@ -4,7 +4,7 @@
 	.factory('MateriasHasPeriodosFactory',factory);
 
 	function factory($http){
-		var url= '/api/materiashasperiodos';
+		var url= 'api/materiashasperiodos';
         var fc={
 			gDt: gDt,
 			gDts: gDts,

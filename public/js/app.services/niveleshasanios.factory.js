@@ -4,7 +4,7 @@
 	.factory('NivelesHasAniosFactory',factory);
 
 	function factory($http){
-		var url= '/api/niveleshasanios';
+		var url= 'api/niveleshasanios';
         var fc={
 			gDt: gDt,
 			gDts: gDts,

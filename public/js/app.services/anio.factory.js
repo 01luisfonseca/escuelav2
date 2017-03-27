@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/anios',
+            url: 'api/anios',
 			gDt: gDt,
 			gDts: gDts,
             gSDt:gSDt,

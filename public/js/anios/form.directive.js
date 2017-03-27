@@ -7,7 +7,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/anios/form.html',
+        	templateUrl: 'js/anios/form.html',
         	restrict: 'EA',
         	scope:{
         		existente: '='

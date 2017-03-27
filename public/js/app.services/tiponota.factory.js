@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/tiponota',
+            url: 'api/tiponota',
 			gDt: gDt,
 			gDts: gDts,
             gSDt:gSDt,

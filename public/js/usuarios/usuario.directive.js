@@ -6,7 +6,7 @@
 	function directive(){
 		var directive = {
         	link: link,
-        	templateUrl: '/js/usuarios/usuario.html',
+        	templateUrl: 'js/usuarios/usuario.html',
         	restrict: 'EA',
         	scope:{
         		nuevo:'=',

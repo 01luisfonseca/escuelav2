@@ -8,7 +8,7 @@
 
 		// Variables
 		vm.info={};
-		vm.url='/api/perfil';
+		vm.url='api/perfil';
 
 		// Funciones
 		vm.buscarInfo=buscarInfo;

@@ -4,7 +4,7 @@
 	.factory('PeriodosFactory',factory);
 
 	function factory($http){
-        var url= '/api/periodos';
+        var url= 'api/periodos';
 		var fc={
 			gDt: gDt,
 			gDts: gDts,
