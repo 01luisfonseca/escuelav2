@@ -74,43 +74,32 @@
  		function calcTheBest(notas){
  			if (notas.length) {
  				vm.calculado=true;
- 				if (notas.length>1) {
- 					armarTabla(notas,'multiple');
- 				}else{
- 					armarTabla(notas);
- 				}
+ 				armarTabla(notas[0]);
  				return true;
  			}
  			console.log('No hay niveles para mostrar');
  			return false;
 
- 			function armarTabla(nt,type){
- 				vm.gen={
- 					titulo: type? 'CURSO: '+nt[0].curso: 'GENERAL DEL COLEGIO',
- 					anio: nt[0].anio,
- 				};
- 				if (type) {
- 					vm.notastabla.alumnos=filtrarAlumnosNotas(nt);
- 				}else{
- 					vm.notastabla=nt[0];
- 				}
- 			}
-
- 			function filtrarAlumnosNotas(nt){
- 				var arr=[];
- 				for (var i = 0; i < nt.length; i++) {
- 					for (var j = 0; j < nt[i].alumnos.length; j++) {
- 						arr.push({alumnos: nt[i].alumnos[j], nivel: nt[i].curso});
+ 			function armarTabla(nt){
+ 				for (var i = 0; i < nt.alumnos.length; i++) {
+ 					var acum=0;
+ 					for (var j = 0; j < nt.alumnos[i].materias.length; j++) {
+ 						for (var k = 0; k < nt.alumnos[i].materias[j].periodo.length; k++) {
+ 							if(nt.alumnos[i].materias[j].periodo[k].nombre==vm.anios[vm.sel.anio].periodos[vm.sel.pers].nombre){
+ 								acum += nt.alumnos[i].materias[j].periodo[k].prom;
+ 							}
+ 						}
  					}
+ 					acum /= nt.alumnos[i].materias.length;
+ 					nt.alumnos[i].promPer=acum;
  				}
- 				for (var i = 0; i < arr.length; i++) {
- 					arr[i].alumnos.nivel=arr[i].nivel;
+ 				nt.alumnos.sort((a,b)=>{
+ 					return b.promPer - a.promPer;
+ 				});
+ 				for (var i = 0; i < nt.alumnos.length; i++) {
+ 					nt.alumnos[i].puestoCurso=i+1;
  				}
- 				var res=[];
- 				for (var i = 0; i < arr.length; i++) {
- 					res.push(arr[i].alumnos);
- 				}
- 				return res;
+ 				vm.notastabla.alumnos=nt.alumnos; // Alumnos por nivel ordenados
  			}
  		}	
 	}
