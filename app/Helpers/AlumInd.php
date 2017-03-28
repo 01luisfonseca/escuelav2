@@ -19,7 +19,9 @@ class AlumInd implements AlumIndContract
             $acum=0;
             foreach ($ind->materias_has_periodos->indicadores as $indic) {
                 $notas=AlumnosHasIndicadores::where('indicadores_id',$indic->id)->where('alumnos_id',$alumno)->first();
-                $acum += $notas->prom * $indic->porcentaje/100;
+                if($notas){
+                    $acum += $notas->prom * $indic->porcentaje/100;
+                }
             }
             $per=AlumnosHasPeriodos::where('alumnos_id',$alumno)->where('materias_has_periodos_id',$ind->materias_has_periodos->id)->first();
             if (!$per) { // En caso de que no exista el alumno-periodo, creamos uno
