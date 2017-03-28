@@ -63,7 +63,7 @@ class AlumInd implements AlumIndContract
         return false;
     }
 
-    public function addActProm($alumno,$indicador){
+    public function addActProm($alumno,$indicador,$tipo='EXISTENTE'){
         $obj=AlumnosHasIndicadores::where('indicadores_id',$indicador)
             ->where('alumnos_id',$alumno)
             ->first();
@@ -74,7 +74,7 @@ class AlumInd implements AlumIndContract
             $alumInd->prom=0;
             $alumInd->save();
         }
-        return $this->actProm($alumno,$indicador);
+        return $tipo=='EXISTENTE'? $this->actProm($alumno,$indicador) : true;
     }
 
     public function actPromPorIndic($indicador){

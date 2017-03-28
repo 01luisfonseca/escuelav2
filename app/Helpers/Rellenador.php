@@ -148,7 +148,7 @@ class Rellenador implements RellenadorContract
                 $res.='; Notas ID: '.$obj->id.', Alumnos ID: '.$val->id.', TipoNota ID: '.$tipoNId.', Cal: 0';
                 // Actualiza el promedio si hay modificaciones
                 $alumind=new AlumInd;
-                $alumind->addActProm($obj->alumnos_id,$origen->indicadores->id);
+                $alumind->addActProm($obj->alumnos_id,$origen->indicadores->id,'NUEVO');
             }
         }
         return $res;
