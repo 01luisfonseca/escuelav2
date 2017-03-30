@@ -4,10 +4,15 @@
 		.module('escuela')
 		.controller('BoletinCtrl',controller);
 
-	function controller(animPage,NivelesHasAniosFactory,AniosFactory,printer,$rootScope){
+	function controller(animPage,NivelesHasAniosFactory,AniosFactory,printer,$rootScope,opcion){
 		var vm=this;
 
 		// Variables básicas
+		vm.info={
+			logo:'',
+			slogan:'',
+			org:''
+		};
 		vm.anios=[];
 		vm.notas=[];
 		vm.notastabla=[];
@@ -23,6 +28,8 @@
 		vm.calcNivel=calcNivel;// Genera la lista de alumnos y los lanza en ventanas emergentes.
 		vm.perSel=perSel;   // Verifica si se hizo seleccion de periodo
 		vm.nivelSel=nivelSel;// Verifica si se hizo seleccion de nivel
+		vm.hayInfoAlumnos=hayInfoAlumnos;// Verifica si hay la información de alumnos para crear boletines
+		vm.lanzaBoletin=lanzaBoletin;// Lanza los boletines listos para la impresión
 
 		// Lanzamiento Automático
 		animPage.show('boletines',function(){});
@@ -36,7 +43,7 @@
 			let arr=[vm.anios[vm.sel.anio].niveles_has_anios[vm.sel.nivel]]	;
 			let per=vm.anios[vm.sel.anio].periodos[vm.sel.pers].id;
 			getAllNiveles(arr,per).then(()=>{
-				console.log('Pasamos');
+ 				$rootScope.$broadcast('cargando',false);
 			});
 		}
  		function perSel(){
@@ -44,6 +51,14 @@
  		}
  		function nivelSel(){
  			return vm.sel.nivel>=0;
+ 		}
+ 		function hayInfoAlumnos(){
+ 			return vm.notastabla.length>0;
+ 		}
+ 		function lanzaBoletin(id){
+ 			console.log(opcion.get('Logo'));
+ 			console.log(opcion.get('Slogan'));
+ 			console.log(id);
  		}
  		function getAnios(){
  			$rootScope.$broadcast('cargando',true);
@@ -61,7 +76,6 @@
  				if (stack.length) {
  					return getAllNiveles(stack,per);
  				}else{
- 					$rootScope.$broadcast('cargando',false);
  					calcTheBest(vm.notas);
  					return true;
  				}
@@ -99,7 +113,8 @@
  				for (var i = 0; i < nt.alumnos.length; i++) {
  					nt.alumnos[i].puestoCurso=i+1;
  				}
- 				vm.notastabla.alumnos=nt.alumnos; // Alumnos por nivel ordenados
+ 				vm.notastabla=nt.alumnos; // Alumnos por nivel ordenados
+ 				console.log(vm.notastabla); // Para eliminar
  			}
  		}	
 	}
