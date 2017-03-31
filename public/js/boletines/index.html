@@ -49,7 +49,7 @@
                         <div class="panel-body">
                               <div class='row'>
                                     <div class="form-group" ng-click='vm.lanzaBoletin(0)'>
-                                          <label class="col-sm-10 control-label">BOLETIN POR CURSO</label>
+                                          <label class="col-sm-10 control-label"><em>BOLETIN POR CURSO</em></label>
                                           <div class="col-sm-2">
                                                 <button type="button" class="btn btn-warning btn-md">
                                                       <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
@@ -57,7 +57,7 @@
                                           </div>
                                     </div>
                               </div>
-                              <div class='row' ng-repeat='alumno in vm.notas[0].alumnos'>
+                              <div class='row' ng-repeat='alumno in vm.notas[0].alumnos | orderBy:"lastname"'>
                                     <div class="form-group">
                                           <label class="col-sm-10 control-label">{{ alumno.lastname }}, {{ alumno.name }}</label>
                                           <div class="col-sm-2">
@@ -74,15 +74,15 @@
 	</div>               
 </div>
 <!-- BOLETINES OCULTOS -->
-<div ng-show='false'>
+<div ng-show='true'>
       <div ng-if='vm.hayInfoAlumnos()'>
-            <!--<link rel="stylesheet" href="css/boletin.css">-->
+            <link rel="stylesheet" href="css/boletin.css">
             <div ng-repeat='alumno in vm.notastabla' id='prinZoneBoletines{{alumno.id}}'>
                   <!-- BOLETIN POR CADA ALUMNO -->
                   <div class='pagina'>
                         <div class='margen_interno dist'>
                               <div class="titulo">
-                                    <div class="logo dist"><img class="emblemas" ng-src="vm.info.logo"></div>
+                                    <div class="logo dist"><img class="emblemas" ng-src="{{vm.info.logo}}"></div>
                                     <div class="encabezado">
                                           <div class="presentacion">
                                                 <h2>{{vm.info.org}}</h2>
@@ -101,14 +101,14 @@
                                                 </div>
                                           </div>
                                     </div>
-                                    <div class="logo dist"><img class="emblemas" ng-src="vm.info.slogan"></div>
+                                    <div class="logo dist"><img class="emblemas" ng-src="{{vm.info.slogan}}"></div>
                               </div>
                               <div class="cuerpo">
                                     <div class="indicadores">
                                           <p>I.H.</p>
                                           <p>FP</p>
                                           <p>FT</p>
-                                          <p>1-4 OJOº</p>
+                                          <p ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>{{$index+1}}º</p>
                                           <p>DEF</p>
                                           <p>PROM</p>
                                           <p>E.N.</p>
@@ -126,7 +126,7 @@
                                                             <p></p>
                                                             <p></p>
                                                             <p></p>
-                                                            <p>{{materia.periodo[vm.sel.pers].prom}}</p>
+                                                            <p ng-repeat='periodo in materia.periodo | orderBy:"nombre"'>{{periodo.prom | number:1}}</p>
                                                             <p></p>
                                                             <p></p>
                                                       </div>
@@ -134,16 +134,10 @@
                                                 <div class="cmateria">
                                                       <div ng-repeat="periodo in materia.periodo | orderBy:'nombre'">
                                                             <div ng-if='vm.anios[vm.sel.anio].periodos[vm.sel.pers].nombre == periodo.nombre'>
-                                                                  
-                                                            
-                                                      <!--@foreach($materia->niveles_has_periodos as $periodo)
-                                                            @if($periodo->periodos_id==$periodos_id)
-                                                                  @foreach($periodo->indicadores as $indicador)-->
-
                                                                   <div ng-repeat='indicador in periodo.indicadores' class="filamat">
                                                                         <p>{{indicador.nombre | uppercase}}</p>
                                                                         <p>{{indicador.desc}}</p>
-                                                                        <p>{{indicador.prom}}</p>
+                                                                        <p>{{indicador.prom | number:1}}</p>
                                                                   </div>
                                                             </div>
                                                       </div>
@@ -164,22 +158,22 @@
                                           <table>
                                                 <tr>
                                                       <th>Puesto en el grupo</th>
-                                                      <td>{{ alumno.puestoCurso }}</td>
-                                                      <th></th>
+                                                      <td  ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>{{ alumno.puestoCurso }}</td>
+                                                      <th>1</th>
                                                 </tr>
                                                 <tr>
                                                       <th>Promedio Curso</th>
-                                                      <td>Promedio global por periodo</td>
-                                                      <th>Promedio general</th>
+                                                      <td ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>0</td>
+                                                      <th>0</th>
                                                 </tr>
                                                 <tr>
                                                       <th>Promedio Estudiante</th>
-                                                      <td>Promedio del estudiante por periodo</td>
-                                                      <th>Promedio total</th>
+                                                      <td ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>0</td>
+                                                      <th>0</th>
                                                 </tr>
                                                 <tr>
                                                       <td></td>
-                                                      <th>P1 -- 4</th>
+                                                      <th ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>P{{$index+1}}</th>
                                                       <th>DEF</th>
                                                 </tr>
                                           </table>
