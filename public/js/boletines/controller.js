@@ -185,7 +185,6 @@
  				}
  				llenarInfo();
  				vm.notastabla=nt.alumnos; // Alumnos por nivel ordenados
- 				console.log(vm.notastabla);
  			}
  		}	
  		function llenarInfo(){

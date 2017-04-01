@@ -3,7 +3,7 @@
 	angular.module('escuela')
 		.service('opcion',service);
 
-	function service(GeneralesFactory){
+	function service(GeneralesFactory,$localStorage,$interval){
 		var vm=this;
 		var info;
 
@@ -15,9 +15,12 @@
 
 		// Automáticas
 		vm.buscarInfo();
+		$interval(buscarInfo,5000);
 
 		/////////
 		function buscarInfo(){
+			if( typeof($localStorage.currentUser)!=='object' ) return false;
+			console.log('Opt');
 			return GeneralesFactory.gDts().then(function(res){
 				info=res.data;
 			});
