@@ -38,7 +38,7 @@ h1,h2,h3,h4,h5,h6,p{
 }
 .presentacion{
 	width:100%;
-	height: 1.5cm;
+	height: auto;
 }
 .presentacion h2,
 .presentacion h3,

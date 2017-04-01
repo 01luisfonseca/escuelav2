@@ -49,7 +49,7 @@
                         <div class="panel-body">
                               <div class='row'>
                                     <div class="form-group" ng-click='vm.lanzaBoletin(0)'>
-                                          <label class="col-sm-10 control-label"><em>BOLETIN POR CURSO</em></label>
+                                          <label class="col-sm-10 control-label"><h4><em>TODOS LOS BOLETINES DEL CURSO</em></h4></label>
                                           <div class="col-sm-2">
                                                 <button type="button" class="btn btn-warning btn-md">
                                                       <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
@@ -59,7 +59,7 @@
                               </div>
                               <div class='row' ng-repeat='alumno in vm.notas[0].alumnos | orderBy:"lastname"'>
                                     <div class="form-group">
-                                          <label class="col-sm-10 control-label">{{ alumno.lastname }}, {{ alumno.name }}</label>
+                                          <label class="col-sm-10 control-label"><h4><small>{{ alumno.lastname }}, {{ alumno.name }}</small></h4></label>
                                           <div class="col-sm-2">
                                                 <button type="button" class="btn btn-warning btn-sm" ng-click='vm.lanzaBoletin(alumno.id)'>
                                                       <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
@@ -74,9 +74,9 @@
 	</div>               
 </div>
 <!-- BOLETINES OCULTOS -->
-<div ng-show='true'>
+<div ng-show='false'>
       <div ng-if='vm.hayInfoAlumnos()'>
-            <link rel="stylesheet" href="css/boletin.css">
+      <!--<link rel="stylesheet" href="css/boletin.css">-->
             <div ng-repeat='alumno in vm.notastabla' id='prinZoneBoletines{{alumno.id}}'>
                   <!-- BOLETIN POR CADA ALUMNO -->
                   <div class='pagina'>
@@ -155,25 +155,25 @@
                                           <p></p>
                                     </div>
                                     <div>
-                                          <table>
+                                          <table class="table table-bordered table-condensed">
                                                 <tr>
                                                       <th>Puesto en el grupo</th>
-                                                      <td  ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>{{ alumno.puestoCurso }}</td>
-                                                      <th>1</th>
+                                                      <td  ng-repeat='periodo in alumno.periodos | orderBy:"nombre"'>{{ periodo.puesto }}</td>
+                                                      <th>{{ vm.calcPromGen(alumno.periodos,'puesto') | number:0 }}</th>
                                                 </tr>
                                                 <tr>
                                                       <th>Promedio Curso</th>
-                                                      <td ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>0</td>
-                                                      <th>0</th>
+                                                      <td ng-repeat='periodo in vm.periodosCurso | orderBy:"nombre"'>{{ periodo.prom | number:1 }}</td>
+                                                      <th>{{ vm.calcPromGen(vm.periodosCurso) | number:1}}</th>
                                                 </tr>
                                                 <tr>
                                                       <th>Promedio Estudiante</th>
-                                                      <td ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>0</td>
-                                                      <th>0</th>
+                                                      <td ng-repeat='periodo in alumno.periodos | orderBy:"nombre"'>{{ periodo.prom | number:1 }}</td>
+                                                      <th>{{ vm.calcPromGen(alumno.periodos) | number:1 }}</th>
                                                 </tr>
                                                 <tr>
                                                       <td></td>
-                                                      <th ng-repeat='periodo in alumno.materias[0].periodo | orderBy:"nombre"'>P{{$index+1}}</th>
+                                                      <th ng-repeat='periodo in alumno.periodos | orderBy:"nombre"'>P{{$index+1}}</th>
                                                       <th>DEF</th>
                                                 </tr>
                                           </table>
