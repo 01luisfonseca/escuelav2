@@ -98,7 +98,7 @@
  					cta++;
  				}
  			}
- 			return prom/(cta || 1);
+ 			return prom/(cta>0? cta : 1);
  		}
  		function getAnios(){
  			$rootScope.$broadcast('cargando',true);
@@ -155,7 +155,7 @@
  					}
  					for (var x = 0; x < nt.alumnos[i].periodos.length; x++) {
  						// Promedio global por periodo, por alumno
- 						nt.alumnos[i].periodos[x].prom /= nt.alumnos[i].materias.length || 1;
+ 						nt.alumnos[i].periodos[x].prom /= nt.alumnos[i].materias.length>0? nt.alumnos[i].materias.length : 1;
  					}
  				}
  				for (var r = 0; r < nt.alumnos[0].periodos.length; r++) {
@@ -182,7 +182,7 @@
  					for (var x = 0; x < nt.alumnos.length; x++) {
  						vm.periodosCurso[i].prom += nt.alumnos[x].periodos[i].prom;
  					}
- 					vm.periodosCurso[i].prom /= nt.alumnos.length || 1;
+ 					vm.periodosCurso[i].prom /= nt.alumnos.length>0? nt.alumnos.length : 1;
  				}
  				llenarInfo();
  				vm.notastabla=nt.alumnos; // Alumnos por nivel ordenados

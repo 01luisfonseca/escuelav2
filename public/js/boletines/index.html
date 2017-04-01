@@ -127,6 +127,7 @@
                                                             <p></p>
                                                             <p></p>
                                                             <p ng-repeat='periodo in materia.periodo | orderBy:"nombre"'>{{periodo.prom | number:1}}</p>
+                                                            <p>{{ vm.calcPromGen(materia.periodo) | number:1 }}</p>
                                                             <p></p>
                                                             <p></p>
                                                       </div>
