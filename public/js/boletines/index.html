@@ -28,7 +28,7 @@
             </div>
             <div class='row'>
             <div class="form-group col-xs-12" ng-show='vm.perSel()'>
-                  <label class="col-sm-2 control-label">Elija un nivel (Opcional).</label>
+                  <label class="col-sm-2 control-label">Elija un nivel.</label>
                   <div class="col-sm-8">
                         <select ng-model='vm.sel.nivel' class='form-control'>
                               <option ng-repeat='nivel in vm.anios[vm.sel.anio].niveles_has_anios' value='{{$index}}'>{{nivel.niveles.nombre}}</option>
