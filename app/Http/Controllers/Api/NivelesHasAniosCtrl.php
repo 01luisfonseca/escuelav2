@@ -283,6 +283,16 @@ class NivelesHasAniosCtrl extends Controller
 
             }
         }
+        foreach ($resultado['alumnos'] as &$alumnos) {
+            foreach ($alumnos['materias'] as &$materia) {
+                usort($materia['periodo'], function($a, $b){
+                    if ($a['nombre'] == $b['nombre']) {
+                        return 0;
+                    }
+                    return ($a['nombre'] < $b['nombre']) ? -1 : 1;
+                });
+            }
+        }
         $nivel=collect($resultado);
         return $nivel->toJson();
     }
