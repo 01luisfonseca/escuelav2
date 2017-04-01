@@ -150,6 +150,7 @@
  					for (var j = 0; j < nt.alumnos[i].materias.length; j++) {
  						for (var k = 0; k < nt.alumnos[i].materias[j].periodo.length; k++) {
  							// Acumulamos las notas para el promedio por periodo por alumno
+ 							console.log('Per',k,nt.alumnos[i].materias[j].periodo[k].prom);
  							nt.alumnos[i].periodos[k].prom += nt.alumnos[i].materias[j].periodo[k].prom; 
  						}
  					}
@@ -170,10 +171,10 @@
 	 					return b.periodos[r].prom - a.periodos[r].prom;
 	 				});
 	 				for (var i = 0; i < nt.alumnos.length; i++) {
-	 					console.log('Prom',r,nt.alumnos[i].periodos[r].prom);
+	 					//console.log('Prom',r,nt.alumnos[i].periodos[r].prom);
 	 					vm.periodosCurso[r].cuenta += nt.alumnos[i].periodos[r].prom;
 	 				}
-	 				console.log('Res',vm.periodosCurso[r].cuenta);
+	 				//console.log('Res',vm.periodosCurso[r].cuenta);
 	 				for (var x = 0; x < nt.alumnos.length; x++) {
 	 					if (vm.periodosCurso[r].cuenta>0){
 	 						nt.alumnos[x].periodos[r].puesto=x+1;
@@ -188,6 +189,7 @@
  				}
  				llenarInfo();
  				vm.notastabla=nt.alumnos; // Alumnos por nivel ordenados
+ 				console.log(vm.notastabla);
  			}
  		}	
  		function llenarInfo(){
