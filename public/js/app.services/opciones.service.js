@@ -20,7 +20,6 @@
 		/////////
 		function buscarInfo(){
 			if( typeof($localStorage.currentUser)!=='object' ) return false;
-			console.log('Opt');
 			return GeneralesFactory.gDts().then(function(res){
 				info=res.data;
 			});
