@@ -170,10 +170,10 @@
 	 					return b.periodos[r].prom - a.periodos[r].prom;
 	 				});
 	 				for (var i = 0; i < nt.alumnos.length; i++) {
-	 					console.log(nt.alumnos[i].periodos[r].prom);
+	 					console.log('Prom',r,nt.alumnos[i].periodos[r].prom);
 	 					vm.periodosCurso[r].cuenta += nt.alumnos[i].periodos[r].prom;
 	 				}
-	 				console.log('Res,'vm.periodosCurso[r].cuenta);
+	 				console.log('Res',vm.periodosCurso[r].cuenta);
 	 				for (var x = 0; x < nt.alumnos.length; x++) {
 	 					if (vm.periodosCurso[r].cuenta>0){
 	 						nt.alumnos[x].periodos[r].puesto=x+1;
