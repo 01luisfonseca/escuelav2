@@ -452,6 +452,19 @@
                         controller: 'BoletinCtrl as vm',
                     }
                 }
+            })
+            .state('mantenimiento', {
+                url: "/mantenimiento",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "js/mantenimiento/index.html",
+                        controller: 'MttoCtrl as vm',
+                    }
+                }
             });
     }
 

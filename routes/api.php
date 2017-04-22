@@ -34,6 +34,12 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api','thrott
 		Route::get('/count/elem','IngreyEgreCtrl@count');
 	});
 
+	/** RUTAS MANTENIMIENTO **/
+	Route::group(['prefix'=>'mantenimiento','middleware'=>'admin'],function(){
+		Route::get('/indicador/{id}/{idAlumno}','MttoCtrl@indicador');
+		Route::get('/periodo/{id}/{idAlumno}','MttoCtrl@periodo');
+	});
+
 	/** RUTAS PAGO GASTOS **/
 	Route::group(['prefix'=>'gasto','middleware'=>'coordinador'],function(){
 		//Basicos

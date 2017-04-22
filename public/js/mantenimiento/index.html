@@ -1,0 +1,29 @@
+<div  id="mtto" class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8 col-lg-offset-2 col-lg-9">
+	<div id="header">
+		<h2>Actividades de Mantenimiento.</h2>
+	</div>
+	<div id="content">
+            <div class='row'>
+                  <p><em style="color: red;">ATENCIÓN:</em> Ésta área es de uso del personal encargado del soporte de la aplicación. No oprima nada si no está seguro de lo que hace.</p>
+                  <p>Por favor seleccione una acción de mantenimiento.</p>
+            </div>
+            <div class='row' ng-show='vm.niveles.length > 0'>
+                  <div class="form-group col-xs-12">
+                        <p>Para hacer mantenimiento de indicadores resumidos y de periodos resumidos. <button ng-show='!vm.estacargando()' class="btn btn-info btn-md" ng-click='vm.actIndicPers()'>Hacer actividad</button>
+                        <div ng-show='vm.statusIndicador<100 && vm.statusIndicador>0' class="progress">
+                          <div class="progress-bar" role="progressbar" aria-valuenow="{{vm.statusIndicador | number:0}}" aria-valuemin="0" aria-valuemax="100" style="width: {{vm.statusIndicador | number:0}}%;">
+                            {{vm.statusIndicador | number:0}}%
+                          </div>
+                        </div></p>
+                        <p>Para hacer mantenimiento de periodos resumidos. <button ng-show='!vm.estacargando()' class="btn btn-info btn-md" ng-click='vm.actPers()'>Hacer actividad</button>
+                        <div ng-show='vm.statusPeriodo<100 && vm.statusPeriodo>0' class="progress">
+                          <div class="progress-bar" role="progressbar" aria-valuenow="{{vm.statusPeriodo | number:0}}" aria-valuemin="0" aria-valuemax="100" style="width: {{vm.statusPeriodo | number:0}}%;">
+                            {{vm.statusPeriodo | number:0}}%
+                          </div>
+                        </div></p>
+                  </div>
+            </div>
+	</div>
+	<div id="footer">
+	</div>               
+</div>

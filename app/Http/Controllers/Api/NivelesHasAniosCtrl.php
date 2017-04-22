@@ -22,6 +22,7 @@ class NivelesHasAniosCtrl extends Controller
     public function __construct(Request $request)//Dependency injection
     {
         $this->req = $request;
+        $this->rel = ['alumnos','materias_has_niveles'];
     }
 
     /**
@@ -31,7 +32,7 @@ class NivelesHasAniosCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=NivelesHasAnios::orderBy('updated_at','desc')->get();
+        $obj=NivelesHasAnios::with($this->rel)->orderBy('updated_at','desc')->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros. Tabla=NivelesHasAnios.';
         $ev->registro(0,$msj,$this->req->user()->id);

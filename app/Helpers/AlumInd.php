@@ -13,32 +13,31 @@ use Log;
 class AlumInd implements AlumIndContract
 {
     //Actualiza el promedio del periodo
-    public function actPromPer($alumno,$indicador){
-        $ind=Indicadores::with('materias_has_periodos.indicadores')->find($indicador);
-        if ($ind) {
-            $acum=0;
-            foreach ($ind->materias_has_periodos->indicadores as $indic) {
-                $notas=AlumnosHasIndicadores::where('indicadores_id',$indic->id)->where('alumnos_id',$alumno)->first();
-                if($notas){
-                    $acum += $notas->prom * $indic->porcentaje/100;
-                }
-            }
-            $per=AlumnosHasPeriodos::where('alumnos_id',$alumno)->where('materias_has_periodos_id',$ind->materias_has_periodos->id)->first();
-            if (!$per) { // En caso de que no exista el alumno-periodo, creamos uno
-                $per=new AlumnosHasPeriodos;
-            }
-            $per->alumnos_id=$alumno;
-            $per->materias_has_periodos_id=$ind->materias_has_periodos->id;
-            $per->prom=$acum;
-            $per->save();
-            return true;
+    public function actPromPer($alumno,$perId){
+        $acum=0;
+        $per=AlumnosHasPeriodos::where('materias_has_periodos_id',$perId)->where('alumnos_id',$alumno)->first();
+        if(!$per){
+            $per= new AlumnosHasPeriodos;
         }
-        return false;
+        $ind= Indicadores::where('materias_has_periodos_id',$perId)
+            ->with(['alumnos_has_indicadores'=> function($query) use ($alumno){
+                $query->where('alumnos_id',$alumno);
+            }])
+            ->get();
+        foreach ($ind as $indic) {
+            $acum += $indic->alumnos_has_indicadores[0]->prom * $indic->porcentaje/100;
+        }
+        $per->alumnos_id=$alumno;
+        $per->materias_has_periodos_id=$perId;
+        $per->prom=$acum;
+        $per->save();
+        return true;
     }
 
     //Actualiza el promedio del indicador
     public function actProm($alumno,$indicador){
-        $obj=AlumnosHasIndicadores::where('indicadores_id',$indicador)
+        $obj=AlumnosHasIndicadores::with('indicadores')
+            ->where('indicadores_id',$indicador)
             ->where('alumnos_id',$alumno)
             ->first();
         if ($obj) {
@@ -58,7 +57,7 @@ class AlumInd implements AlumIndContract
             $elem=AlumnosHasIndicadores::find($obj->id);
             $elem->prom=$acum? $acum/$notas->count(): $acum; // Validamos si acum tiene mas que cero
             $elem->save();
-            return $this->actPromPer($alumno,$indicador);
+            return $this->actPromPer($alumno,$obj->indicadores->materias_has_periodos_id);
         }
         return false;
     }

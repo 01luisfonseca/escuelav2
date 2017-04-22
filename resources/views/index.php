@@ -77,6 +77,7 @@
         <script src='js/app.services/printer.service.js'></script>
         <script src='js/app.services/gasto.factory.js'></script>
         <script src='js/app.services/ingreyegre.factory.js'></script>
+        <script src='js/app.services/mtto.factory.js'></script>
 
         <!-- Modulos -->
         <script src='js/layout/menu.directive.js'></script>
@@ -153,6 +154,7 @@
         <script src='js/juicios/table.controller.js'></script>  
         <script src='js/honor/controller.js'></script>      
         <script src='js/boletines/controller.js'></script>      
+        <script src='js/mantenimiento/controller.js'></script>      
 
 
     </head>
