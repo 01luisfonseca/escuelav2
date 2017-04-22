@@ -275,6 +275,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'/*,'thro
 		Route::get('notas/{id}','NivelesHasAniosCtrl@notasnivel');
 		Route::get('notaprom/{id}','NivelesHasAniosCtrl@notasnivelper');
 		Route::get('notaprom/{id}/{perId}','NivelesHasAniosCtrl@notasnivelper');
+		Route::get('notanivel/{idAnio}/{idPeriodo}','NivelesHasAniosCtrl@notasmaterias');
 	});
 
 	/** RUTAS PERIODOS TABLE **/

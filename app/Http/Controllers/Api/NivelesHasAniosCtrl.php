@@ -160,6 +160,20 @@ class NivelesHasAniosCtrl extends Controller
     /////////////////////////////////////////////
    
     /**
+     * Notas según materias
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function notasmaterias($idAnio, $idPeriodo){
+        $obj=NivelesHasAnios::with(['niveles','materias_has_niveles'=>function($query) use($idPeriodo){
+            $query->with(['materias','materias_has_periodos'=>function($query) use($idPeriodo){
+                $query->with('alumnos_has_periodos')->where('periodos_id',$idPeriodo)->orderBy('periodos_id','asc');
+            }])->orderBy('materias_id','asc');
+        }])->where('anios_id',$idAnio)->orderBy('niveles_id','asc')->get();
+        return $obj->toJson();
+    }
+
+    /**
      * Muestra numero de registros
      *
      * @return \Illuminate\Http\Response

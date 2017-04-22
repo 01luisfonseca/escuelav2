@@ -465,6 +465,19 @@
                         controller: 'MttoCtrl as vm',
                     }
                 }
+            })
+            .state('academico', {
+                url: "/analisis/academico",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "js/cursymat/index.html",
+                        controller: 'CursYMatCtrl as vm',
+                    }
+                }
             });
     }
 

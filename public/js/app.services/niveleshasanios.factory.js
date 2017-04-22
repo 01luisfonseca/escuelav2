@@ -16,6 +16,7 @@
             getNivelables:getNivelables,
             gPAl: gPAl,
             gNAl: gNAl,
+            gNNAl: gNNAl,
             gNPAl:gNPAl
 		};
 
@@ -55,6 +56,9 @@
         function gNPAl(id,per){ // Notas promedio desde periodo
             let turl=per? url+'/notaprom/'+id+'/'+per : url+'/notaprom/'+id;
             return $http.get(turl);
+        }
+        function gNNAl(idAnio,idPer){ // Notas promedio por todos los niveles
+            return $http.get(url+'/notanivel/'+idAnio+'/'+idPer);
         }
 	}
 })();

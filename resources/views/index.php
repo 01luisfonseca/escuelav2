@@ -155,6 +155,7 @@
         <script src='js/honor/controller.js'></script>      
         <script src='js/boletines/controller.js'></script>      
         <script src='js/mantenimiento/controller.js'></script>      
+        <script src='js/cursymat/controller.js'></script>      
 
 
     </head>
