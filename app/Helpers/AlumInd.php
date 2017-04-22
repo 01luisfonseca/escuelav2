@@ -25,7 +25,10 @@ class AlumInd implements AlumIndContract
             }])
             ->get();
         foreach ($ind as $indic) {
-            $acum += $indic->alumnos_has_indicadores[0]->prom * $indic->porcentaje/100;
+            //Log::info($indic->alumnos_has_indicadores);
+            if(count($indic->alumnos_has_indicadores)>0){
+                $acum += $indic->alumnos_has_indicadores[0]->prom * $indic->porcentaje/100;
+            }
         }
         $per->alumnos_id=$alumno;
         $per->materias_has_periodos_id=$perId;
@@ -35,7 +38,7 @@ class AlumInd implements AlumIndContract
     }
 
     //Actualiza el promedio del indicador
-    public function actProm($alumno,$indicador){
+    public function actProm($alumno,$indicador,$reqPers=true){
         $obj=AlumnosHasIndicadores::with('indicadores')
             ->where('indicadores_id',$indicador)
             ->where('alumnos_id',$alumno)
@@ -57,12 +60,16 @@ class AlumInd implements AlumIndContract
             $elem=AlumnosHasIndicadores::find($obj->id);
             $elem->prom=$acum? $acum/$notas->count(): $acum; // Validamos si acum tiene mas que cero
             $elem->save();
-            return $this->actPromPer($alumno,$obj->indicadores->materias_has_periodos_id);
+            if($reqPers){
+                return $this->actPromPer($alumno,$obj->indicadores->materias_has_periodos_id);
+            }else{
+                return true;
+            }
         }
         return false;
     }
 
-    public function addActProm($alumno,$indicador,$tipo='EXISTENTE'){
+    public function addActProm($alumno,$indicador,$tipo='EXISTENTE',$reqPers=true){
         $obj=AlumnosHasIndicadores::where('indicadores_id',$indicador)
             ->where('alumnos_id',$alumno)
             ->first();
@@ -73,7 +80,7 @@ class AlumInd implements AlumIndContract
             $alumInd->prom=0;
             $alumInd->save();
         }
-        return $tipo=='EXISTENTE'? $this->actProm($alumno,$indicador) : true;
+        return $tipo=='EXISTENTE'? $this->actProm($alumno,$indicador,$reqPers) : true;
     }
 
     public function actPromPorIndic($indicador){

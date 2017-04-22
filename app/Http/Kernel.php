@@ -33,7 +33,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:2000,1', // Permitidos en un minuto
             'bindings',
             'permited',
         ],
