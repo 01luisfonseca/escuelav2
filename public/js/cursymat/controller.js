@@ -189,7 +189,6 @@
             vm.chart.render();
             // //
             function formatter(e) {
-            		console.log(e.dataPoint);
 					return parseFloat(e.dataPoint.y).toFixed(2);
 			}
  		}
