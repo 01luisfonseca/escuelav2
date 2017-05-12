@@ -13,7 +13,8 @@
         "algolia/algoliasearch-client-php": "^1.11",
         "elasticsearch/elasticsearch": "^5.0",
         "maatwebsite/excel": "~2.1.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

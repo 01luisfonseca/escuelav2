@@ -13,23 +13,28 @@
                   </p>
             </div>
             <div class='row'>
-            <div class="form-group col-xs-12">
-                  <label class="col-sm-2 control-label">Elija un año.</label>
-                  <div class="col-sm-8">
-                        <select ng-model='vm.sel.anio' class='form-control'>
-                              <option ng-repeat='anio in vm.anios track by anio.id' value='{{anio.id}}'>{{anio.anio}}</option>
-                        </select>
+                  <div class="form-group col-xs-12">
+                        <label class="col-sm-2 control-label">Elija un año.</label>
+                        <div class="col-sm-8">
+                              <select ng-model='vm.sel.anio' class='form-control'>
+                                    <option ng-repeat='anio in vm.anios track by anio.id' value='{{anio.id}}'>{{anio.anio}}</option>
+                              </select>
+                        </div>
                   </div>
-            </div>
-            <div class="form-group col-xs-12">
-                  <label class="col-sm-2 control-label">Elija un periodo.</label>
-                  <div class="col-sm-8">
-                        <select ng-model='vm.sel.per' class='form-control' ng-change='vm.cambioAnio()'>
-                              <option ng-repeat='per in vm.periodos() | orderBy:"nombre"' value='{{per.id}}'>{{per.nombre}}</option>
-                        </select>
+                  <div class="form-group col-xs-12">
+                        <label class="col-sm-2 control-label">Elija un periodo.</label>
+                        <div class="col-sm-8">
+                              <select ng-model='vm.sel.per' class='form-control' ng-change='vm.cambioAnio()'>
+                                    <option ng-repeat='per in vm.periodos() | orderBy:"nombre"' value='{{per.id}}'>{{per.nombre}}</option>
+                              </select>
+                        </div>
                   </div>
+                  <!--<div class="row">-->
+                        <div class="form-group col-xs-offset-1 col-xs-10">
+                              <button class="btn btn-warning btn-sm" ng-click='vm.alprimero()'>Volver al primer gráfico</button>
+                        </div>
+                  <!--</div>-->
             </div>
-      </div>
 	</div>
 	<div id="footer">
             <div id="chartContainer" style="height: 200%; width: 100%;"></div>

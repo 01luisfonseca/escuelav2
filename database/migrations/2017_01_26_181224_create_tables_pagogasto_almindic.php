@@ -23,7 +23,7 @@ class CreateTablesPagogastoAlmindic extends Migration
         Schema::create('pago_gasto', function (Blueprint $table) {
             $table->increments('id');
             $table->string('numero_factura');
-            $table->float('valor');
+            $table->float('valor',15,2);
             $table->mediumText('descripcion')->nullable();
             $table->rememberToken();
             $table->timestamps();

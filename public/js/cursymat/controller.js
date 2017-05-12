@@ -31,8 +31,8 @@
 		// Funciones basicas
 		vm.periodos=periodos;
 		vm.cambioAnio=cambioAnio;
-
 		vm.mostrarGraficos=mostrarGraficos;
+		vm.alprimero=alprimero;
 
 
 		// Lanzamiento Automático
@@ -49,14 +49,17 @@
  			vm.status={
 				mat:{
 					name:[],
-					value:[]
+					value:[],
+					promCurso:[],
 				},
 				cur:{
 					name:[],
 					value:[],
+					filtroMateria:[],
 				}
 			};
  		}
+ 		function alprimero(){}
  		function getAnios(){
  			$rootScope.$broadcast('cargando',true);
  			return AniosFactory.gDts().then(function(res){
@@ -103,12 +106,30 @@
  			let idcursos=[];
  			for (var i = 0; i < dts.length; i++) { // Por cada nivel
  				let promcur=0;
- 				for (var j = 0; j < dts[j].materias_has_niveles.length; j++) {
+ 				var mats=[]; // Separador de materias por curso
+ 				var matname=[];
+ 				var matvaluepasa=[];
+ 				var matvaluenopasa=[];
+ 				for (var j = 0; j < dts[j].materias_has_niveles.length; j++) { // Por cada materia
  					// Extracción de notas promedio por periodos
  					let prommat=0;
+ 					var filtro={p:[], np:[]};
  					for (var k = 0; k < dts[i].materias_has_niveles[j].materias_has_periodos[0].alumnos_has_periodos.length; k++) {
- 						prommat += parseFloat(dts[i].materias_has_niveles[j].materias_has_periodos[0].alumnos_has_periodos[k].prom);
+ 						var alumno=dts[i].materias_has_niveles[j].materias_has_periodos[0].alumnos_has_periodos[k];
+ 						var notaact=parseFloat(alumno.prom);
+ 						prommat += notaact;
+ 						if (notaact >= 3) {// Filtro de nota. De 3 en adelante.
+ 							filtro.p.push(alumno); // Pasa
+ 						} else {
+ 							filtro.np.push(alumno); // No pasa
+ 						} 
  					}
+ 					dts[i].materias_has_niveles[j].pasan=filtro.p; // Alumnos que pasan
+ 					dts[i].materias_has_niveles[j].nopasan=filtro.np; // alumnos que no pasan
+ 					mats.push({curso: i, mat: j});
+ 					matname.push(dts[i].materias_has_niveles[j].materias.nombre);
+ 					matvaluepasa.push(dts[i].materias_has_niveles[j].pasan.length);
+ 					matvaluenopasa.push(dts[i].materias_has_niveles[j].nopasan.length);
  					let divisor= dts[i].materias_has_niveles[j].materias_has_periodos[0].alumnos_has_periodos.length;
  					// Guardamos el promedio de la materia para todos los alumnos del curso.
  					dts[i].materias_has_niveles[j].prom= prommat / (divisor !== 0? divisor : 1);
@@ -117,7 +138,9 @@
  					materiasDisponibles.push({
  						id: dts[i].materias_has_niveles[j].materias.id, 
  						nombre:dts[i].materias_has_niveles[j].materias.nombre, 
- 						prom: dts[i].materias_has_niveles[j].prom
+ 						prom: dts[i].materias_has_niveles[j].prom,
+ 						curso: dts[i].niveles.nombre,
+ 						posmats : {curso: i, mat: j}
  					});
  					idcursos.push(dts[i].materias_has_niveles[j].materias.id);
  				}
@@ -125,25 +148,41 @@
  				dts[i].prom= promcur / (divis !== 0? divis : 1);
  				vm.status.cur.name.push(dts[i].niveles.nombre); // Nombre Niveles
  				vm.status.cur.value.push(dts[i].prom); // Promedio por nivel.
+ 				vm.status.cur.filtroMateria.push({
+ 					nivelid:dts[i].id,
+ 					posmats: mats, // Posiciones de materias
+ 					name: matname,
+ 					value: matvaluepasa,
+ 					value2: matvaluenopasa, //Para verificar integracion de dos barras. TODO
+ 				}); // Materias en curso.
  			}
  			let materias=idcursos.filter(function(value, index, self) { 
 			    return self.indexOf(value) === index;
 			});
 			materias.sort(function(a, b){return a-b;}); // Organización numérica ascendente
-			let objMat=[];
+			//let objMat=[];
 			for (var i = 0; i < materias.length; i++) {
 				let cuentael=0;
 				vm.status.mat.name.push('');
 				vm.status.mat.value.push(0);
+				vm.status.mat.promCurso.push({
+					posmats: [],
+					name:[],
+					value:[],
+				});
 				for (var j = 0; j < materiasDisponibles.length; j++) {
 					if(materias[i]==materiasDisponibles[j].id){
 						cuentael ++;
 						vm.status.mat.name[i]=materiasDisponibles[j].nombre;
 						vm.status.mat.value[i] += materiasDisponibles[j].prom;
+						vm.status.mat.promCurso[i].posmats.push(materiasDisponibles[j].posmats);
+						vm.status.mat.promCurso[i].name.push(materiasDisponibles[j].curso);
+						vm.status.mat.promCurso[i].value.push(materiasDisponibles[j].prom);
 					}
 				}
 				vm.status.mat.value[i] /= (cuentael>0? cuentael : 1);
 			}
+			console.log('Status:',vm.status);
  			mostrarGraficos();
  		}
  		function dibujaGrafico(title,data,callback,container){
