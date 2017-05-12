@@ -95,10 +95,39 @@
  			});
  		}
  		function mostrarGraficos(){
+ 			for (var i = 0; i < vm.status.cur.name.length; i++) {
+ 				vm.status.cur.name[i]= reductNames(vm.status.cur.name[i]);
+ 			}
+ 			for (var j = 0; j < vm.status.cur.filtroMateria.length; j++) {
+				var fmat=vm.status.cur.filtroMateria[j];
+				for (var k = 0; k < fmat.name.length; k++) {
+					fmat.name[k]=reductNames(fmat.name[k]);
+				}
+			}
+			for (var i = 0; i < vm.status.mat.name.length; i++) {
+ 				vm.status.mat.name[i]= reductNames(vm.status.mat.name[i]);
+ 			}
+ 			for (var j = 0; j < vm.status.mat.promCurso.length; j++) {
+				var fmat=vm.status.mat.promCurso[j];
+				for (var k = 0; k < fmat.name.length; k++) {
+					fmat.name[k]=reductNames(fmat.name[k]);
+				}
+			}
  			if (vm.sel.type=='mat') {
  				dibujaGrafico('Rendimiento académico por Materia.',vm.status.mat);
  			}else{
  				dibujaGrafico('Rendimiento académico por Curso.',vm.status.cur);
+ 			}
+ 		}
+ 		function reductNames(name){
+ 			if(name.indexOf(' ')>-1){
+ 				var splitted=name.split(' ');
+ 				return splitted[0].substring(0,3)+'. '+splitted[splitted.length-1].substring(0,5);
+ 			}else{
+ 				if (name.indexOf('-')>-1) {
+ 					return name.substring(0,9);
+ 				}
+ 				return name.substring(0,5); // Una palabra es recortada a 5 letras
  			}
  		}
  		function calcularDatos(dts){
