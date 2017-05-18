@@ -31,12 +31,13 @@
                   </div>
                   <!--<div class="row">-->
                         <div class="form-group col-xs-offset-1 col-xs-10">
-                              <button class="btn btn-warning btn-sm" ng-show='vm.muestraboton' ng-click='vm.mostrarGraficos()'>Volver al primer gráfico</button>
+                              <button class="btn btn-warning btn-sm" ng-show='true' ng-click='vm.mostrarGraficos()'>Volver al primer gráfico</button>
                         </div>
                   <!--</div>-->
             </div>
 	</div>
 	<div id="footer">
-            <div id="chartContainer" style="height: 200%; width: 100%;"></div>
+            <div ng-hide='vm.muestraChartjs' id="chartContainer" style="height: 200%; width: 100%;"></div>
+            <canvas ng-show='vm.muestraChartjs' id="specialChart" style="width: 100%;" height="200"></canvas>
 	</div>            
 </div>

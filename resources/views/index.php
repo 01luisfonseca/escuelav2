@@ -32,6 +32,7 @@
         <script src='js/assets/tm/TweenMax.min.js'></script>
         <script src='js/node_modules/ng-dialog/js/ngDialog.min.js'></script>
         <script src="js/node_modules/canvasjs/dist/canvasjs.min.js"></script>
+        <script src="js/node_modules/chart.js/dist/Chart.js"></script>
         <script src="js/node_modules/moment/min/moment.min.js"></script>      
         
         <!-- Frontend -->

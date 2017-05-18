@@ -10,6 +10,7 @@
 		// Variables básicas
 		vm.anios=[];
 		vm.muestraboton=false;
+		vm.muestraChartjs=false;
 		vm.sel={
 			anio: 0,
 			per: null,
@@ -97,6 +98,7 @@
  		}
  		function mostrarGraficos(){
  			vm.muestraboton=false;
+ 			vm.muestraChartjs=false;
  			for (var i = 0; i < vm.status.cur.name.length; i++) {
  				vm.status.cur.name[i]= reductNames(vm.status.cur.name[i]);
  				vm.status.cur.filtroMateria[i].reducName=vm.status.cur.name[i];
@@ -289,6 +291,7 @@
 			}
  		}
  		function dibujaGraficoFull(title,data,callback,container){
+ 			vm.muestraChartjs=true;
  			if (typeof callback=='undefined') {
  				callback=function(e){
  					console.log(e);
@@ -310,7 +313,30 @@
  					//indexLabel: data.value[i],
  				});
  			}
- 			console.log(datapointPasan,datapointNoPasan);
+ 			//console.log(datapointPasan,datapointNoPasan);
+ 			var datag = {
+			    labels: data.name,
+			    datasets: [
+			        {
+			            label: "Pasan",
+			            backgroundColor: "green",
+			            data: data.value
+			        },
+			        {
+			            label: "No pasan",
+			            backgroundColor: "red",
+			            data: data.value2
+			        }
+			    ]
+			};
+			var options={};
+			var ctx= document.getElementById("specialChart").getContext("2d");
+ 			var myBarChart = new Chart(ctx, {
+			    type: 'bar',
+			    data: datag,
+			    options: options
+			});
+ 			/*
  			$window.chart2 = new CanvasJS.Chart(container, {
  				title:{
         			text: title
@@ -332,7 +358,7 @@
                 	}
                 ]
             });
-            $window.chart2.render();
+            $window.chart2.render();*/
  		}
 		
 	}
