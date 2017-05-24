@@ -261,6 +261,9 @@
  					//indexLabel: data.value[i],
  				});
  			}
+ 			datapoint.sort(function(dataPoint1, dataPoint2) {
+				return dataPoint2.y - dataPoint1.y;
+			});
  			vm.chart = new CanvasJS.Chart(container, {
  				title:{
         			text: title
@@ -330,7 +333,11 @@
 			    ]
 			};
 			var options={};
-			var ctx= document.getElementById("specialChart").getContext("2d");
+			$('#canvasId').empty();
+			$('#canvasId').append("<canvas id='specialChart' style='width: 100%;' height='200'></canvas>");
+			var canvas=document.getElementById("specialChart");
+			var ctx= canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
  			var myBarChart = new Chart(ctx, {
 			    type: 'bar',
 			    data: datag,
