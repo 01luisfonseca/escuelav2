@@ -17,12 +17,14 @@
 		};
 		vm.status={};
 		vm.datosRaw=[];
+		vm.dataMesRaw=[];
 		vm.cargando=false;
+		vm.ocultaMatricula=false;
 		vm.anios=[];
 		vm.meses=[];
 		vm.sel={
 			anio: 0,
-			mes: 0,
+			mes: '',
 			type: 'pen',
 			tabla: false
 		};
@@ -31,6 +33,7 @@
 		vm.cambioAnio=cambioAnio;
 		vm.cambioMes=cambioMes;
 		vm.mostrarGraficos=mostrarGraficos;
+		vm.grafIni=grafIni;
 
 
 		// Lanzamiento Automático
@@ -40,6 +43,7 @@
 
 		/////////////////////////// FUNCIONES BASICAS //////////////////////////////
 		function activate(){
+ 			vm.ocultaMatricula=true;
 			initObjeto();
 			getAnios();
 			getMeses();
@@ -120,6 +124,7 @@
  			});
  		}
  		function cambioAnio(){
+ 			vm.ocultaMatricula=false;
  			$rootScope.$broadcast('cargando',true);
  			initObjeto();
  			return NivelesHasAniosFactory.gPAl(vm.sel.anio).then(function(res){
@@ -134,14 +139,37 @@
  			});
  		}
  		function cambioMes(){
- 			initObjeto();
+ 			vm.ocultaMatricula=true;
+ 			$rootScope.$broadcast('cargando',true);
+ 			return NivelesHasAniosFactory.gPMAl(vm.sel.anio,vm.sel.mes).then(
+ 				function(res){
+ 					$rootScope.$broadcast('cargando',false);
+ 					vm.dataMesRaw=res.data;
+ 					calcularDatos(res.data);
+ 					mostrarGraficos();
+ 				},
+ 				function(){
+ 					$rootScope.$broadcast('cargando',false);
+ 					$window.alert('El servidor presenta molestias en la conexión.');
+ 					console.log(e);
+ 				}
+ 			);
+ 		}
+ 		function grafIni(){
+ 			if(vm.sel.anio!==0) vm.ocultaMatricula=false;
+ 			vm.sel.mes='';
+ 			vm.mostrarGraficos();
  		}
  		function mostrarGraficos(){
  			vm.sel.tabla= false;
  			vm.selecData= {};
  			var tipo;
  			if (vm.sel.type=='pen') {
- 				dibujaGrafico('Estado de pensiones según el año.',vm.status.pen,llamadaPension);
+ 				if (vm.sel.mes=='') {
+ 					dibujaGrafico('Estado de pensiones según el año.',vm.status.pen,llamadaPension);
+ 				} else {
+ 					dibujaGrafico('Estado de pensiones según el mes de '+vm.meses[vm.sel.mes-1].nombre,vm.status.pen,llamadaPensionMes);
+ 				}
  			}else{
  				dibujaGrafico('Estado de matrículas según el año.',vm.status.mat,llamadaMatricula);
  			}
@@ -150,6 +178,12 @@
  				tipo=e.dataPoint.label;
  				var index=verTipo(tipo);
     			dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
+ 			}
+ 			function llamadaPensionMes(e){
+ 				tipo=e.dataPoint.label;
+ 				console.log(tipo);
+ 				//var index=verTipo(tipo);
+    			//dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
  			}
  			function llamadaMatricula(e){
  				tipo=e.dataPoint.label;
@@ -192,7 +226,8 @@
  				}
 			}
  		}
- 		function calcularDatos(dts){
+ 		function calcularDatos(dts){ // Aqui vamos. debemos evaluar los datos si ha elegido mes o si es un año.
+ 			initObjeto(); // Inicializamos datos
  			for (var i = 0; i < dts.length; i++) {
  				for (var x = 0; x < 3; x++) { // Agrega la información básica de los arreglos. No calcula
  					vm.status.mat.niveles[x].ids.push(dts[i].id);
@@ -209,6 +244,7 @@
  					var pagoPen=verifyPago(dts[i].alumnos[j].pago_pension, 'pen');
  					vm.status.mat.niveles[pagoMat].value[i]+=1;
  					vm.status.pen.niveles[pagoPen].value[i]+=1;
+ 					//if(pagoPen>0) console.log('Estado',pagoPen, dts[i].alumnos[j].name+' '+dts[i].alumnos[j].name);
  					var alu=dts[i].alumnos[j], obj=undefined;
  					if (alu.name) {
  						obj={
@@ -232,6 +268,7 @@
  				}
  			}
  			promediarRes();
+ 			//console.log(vm.datosRaw,vm.status);
  		}
  		function promediarRes(){
  			for (var i = 0; i < vm.status.pen.niveles.length; i++) {
@@ -246,20 +283,37 @@
  		function verifyPago(obj, type){
  			if (obj.length) {
  				var pago;
- 				if (type==='pen') {
- 					var fecha=new Date(vm.datosRaw[0].anios.anio, obj[0].mes_id, 1, 0, 0, 0, 0);
- 					pago=moment(fecha);
+ 				/*if (type==='pen') {
+					var fecha=new Date(vm.datosRaw[0].anios.anio, obj[0].mes_id, 1, 0, 0, 0, 0);
+					pago=moment(fecha);
  				}else{
  					return 0; // Existe matrícula, por lo que se cuenta como pagada.
+ 				}*/
+ 				if (type!=='pen') return 0;
+ 				if (vm.sel.mes!=='') {
+ 					return 0;
+ 					//let miahora=new Date(vm.datosRaw[0].anios.anio,obj[0].mes_id,1,0,0,0,0);
+ 					//let otroah=moment(miahora);
+ 					//pago= otroah.diff(pago);
+ 				} else {
+ 					if (obj[0].mes_id>=(vm.ahora.month()+1)) {
+ 						return 0;
+ 					}else{
+ 						if((vm.ahora.month()+1)-obj[0].mes_id==1) return 1;
+ 						return 2;
+ 					}
+ 					//console.log('Fechas',pago,vm.ahora);
+ 					//pago=vm.ahora.diff(pago, 'days'); // Calculo de la diferencia de días
+ 					//pago=pago.diff(vm.ahora, 'days');
  				}
- 				pago=vm.ahora.diff(pago, 'days'); // Calculo de la diferencia de días
+ 				/*console.log('Compradaro', pago, vm.limite.mora,vm.limite.retraso);
  				if (pago <= vm.limite.mora) {
  					if (pago>vm.limite.retraso) {
  						return 1;
  					}else{
  						return 0;
  					}
- 				}
+ 				}*/
  			}
  			return 2; // Si un elemento no tiene nada, entonces es porque no han pagado. Tambien aplica para los morosos
  		}

@@ -15,6 +15,7 @@
             dDt: dDt,
             getNivelables:getNivelables,
             gPAl: gPAl,
+            gPMAl: gPMAl,
             gNAl: gNAl,
             gNNAl: gNNAl,
             gNPAl:gNPAl
@@ -49,6 +50,9 @@
         }
         function gPAl(id){
             return $http.get(url+'/pagados/'+id);
+        }
+        function gPMAl(id,mes){
+            return $http.get(url+'/pagados_mes/'+id+'/'+mes);
         }
         function gNAl(id){ // Notas promedio desde indicadores
             return $http.get(url+'/notas/'+id);

@@ -210,11 +210,34 @@ class NivelesHasAniosCtrl extends Controller
         $elemen=$obj->toArray();
         for ($i=0; $i < count($elemen); $i++) { 
             for ($j=0; $j < count($elemen[$i]['alumnos']); $j++) {
-                $pen=PagoPension::where('alumnos_id', $elemen[$i]['alumnos'][$j]["id"])->orderBy('mes_id','desc')->take(1)->get();
-                $mat=PagoMatricula::where('alumnos_id', $elemen[$i]['alumnos'][$j]["id"])->orderBy('id','desc')->take(1)->get();
+                $pen=PagoPension::where('alumnos_id', $elemen[$i]['alumnos'][$j]["id"])->orderBy('created_at','desc')->take(1)->get();
+                $mat=PagoMatricula::where('alumnos_id', $elemen[$i]['alumnos'][$j]["id"])->orderBy('created_at','desc')->take(1)->get();
                 $pent= $pen->toArray();
                 $matt= $mat->toArray();
                 $elemen[$i]['alumnos'][$j]["pago_matricula"]=$matt;
+                $elemen[$i]['alumnos'][$j]["pago_pension"]=$pent;
+            }
+        }
+        //dd($elemen[18]);
+        $tmp=collect($elemen);
+        return $tmp->toJson();
+    }
+
+    /**
+     * Devuelve los registros con ultimos pagos de todos los alumnos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pagadosmes($idAnio, $idMes){
+        $obj=NivelesHasAnios::with(['anios','niveles', 'alumnos'=>function($query){
+            $query->join('users','users_id','=','users.id')->select('alumnos.*','users.lastname','users.name','users.identificacion')->orderBy('users.lastname','asc');
+        }])->join('niveles','niveles_id','=','niveles.id')->select('niveles_has_anios.*')->orderBy('niveles.nombre','asc')->where('anios_id',$idAnio)->get();
+        $elemen=$obj->toArray();
+        for ($i=0; $i < count($elemen); $i++) { 
+            for ($j=0; $j < count($elemen[$i]['alumnos']); $j++) {
+                $pen=PagoPension::where('alumnos_id', $elemen[$i]['alumnos'][$j]["id"])->where('mes_id','>=',$idMes)->orderBy('created_at','desc')->take(1)->get();
+                $pent= $pen->toArray();
+                $elemen[$i]['alumnos'][$j]["pago_matricula"]=[];//$matt;
                 $elemen[$i]['alumnos'][$j]["pago_pension"]=$pent;
             }
         }
