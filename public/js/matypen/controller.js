@@ -140,6 +140,7 @@
  		}
  		function cambioMes(){
  			vm.ocultaMatricula=true;
+ 			vm.sel.type='pen';
  			$rootScope.$broadcast('cargando',true);
  			return NivelesHasAniosFactory.gPMAl(vm.sel.anio,vm.sel.mes).then(
  				function(res){
