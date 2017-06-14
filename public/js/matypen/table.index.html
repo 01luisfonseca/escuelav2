@@ -1,21 +1,51 @@
 <div class="panel panel-default">
-<div class="panel-body">
-      <h3>DISCRIMINACIÓN POR: {{vm.calcDiscrim() | uppercase}}</h3>
-      <H5>FILTRADO POR: {{vm.calcfiltro() | uppercase}}</H5>
-      <H5>NIVEL ASOCIADO: {{vm. calcNivel() | uppercase}}</H5>
-      <p>Listado de alumnos que cumplen el requerimiento.</p>
-      <div class="table-responsive">
-            <table class="table table-striped">
-                  <tr>
-                        <th>Nombre de Alumno</th>
-                        <th>Identificación</th>
-                        <th>Ultima fecha de pago</th>
-                  </tr>
-                  <tr ng-repeat='alumno in vm.selecData.alumnos'>
-                        <td>{{alumno.name}} {{alumno.lastname}}</td>
-                        <td>{{alumno.identificacion}}</td>
-                        <td>{{alumno.valor | currency}}, {{alumno.fecha}}</td>
-                  </tr>
-            </table>
+      <div class="panel-body" ng-if='!vm.esPensionMes()'>
+            <h3>DISCRIMINACIÓN POR: {{vm.calcDiscrim() | uppercase}}</h3>
+            <H5>FILTRADO POR: {{vm.calcfiltro() | uppercase}}</H5>
+            <H5>NIVEL ASOCIADO: {{vm. calcNivel() | uppercase}}</H5>
+            <p>Listado de alumnos que cumplen el requerimiento.</p>
+            <div class="table-responsive">
+                  <table class="table table-striped">
+                        <tr>
+                              <th>Nombre de Alumno</th>
+                              <th>Identificación</th>
+                              <th>Ultima fecha de pago</th>
+                        </tr>
+                        <tr ng-repeat='alumno in vm.selecData.alumnos'>
+                              <td>{{alumno.name}} {{alumno.lastname}}</td>
+                              <td>{{alumno.identificacion}}</td>
+                              <td>{{alumno.valor | currency}}, {{alumno.fecha}}</td>
+                        </tr>
+                  </table>
+            </div>
       </div>
-</div></div>
+      <div class="panel-body" ng-if='vm.esPensionMes()'>
+            <h3>DISCRIMINACIÓN B POR: {{vm.calcDiscrim() | uppercase}}</h3>
+            {{typeof(vm.selecData.mes)}}
+            <H5>FILTRADO POR: {{vm.selecData.mes.nombre | uppercase}}</H5>
+            <p>Listado de alumnos que cumplen el requerimiento.</p>
+            <div class="table-responsive">
+                  <table class="table table-striped">
+                        <tr>
+                              <th>Nombre de Alumno</th>
+                              <th>Identificación</th>
+                              <th>Ultima fecha de pago</th>
+                        </tr>
+                        <tr ng-repeat='nivel in vm.selecData.levels'>
+                              <td colspan="3">
+                                    <table class="table table-striped">
+                                          <tr>
+                                                <td colspan="3"><h3>NIVEL: {{nivel.name | uppercase}}</h3></td>
+                                          </tr>
+                                          <tr ng-repeat='alumno in nivel.alumnos'>
+                                                <td>{{alumno.name}} {{alumno.lastname}}</td>
+                                                <td>{{alumno.identificacion}}</td>
+                                                <td>{{alumno.valor | currency}}, {{alumno.fecha}}</td>
+                                          </tr>
+                                    </table>
+                              </td>
+                        </tr>
+                  </table>
+            </div>
+      </div>
+</div>

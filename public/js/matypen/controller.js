@@ -15,6 +15,7 @@
 			mora: 45,
 			retraso: 35
 		};
+		vm.statustempo=[];
 		vm.status={};
 		vm.datosRaw=[];
 		vm.dataMesRaw=[];
@@ -145,6 +146,7 @@
  			return NivelesHasAniosFactory.gPMAl(vm.sel.anio,vm.sel.mes).then(
  				function(res){
  					$rootScope.$broadcast('cargando',false);
+ 					vm.statustempo=JSON.parse(JSON.stringify(vm.status));
  					vm.dataMesRaw=res.data;
  					calcularDatos(res.data);
  					mostrarGraficos();
@@ -158,6 +160,8 @@
  		}
  		function grafIni(){
  			if(vm.sel.anio!==0) vm.ocultaMatricula=false;
+ 			if(vm.sel.mes!=='') vm.status=JSON.parse(JSON.stringify(vm.statustempo));
+ 			vm.statustempo=[];
  			vm.sel.mes='';
  			vm.mostrarGraficos();
  		}
@@ -182,7 +186,7 @@
  			}
  			function llamadaPensionMes(e){
  				tipo=e.dataPoint.label;
- 				console.log(tipo);
+ 				tablaExportar(e);
  				//var index=verTipo(tipo);
     			//dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
  			}
@@ -210,20 +214,33 @@
  			}
  			function exportarLista(nivel, clase, tipo){
  				vm.sel.tabla=true;
- 				for (var i = 0; i < vm.status[tipo].name.length; i++) {
- 					if(vm.status[tipo].name[i]==clase){
- 						for (var j = 0; j < vm.status[tipo].niveles[i].levels.length; j++) {
- 							if(vm.status[tipo].niveles[i].levels[j].name==nivel){
- 								vm.status[tipo].niveles[i].levels[j].tipo=tipo;
- 								vm.status[tipo].niveles[i].levels[j].clase=vm.status[tipo].name[i];
- 								Saver.setData('matypen',vm.status[tipo].niveles[i].levels[j]); // Parece que hay que implementar promesas ya que en la primera no funciona.
-								$timeout(function(){
-									$window.open('/#/matypentable'); 
-								},500);
- 							}
- 						}
- 						
- 					}
+ 				if(nivel!==clase){
+	 				for (var i = 0; i < vm.status[tipo].name.length; i++) {
+	 					if(vm.status[tipo].name[i]==clase){
+	 						for (var j = 0; j < vm.status[tipo].niveles[i].levels.length; j++) {
+	 							if(vm.status[tipo].niveles[i].levels[j].name==nivel){
+	 								vm.status[tipo].niveles[i].levels[j].tipo=tipo;
+	 								vm.status[tipo].niveles[i].levels[j].clase=vm.status[tipo].name[i];
+	 								Saver.setData('matypen',vm.status[tipo].niveles[i].levels[j]); // Parece que hay que implementar promesas ya que en la primera no funciona.
+									$timeout(function(){
+										$window.open('/#/matypentable'); 
+									},500);
+	 							}
+	 						}
+	 						
+	 					}
+	 				}
+ 				}else{
+ 					let i=verTipo(nivel);
+ 					let info={
+ 						levels: vm.status[tipo].niveles[i].levels,
+ 						mes: vm.meses[vm.sel.mes-1],
+ 						tipo:vm.sel.type
+ 					};
+ 					Saver.setData('matypen',info); // Parece que hay que implementar promesas ya que en la primera no funciona.
+					$timeout(function(){
+						$window.open('/#/matypentable'); 
+					},500);
  				}
 			}
  		}

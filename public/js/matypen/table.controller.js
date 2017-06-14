@@ -14,12 +14,17 @@
 		vm.cargaInfo=cargaInfo;
 		vm.calcDiscrim=calcDiscrim;
 		vm.calcfiltro=calcfiltro;
-		vm. calcNivel=calcNivel;
+		vm.calcNivel=calcNivel;
+		vm.esPensionMes=esPensionMes;
 		
 		// Lanzamiento Automático
 		vm.cargaInfo();
 		
 		/////////////////////////// FUNCIONES BASICAS //////////////////////////////
+		function esPensionMes(){
+			console.log(vm.selecData.hasOwnProperty('mes'),typeof(vm.selecData.mes));
+			return vm.selecData.hasOwnProperty('mes');
+		}
 		function cargaInfo(){
 			vm.selecData=Saver.getData('matypen');
 			console.log(vm.selecData);
