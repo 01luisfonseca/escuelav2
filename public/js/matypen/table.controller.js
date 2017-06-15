@@ -29,7 +29,7 @@
 		function cargaInfo(){
 			let datos=Saver.getData('matypen');
 			vm.selecData=datos.level;
-			vm.mes=datos.mes?parseInt(datos.mes)+1 : '';
+			vm.mes=datos.mes?parseInt(datos.mes) : '';
 			console.log(vm.selecData);
 			if (!vm.selecData) {
 				$location.path('/authhome');
