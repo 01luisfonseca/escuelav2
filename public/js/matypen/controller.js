@@ -186,7 +186,10 @@
  			}
  			function llamadaPensionMes(e){
  				tipo=e.dataPoint.label;
- 				tablaExportar(e);
+ 				var index=verTipo(tipo);
+    			dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
+ 				//tipo=e.dataPoint.label;
+ 				//tablaExportar(e);
  				//var index=verTipo(tipo);
     			//dibujaGrafico('Resultados de pensiones por: '+e.dataPoint.label,vm.status.pen.niveles[index],tablaExportar);
  			}
@@ -221,7 +224,7 @@
 	 							if(vm.status[tipo].niveles[i].levels[j].name==nivel){
 	 								vm.status[tipo].niveles[i].levels[j].tipo=tipo;
 	 								vm.status[tipo].niveles[i].levels[j].clase=vm.status[tipo].name[i];
-	 								Saver.setData('matypen',vm.status[tipo].niveles[i].levels[j]); // Parece que hay que implementar promesas ya que en la primera no funciona.
+	 								Saver.setData('matypen',{level:vm.status[tipo].niveles[i].levels[j],mes:vm.sel.mes}); // Parece que hay que implementar promesas ya que en la primera no funciona.
 									$timeout(function(){
 										$window.open('/#/matypentable'); 
 									},500);

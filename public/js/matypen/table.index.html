@@ -2,6 +2,7 @@
       <div class="panel-body" ng-if='!vm.esPensionMes()'>
             <h3>DISCRIMINACIÓN POR: {{vm.calcDiscrim() | uppercase}}</h3>
             <H5>FILTRADO POR: {{vm.calcfiltro() | uppercase}}</H5>
+            <H5 ng-if='vm.mes!==""'>MES: {{vm.mes}}</H5>
             <H5>NIVEL ASOCIADO: {{vm. calcNivel() | uppercase}}</H5>
             <p>Listado de alumnos que cumplen el requerimiento.</p>
             <div class="table-responsive">

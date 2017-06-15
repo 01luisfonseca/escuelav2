@@ -9,6 +9,7 @@
 
 		// Variables básicas
 		vm.selecData={};
+		vm.mes='';
 			
 		// Funciones basicas
 		vm.cargaInfo=cargaInfo;
@@ -26,7 +27,9 @@
 			return vm.selecData.hasOwnProperty('mes');
 		}
 		function cargaInfo(){
-			vm.selecData=Saver.getData('matypen');
+			let datos=Saver.getData('matypen');
+			vm.selecData=datos.level;
+			vm.mes=datos.mes?parseInt(datos.mes)+1 : '';
 			console.log(vm.selecData);
 			if (!vm.selecData) {
 				$location.path('/authhome');
