@@ -179,8 +179,9 @@ class OtrosCtrl extends Controller
      * @return \Illuminate\Http\Response
      */
     public function count(){
-        $obj=PagoOtros::count();
-        return response()->json(['registros'=>$obj]);
+        // $obj=PagoOtros::count();
+        // return response()->json(['registros'=>$obj]);
+        return 'ok';
     }
 
     /**
