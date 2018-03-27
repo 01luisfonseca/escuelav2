@@ -158,8 +158,8 @@ class MesesCtrl extends Controller
      * @return \Illuminate\Http\Response
      */
     public function count(){
-        $obj=Meses::all();
-        return response()->json(['registros'=>$obj->count()]);
+        $obj=Meses::count();
+        return response()->json(['registros'=>$obj]);
     }
 
     /**
