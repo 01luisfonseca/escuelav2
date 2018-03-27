@@ -180,6 +180,7 @@ class OtrosCtrl extends Controller
      */
     public function count(){
         $obj=PagoOtros::all();
+        Log::info($obj);
         return response()->json(['registros'=>$obj->count()]);
     }
 
