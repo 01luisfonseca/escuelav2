@@ -1,5 +1,5 @@
 # Set master image
-FROM php:7.1-fpm-alpine
+FROM php:7.0-fpm-alpine
 
 # Copy composer.lock and composer.json
 COPY composer.lock composer.json /var/www/html/
