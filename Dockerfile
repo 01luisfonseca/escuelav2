@@ -44,9 +44,9 @@ COPY . /var/www
 
 RUN chmod 755 -R storage
 
-RUN chwon www-data:www-data storage/oauth-private.key
+RUN chown www-data:www-data storage/oauth-private.key
 
-RUN chwon www-data:www-data storage/oauth-public.key
+RUN chown www-data:www-data storage/oauth-public.key
 
 RUN chmod 660 storage/oauth-private.key
 
