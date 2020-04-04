@@ -27,8 +27,34 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 
-### Project steps
 
+
+# Project steps
+
+## Run sql commands
+Require run a couple of commands to have acces to database.
+
+```bash
+docker-compose exec db bash
+```
+It opens bash in virtual Server. Next:
+
+```bash
+mysql -u root -p
+```
+Requires password: jAjy2qpCyLhRy7De
+
+And set a global user
+```sql
+GRANT ALL ON *.* TO 'i353614_lara3'@'%' IDENTIFIED BY 'jAjy2qpCyLhRy7De';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+Finally, set .env database host variable to db
+
+## Docker basic commands
+* docker-compose exec app bash => Access to command line
 * docker-compose exec app php composer.phar install
 * docker-compose exec app php artisan key:generate
 * docker-compose exec app php artisan migrate
