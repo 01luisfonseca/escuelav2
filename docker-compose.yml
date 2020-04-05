@@ -1,42 +1,42 @@
 version: '3'
 services:
 
-  #PHP Service
-  app:
-    build:
-      args:
-        user: www-data
-        uid: 1000
-      context: .
-      dockerfile: Dockerfile
-    image: digitalocean.com/php
-    container_name: app
-    restart: unless-stopped
-    tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-    working_dir: /var/www/html
-    volumes:
-      - ./:/var/www/html
-      - ./dockerdata/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
+  # #PHP Service
+  # app:
+  #   build:
+  #     args:
+  #       user: www-data
+  #       uid: 1000
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: digitalocean.com/php
+  #   container_name: app
+  #   restart: unless-stopped
+  #   tty: true
+  #   environment:
+  #     SERVICE_NAME: app
+  #     SERVICE_TAGS: dev
+  #   working_dir: /var/www/html
+  #   volumes:
+  #     - ./:/var/www/html
+  #     - ./dockerdata/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+  #   networks:
+  #     - app-network
 
-  #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./:/var/www/
-      - ./dockerdata/nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
+  # #Nginx Service
+  # webserver:
+  #   image: nginx:alpine
+  #   container_name: webserver
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./:/var/www/
+  #     - ./dockerdata/nginx/conf.d/:/etc/nginx/conf.d/
+  #   networks:
+  #     - app-network
 
   #MySQL Service
   db:
